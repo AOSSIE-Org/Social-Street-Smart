@@ -1,0 +1,13 @@
+{
+	"appName" : {
+		"message" : "Social Street Smart",
+		"description": "The title of the application, displayed in the web store."
+	},
+	"appDesc" : {
+		"message": "Shaping tomorrow's Internet with Artificial Intelligence.",
+		"description": "The description of the application, displayed in the web store."
+	},
+    "default": {
+        "message": "Default"
+    }
+}
