@@ -24,7 +24,7 @@
           "https://*/*"
         ],
         "js" : [
-          "sss.js"
+          "scripts/content/sss.js"
         ],
         "run_at" : "document_end",
         "all_frames" : false
