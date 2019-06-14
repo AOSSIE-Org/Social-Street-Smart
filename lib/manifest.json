@@ -30,6 +30,10 @@
         "all_frames" : false
       }
     ],
+"web_accessible_resources": [
+    "common/profanity_list_en.json"
+],
+
     "permissions": [
       "tabs"
     ],
