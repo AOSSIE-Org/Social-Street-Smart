@@ -35,7 +35,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('esLint',()=>{
-  gulp.src('./lib/*.js')
+  gulp.src(['./lib/assets/js/*.js','./lib/scripts/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
@@ -50,10 +50,12 @@ function isFixed(file) {
 }
 
 gulp.task('fix', function () {
-  return gulp.src('./lib/*.js')
+  return gulp.src(['./lib/assets/js/*.js','./lib/scripts/**/*.js'])
     .pipe(eslint({fix:true}))
     .pipe(eslint.format())
-    .pipe(gulpIf(isFixed, gulp.dest('lib/')))
+    .pipe(gulpIf(isFixed, gulp.dest(function (file) {
+        return file.base;
+    })))
     .pipe(eslint.failAfterError());
 });
 

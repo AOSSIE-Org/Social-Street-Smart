@@ -207,10 +207,10 @@
 	margin-left:-4px;
 	margin-right: 4px;
  	border-right-width: 2px;
-	 font-size: 1.3rem;
-	 font-family: 'Heebo', system-ui;
-	 text-shadow: 0px 0px 0px black;
-  box-shadow: 6px 6px 4px #888888;
+	font-size: 1.3rem;
+	font-family: 'Heebo', system-ui;
+	text-shadow: 0px 0px 0px black;
+    box-shadow: 6px 6px 4px #888888;
 	color: black;
 }
 .list-group-horizontal .list-group-item:first-child
@@ -229,7 +229,7 @@
 	 font-size: 1.3rem;
 	 font-family: 'Heebo', system-ui;
 	 text-shadow: 0px 0px 0px black;
-  box-shadow: 6px 6px 4px #888888;
+     box-shadow: 6px 6px 4px #888888;
 
 }
 
