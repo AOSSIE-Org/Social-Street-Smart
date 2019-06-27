@@ -27,7 +27,6 @@ class Embed:
         f.close()
         print("embeddings loaded")
         
-
     def sent_embed(self, Y):
         c=0
         Y= Y.split()
