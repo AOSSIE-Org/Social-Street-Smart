@@ -20,6 +20,7 @@ def predict():
     prediciton = model.predict(feat)
     class_= get_classes(prediciton)
     r=jsonify({'prediciton': class_})
+    r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
     return r
     
 @application.route('/scrap', methods=['POST'])
@@ -28,6 +29,7 @@ def scrap():
     reqURL= req['url']
     newsPost= getNews(reqURL)
     r=jsonify({'result':newsPost})
+    r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
     return r
 
 
