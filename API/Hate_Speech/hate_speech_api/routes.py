@@ -16,6 +16,7 @@ tokenizer.fit_on_texts(sentences)
 
 graph = tf.get_default_graph()
 
+
 def load_model():
 	global loaded_model
 	json_file = open('hate_speech_api/resources/lstm_hate_speech.json', 'r')
@@ -26,47 +27,44 @@ def load_model():
 
 load_model()
 
+
 @app.route('/pred', methods=['GET','POST'])
 def predict():
-	nstr= request.args.get('text')
-	nstr = nstr.encode('utf-8')
-	#nstr=str(nstr)
 
-	predictions=nn(nstr)
-	#print('Toxic:         {:.0%}'.format(predictions[0][0]))
-	#print('Severe Toxic:  {:.0%}'.format(predictions[0][1]))
-	#print('Obscene:       {:.0%}'.format(predictions[0][2]))
-	#print('Threat:        {:.0%}'.format(predictions[0][3]))
-	#print('Insult:        {:.0%}'.format(predictions[0][4]))
-	#print('Identity Hate: {:.0%}'.format(predictions[0][5]))
+	try:
+		n_str= request.args.get('text')
+		n_str = n_str.encode('utf-8')
+		#nstr=str(nstr)
+		predictions=score(n_str)
+		#print('Toxic:         {:.0%}'.format(predictions[0][0]))
+		#print('Severe Toxic:  {:.0%}'.format(predictions[0][1]))
+		#print('Obscene:       {:.0%}'.format(predictions[0][2]))
+		predictions = predictions.tolist()
+		#print predictions
+		app.logger.info('API called for string: ' + n_str +'. (returned): ' + str(predictions))
 
-	predictions = predictions.tolist()
-	print predictions
-	#predictions=predictions.split()
+		return jsonify({'Toxic': predictions[0][0],
+						'Severe Toxic': predictions[0][1],
+						'Obscene': predictions[0][2],
+						'Threat': predictions[0][3],
+						'Insult': predictions[0][4],
+						'Identity Hate': predictions[0][5]}), 200
 
-
-	return jsonify({'Toxic': predictions[0][0],
-					'Severe Toxic': predictions[0][1],
-					'Obscene': predictions[0][2],
-					'Threat': predictions[0][3],
-					'Insult': predictions[0][4],
-					'Identity Hate': predictions[0][5]}), 200
-
+	except AssertionError as error:
+		app.logger.error('API called for string: ' + n_str + 'Error: '+ error)
 
 
-def nn(nstr):
-	nstr=[nstr]
-	new_string = tokenizer.texts_to_sequences(nstr)
+
+def score(n_str):
+	n_str=[n_str]
+	new_string = tokenizer.texts_to_sequences(n_str)
 	new_string = pad_sequences(new_string, maxlen=200)
 
 	with graph.as_default():
-  		prediction=loaded_model.predict(new_string)
+		prediction=loaded_model.predict(new_string)
 
-
-	#print("Toxicity levels for '{}':".format())
 	#K.clear_session()
 	#prediction = loaded_model.predict(new_string)
-	#print prediction
 	return prediction
 
 

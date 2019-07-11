@@ -30,21 +30,27 @@ load_model()
 
 @app.route('/pred', methods=['GET','POST'])
 def predict():
-	nstr= request.args.get('text')
-	nstr = nstr.encode('utf-8')
-	#nstr=str(nstr)
-	kk=nn(nstr)
-	kk=str(kk)
-	#respo= {'Result': 'none'}
-	#respo['Result'] = str(kk)
-	#print (jsonify(respo)).json()
-	return jsonify({'Result': kk}), 200
+	try:
+		n_str= request.args.get('text')
+		n_str = n_str.encode('utf-8')
+		#n_str=str(n_str)
+		kk=score(n_str)
+		kk=str(kk)
+		#respo= {'Result': 'none'}
+		#respo['Result'] = str(kk)
+		#print (jsonify(respo)).json()
+		app.logger.info('API called for string: ' + n_str +'. (returned): ' + kk)
+		return jsonify({'Result': kk}), 200
+
+
+	except AssertionError as error:
+		app.logger.error('API called for string: ' + n_str + 'Error: '+ error)
 
 
 
-def nn(nstr):
-	nstr=[nstr]
-	new_string = tokenizer.texts_to_sequences(nstr)
+def score(n_str):
+	n_str=[n_str]
+	new_string = tokenizer.texts_to_sequences(n_str)
 	new_string = pad_sequences(new_string, maxlen=200)
 
 	with graph.as_default():
