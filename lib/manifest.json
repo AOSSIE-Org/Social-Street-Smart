@@ -9,6 +9,8 @@
       "scripts" : ["scripts/background/eventPage.js"],
       "persistent": false
     },
+
+  "options_page": "views/settings.html",
     "browser_action" :
     {
       "default_icon" : "assets/icon/pop.png",
@@ -28,6 +30,10 @@
         "all_frames" : false
       }
     ],
+"web_accessible_resources": [
+    "common/profanity_list_en.json"
+],
+
     "permissions": [
       "tabs"
     ],

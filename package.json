@@ -16,12 +16,25 @@
     "del": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-cli": "^2.0.1",
-    "gulp-eslint": "^5.0.0",
-    "gulp-if": "^2.0.2",
-    "gulp-htmlmin": "^3.0.0",
     "gulp-csso": "^2.0.0",
+    "gulp-eslint": "^5.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-if": "^2.0.2",
     "gulp-minify": "^3.1.0",
     "gulp-rename": "^1.2.2",
+    "husky": "^2.4.1",
     "run-sequence": "^1.1.5"
+  },
+  "devDependencies": {
+    "lint-staged": "^8.2.1"
+  },
+
+   "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": ["./node_modules/.bin/eslint --fix", "git add"]
   }
 }
