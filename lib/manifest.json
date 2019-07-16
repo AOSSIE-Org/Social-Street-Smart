@@ -9,6 +9,8 @@
       "scripts" : ["scripts/background/eventPage.js"],
       "persistent": false
     },
+
+  "options_page": "views/settings.html",
     "browser_action" :
     {
       "default_icon" : "assets/icon/pop.png",
@@ -192,6 +194,10 @@
 
       }
     ],
+"web_accessible_resources": [
+    "common/profanity_list_en.json"
+],
+
     "permissions": [
       "tabs",
       "http://13.233.115.232:8091/predict"
