@@ -24,9 +24,9 @@
           "https://*/*"
         ],
         "js" : [
-          "scripts/content/sss.js"
+          "scripts/content/facebook_cb.js","scripts/content/sss.js"
         ],
-        "run_at" : "document_end",
+        "run_at" : "document_idle",
         "all_frames" : false
       }
     ],
