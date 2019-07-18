@@ -35,7 +35,7 @@
 ],
 
     "permissions": [
-      "tabs","notifications"
+      "tabs","notifications","storage"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",
