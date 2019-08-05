@@ -1,3 +1,5 @@
+from application import db
+
 class authenticNews(db.Model):
     __tablename__= 'authNewsTable'
     link= db.Column(db.String(), primary_key=True)
