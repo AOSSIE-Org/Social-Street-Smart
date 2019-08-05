@@ -40,12 +40,7 @@ class allnewsDB(db.Model):
     def serialize(self):
         return{
             'link': self.link,
-            'source': self.source,req= request.json
-    reqURL= req['url']
-    newsPost= getNews(reqURL)
-    r=jsonify({'result':newsPost})
-    r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
-    return r
+            'source': self.source,
             'dateTime': self.dateTime,
             'content': self.content
         }
