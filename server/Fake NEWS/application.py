@@ -16,7 +16,11 @@ from News_Scrapper.newsWebScrap import getNews
 model= None
 application = Flask(__name__)
 
+application.config.from_object(os.getenv('APP_SETTINGS'))
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(application)
 
+from DB.newsDB import allnewsDB
 
 @application.route('/predict', methods= ['POST'])
 def predict():
@@ -38,8 +42,16 @@ def predict():
 def scrap():
     req= request.json
     reqURL= req['url']
-    newsPost= getNews(reqURL)
-    r=jsonify({'result':newsPost})
+    newsPost=allnewsDB.query.get(reqURL).serialize()
+    if newsPost== None :
+        print("not found in db")
+        x= getNews(reqURL)
+        newsPost= allnewsDB(link= x['url'],content= x['title']+ x['description'],source= x['source_domain'],dateTime= x["date_publish"])
+        db.session.add(newsPost)
+        db.session.commit()
+    else:
+        print("found in db")
+    r=jsonify({'result': newsPost})
     r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
     return r
 
