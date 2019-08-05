@@ -1,11 +1,22 @@
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
 from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+
 import numpy as np 
 import pandas as pd
+
 from ML.helperML import get_features, get_classes, load_model
 from News_Scrapper.newsWebScrap import getNews
 
 model= None
 application = Flask(__name__)
+
+
 
 @application.route('/predict', methods= ['POST'])
 def predict():
