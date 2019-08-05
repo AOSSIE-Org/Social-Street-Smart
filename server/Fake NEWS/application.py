@@ -56,9 +56,9 @@ def scrap():
     return r
 
 
+model= load_model()
 
 if __name__=='__main__':
     
-    model= load_model()
     application.debug= False
     application.run(port= 8091, host="0.0.0.0")
