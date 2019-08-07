@@ -6,14 +6,16 @@
     "description": "Shaping tomorrow's Internet with Artificial Intelligence",
     "default_locale": "en",
     "background" : {
-      "scripts" : ["eventPage.js"],
+      "scripts" : ["scripts/background/eventPage.js"],
       "persistent": false
     },
+
+  "options_page": "views/settings.html",
     "browser_action" :
     {
       "default_icon" : "assets/icon/pop.png",
       "default_title" : "Social Street Smart",
-      "default_popup" : "popup.html"
+      "default_popup" : "views/popup.html"
     },
     "content_scripts" : [
       {
@@ -22,14 +24,18 @@
           "https://*/*"
         ],
         "js" : [
-          "sss.js"
+        "scripts/content/youtube.js","scripts/content/twitter.js","scripts/content/facebook.js","scripts/content/sss.js"
         ],
-        "run_at" : "document_end",
+        "run_at" : "document_idle",
         "all_frames" : false
       }
     ],
+"web_accessible_resources": [
+    "common/profanity_list_en.json"
+],
+
     "permissions": [
-      "tabs"
+      "tabs","notifications","storage"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",
@@ -38,4 +44,4 @@
       "96" : "assets/icon/96.png"
     }
 }
-  
+   

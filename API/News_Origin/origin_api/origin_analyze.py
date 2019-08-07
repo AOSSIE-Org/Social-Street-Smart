@@ -16,18 +16,17 @@ from nltk import ne_chunk, pos_tag, word_tokenize
 from pattern.graph import Graph
 import itertools
 import sys
-nltk.download('stopwords')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('maxent_ne_chunker')
-nltk.download('words')
 
-
+#nltk.download('stopwords')
+#nltk.download('averaged_perceptron_tagger')
+#nltk.download('maxent_ne_chunker')
+#nltk.download('words')
 
 
 
 class SourceChecker(object):
 
-	def __init__(self, text, language, max_queries = 10, span = 10, threshold = .8):
+	def __init__(self, text, language, max_queries = 8, span = 8, threshold = .7):
 		self.max_queries = max_queries
 		self.span = span
 		self.threshold = threshold
@@ -35,7 +34,7 @@ class SourceChecker(object):
 		self.language = language
 		self.cat_dict = defaultdict(list)
 		key = ''
-		self.engine = Google(license=key, throttle=0.5, language=None)
+		self.engine = Google(license=key, throttle=0.8, language=None)
 
 	def get_queries(self):
 
@@ -107,7 +106,7 @@ class SourceChecker(object):
 
 	def load_domains(self):
 		"""loads domain information"""
-		sources_path = './static/data/source_data.csv'
+		sources_path = 'origin_api/static/data/news_websites.csv'
 		domain_file = Datasheet.load(sources_path, headers = True)
 		for row in domain_file:
 			url  = row[1]
@@ -169,6 +168,7 @@ class SourceChecker(object):
 					else:
 						print (d)
 				print ('\n')
+		return output
 
 
 	def render_graph(self, domains):
@@ -207,22 +207,3 @@ class SourceChecker(object):
 
 		path = 'graph'
 		g.export(path, encoding='utf-8', distance = 6, directed = False, width = 1400, height = 900)
-
-
-def main():
-
-	text = sys.argv[1]
-	try:
-		language = sys.argv[2]
-	except IndexError:
-		language = 'english'
-	sc = SourceChecker(text, language)
-	queries = sc.get_queries()
-	domains = sc.get_urls(queries)
-	sc.load_domains()
-	sc.render_output(domains)
-	#sc.render_graph(domains)
-
-
-if __name__ == "__main__":
-    main()
