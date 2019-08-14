@@ -7,7 +7,9 @@ migrate = Migrate(application, db)
 manager = Manager(application)
 
 manager.add_command('db', MigrateCommand)
-manager.add_command("runserver", Server(host="127.0.0.1", port=8091))
+# manager.add_command("runserver", Server(host="127.0.0.1", port=8091))
+#for AWS instance
+manager.add_command("runserver", Server(host="0.0.0.0", port=8091))
 
 if __name__ == '__main__':
     print("starting main manage")
