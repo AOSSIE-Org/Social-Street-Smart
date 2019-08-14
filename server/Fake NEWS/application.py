@@ -59,6 +59,6 @@ def scrap():
 model= load_model()
 
 if __name__=='__main__':
-    
+    # only for API testing without API_manager 
     application.debug= False
     application.run(port= 8091, host="0.0.0.0")
