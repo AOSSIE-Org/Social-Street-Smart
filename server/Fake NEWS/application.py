@@ -21,7 +21,7 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(application)
 
 from DB.newsDB import allnewsDB
-
+from Cache.resultCache import fbCache, tweetCache, newsCache
 @application.route('/predict', methods= ['POST'])
 def predict():
     global model

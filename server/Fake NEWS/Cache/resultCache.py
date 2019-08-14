@@ -1,6 +1,6 @@
 from application import db
 
-#Cache DB for facebook
+#Cache DB for facebook posts's result
 
 class fbCache(db.Model):
     __tablename__= 'fbCacheTable'
