@@ -105,6 +105,27 @@ def fb_query(query):
         result= findDB.serialize()['result']
     return result
 
+def twitter_query(query):
+    findDB= tweetCache.query.get(query['tweetID'])
+    result= "unknown"
+    if findDB== None: # result not found in DB
+        query_content = query['content']
+        allauthNews= authenticNewsDB.query.all() #find in db list
+        for news in allauthNews:
+            news= news.serialize()
+            pred= get_prediction(query_content,news['content'])
+            if pred== "disagree":
+                result= "fake"
+                break
+            elif pred== "agree":
+                result= "genuine"
+                break
+        resultCard= tweetCache(tweetID= query['tweetID'], sourceHandle= query['handle'], dateTime= query['dateTime'], result= result)
+        db.session.add(resultCard)
+        db.session.commit()
+    else:
+        result= findDB.serialize()['result']
+    return result
 
 
 
