@@ -69,7 +69,7 @@ def getNewsContent(reqURL):
         db.session.add(newsPost)
         db.session.commit()
     else:
-        # print("found in db")
+        print("found in db")
     newsPost= newsPost.serialize()
     return newsPost
 
