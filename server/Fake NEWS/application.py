@@ -83,6 +83,27 @@ def get_prediction(h,b):
     class_= get_classes(prediction)
     return class_
 
+def fb_query(query):
+    findDB= fbCache.query.get(query['fbID'])
+    result= "unknown"
+    if findDB== None: # result not found in DB
+        query_content = query['content']
+        allauthNews= authenticNewsDB.query.all() #find in db list 
+        for news in allauthNews:
+            news= news.serialize() 
+            pred= get_prediction(query_content,news['content'])
+            if pred== "disagree":
+                result= "fake"
+                break
+            elif pred== "agree":
+                result= "genuine"
+                break
+        resultCard= fbCache(fbID= query['fbID'], sourcePage= query['sourcePage'], dateTime= query['dateTime'], result= result)
+        db.session.add(resultCard)
+        db.session.commit()
+    else:
+        result= findDB.serialize()['result']
+    return result
 
 
 
