@@ -33,6 +33,30 @@ from DB.newsDB import allnewsDB
 from DB.newsDB import authenticNewsDB
 from Cache.resultCache import fbCache, tweetCache, newsCache
 
+# -------auth news scrapper fucntion-----------
+def authNewsScrapMain():
+    print("scheduled auth news scrapping started")
+    newsList= authNewsScraper()
+    for news in newsList:
+        url= news['link']
+        x=authenticNewsDB.query.get(url)
+        if(x==None):
+            newNews= authenticNewsDB(link= news['link'], source= news['source'], dateTime= news['dateTime'], content= news['content'])
+            xNewsNews= allnewsDB(link= news['link'], source= news['source'], dateTime= news['dateTime'], content= news['content'])
+            db.session.add(newNews)
+            db.session.commit()
+            db.session.add(xNewNews)
+            db.session.commit()
+        else:
+            print("found in DB")
+    
+scheduler.add_job(func=authNewsScrapMain, trigger="interval", seconds=0, minutes= 240)
+scheduler.start()
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
+#--------------end-----------
+
 @application.route('/predict', methods= ['POST'])
 def predict():
     global model
