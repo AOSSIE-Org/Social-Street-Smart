@@ -13,7 +13,6 @@ def scrap_Thindu(hindu_url="https://www.thehindu.com/news/international/"):
     print("schduled scraping from the hindu")
     d2= webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", chrome_options=options)
     d2.get(hindu_url)
-    print("loading hindu loaded")
     hindu_page_source= d2.page_source
     hsoup = BeautifulSoup(hindu_page_source, 'lxml')
     hfeeds= hsoup.find_all('div', class_= 'Other-StoryCard')
@@ -34,5 +33,27 @@ def scrap_wire(wire_url= "https://thewire.in/"):
     for x in feeds:
         if x.find("a")["href"][0:5]!="https" : # to avoid navigation to other page
             url_list.append(wire_url[:-1]+ x.find("a")["href"])
-    print(url_list[0])
     return url_list
+
+def authNewsScraper():
+    news_url_li= scrap_Thindu()+ scrap_wire()
+    res_list= []
+    for url in news_url_li:
+        print(url)
+        x= getNews(url)
+        # time.sleep(1)
+        dic= {
+            "link": url,
+            "content":  x['title']+ x['description'],
+            "source": x['source_domain'],
+            "dateTime" : x["date_publish"]
+        }
+        # print(dic)
+        res_list.append(dic)
+    # print(res_list[0], len(res_list))
+    return res_list
+
+if __name__ == "__main__":
+    authNewsScraper()    
+
+
