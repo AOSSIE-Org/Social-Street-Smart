@@ -22,4 +22,17 @@ def scrap_Thindu(hindu_url="https://www.thehindu.com/news/international/"):
         h_url_li.append(x.find("a")["href"])
     return h_url_li
 
-
+def scrap_wire(wire_url= "https://thewire.in/"):
+    print("schduled scraping from the wire")
+    driver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver", chrome_options=options)
+    wire_url= "https://thewire.in/"
+    driver.get(wire_url)
+    page_source = driver.page_source
+    soup = BeautifulSoup(page_source, 'lxml')
+    feeds= soup.find_all('div',class_='card__title')
+    url_list= []
+    for x in feeds:
+        if x.find("a")["href"][0:5]!="https" : # to avoid navigation to other page
+            url_list.append(wire_url[:-1]+ x.find("a")["href"])
+    print(url_list[0])
+    return url_list
