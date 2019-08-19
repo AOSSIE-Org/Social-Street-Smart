@@ -150,26 +150,27 @@ def newsWeb_query(query):
     return result
 
 
-
-
-
-
 @application.route('/predict', methods= ['POST'])
 def predict():
-    global model
-    if model==None:
-        print( "error in loading trained model\n")
-        exit
     query= request.json
     query_body= query['body']
-    query_head= query['head']
-    feat= get_features(query_head, query_body)
-    prediciton = model.predict(feat)
-    class_= get_classes(prediciton)
-    r=jsonify({'prediciton': class_})
+    query_source= query['source']
+    result= None
+    if query_source== "FB" :
+        result= fb_query(query_body)
+    elif query_source == "Twitter":
+        result = twitter_query(query_body)
+    elif query_source == "newsWeb":
+        query_body= getNewsContent(query_body['link'])
+        result = newsWeb_query(query_body)
+    else:
+        print("error in finding source of query")
+
+    r=jsonify({'prediciton': result})
     r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
     return r
-    
+
+#----------------end------------------------------------
 
 model= load_model()
 
