@@ -57,6 +57,30 @@ atexit.register(lambda: scheduler.shutdown())
 
 #--------------end-----------
 
+#---- functions for prediction of query-------
+
+
+def getNewsContent(reqURL):
+    newsPost= allnewsDB.query.get(reqURL)
+    if newsPost== None :
+        # print("not found in db")
+        x= getNews(reqURL)
+        newsPost= allnewsDB(link= x['url'],content= x['title']+ x['description'],source= x['source_domain'],dateTime= x["date_publish"])
+        db.session.add(newsPost)
+        db.session.commit()
+    else:
+        # print("found in db")
+    newsPost= newsPost.serialize()
+    return newsPost
+
+
+
+
+
+
+
+
+
 @application.route('/predict', methods= ['POST'])
 def predict():
     global model
@@ -73,23 +97,6 @@ def predict():
     r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
     return r
     
-@application.route('/scrap', methods=['POST'])
-def scrap():
-    req= request.json
-    reqURL= req['url']
-    newsPost=allnewsDB.query.get(reqURL).serialize()
-    if newsPost== None :
-        print("not found in db")
-        x= getNews(reqURL)
-        newsPost= allnewsDB(link= x['url'],content= x['title']+ x['description'],source= x['source_domain'],dateTime= x["date_publish"])
-        db.session.add(newsPost)
-        db.session.commit()
-    else:
-        print("found in db")
-    r=jsonify({'result': newsPost})
-    r.headers.add('Access-Control-Allow-Origin', '*')           #to solve cross origin request problem, modify this in future
-    return r
-
 
 model= load_model()
 
