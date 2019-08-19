@@ -73,6 +73,15 @@ def getNewsContent(reqURL):
     newsPost= newsPost.serialize()
     return newsPost
 
+def get_prediction(h,b):
+    global model
+    if model==None:
+        print( "error in loading trained model\n")
+        exit
+    feat= get_features(h,b)
+    prediction= model.predict(feat)
+    class_= get_classes(prediction)
+    return class_
 
 
 
