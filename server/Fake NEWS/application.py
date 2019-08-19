@@ -10,6 +10,15 @@ from flask_sqlalchemy import SQLAlchemy
 import numpy as np 
 import pandas as pd
 
+#auth news scheduler
+# pip install apscheduler
+import time
+import atexit
+from News_Scrapper.authNS import authNewsScraper
+from apscheduler.schedulers.background import BackgroundScheduler
+scheduler = BackgroundScheduler()
+
+
 from ML.helperML import get_features, get_classes, load_model
 from News_Scrapper.newsWebScrap import getNews
 
@@ -21,7 +30,9 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(application)
 
 from DB.newsDB import allnewsDB
+from DB.newsDB import authenticNewsDB
 from Cache.resultCache import fbCache, tweetCache, newsCache
+
 @application.route('/predict', methods= ['POST'])
 def predict():
     global model
