@@ -13,7 +13,8 @@ import pandas as pd
 df=pd.read_csv("news_websites.csv")
 df = df.drop([df.columns[0] ],  axis='columns')
 print df.head()
-#df.to_csv('news_websites.csv')
+print(df.dtypes)
+df.to_csv('news_websites.csv')
 df.to_json('../lib/common/news_websites.json')
 
 ## END ##
