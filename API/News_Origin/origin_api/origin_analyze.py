@@ -109,8 +109,10 @@ class SourceChecker(object):
 		sources_path = 'origin_api/static/data/news_websites.csv'
 		domain_file = Datasheet.load(sources_path, headers = True)
 		for row in domain_file:
-			url  = row[1]
-			cats = row[2:]
+			url  = row[2]
+			cats = row[3]
+			cats = "".join(cats)
+			#print (cats)
 			self.cat_dict[url] = cats
 
 
@@ -151,12 +153,12 @@ class SourceChecker(object):
 		for d,v in domains.items():
 			d_cats = [c for c in self.cat_dict[d] if len(c)>0 and len(c.split(' '))<3]
 			overlap = float(len(v))/self.max_queries
-			if overlap <= 0.2:
-				output['MINIMAL'].append((d, d_cats))
-			elif 0.2 < overlap < 0.6:
-				output['SOME'].append((d, d_cats))
+			if 0.2 < overlap < 0.4:
+				output['MINIMAL'].append((d, "".join(d_cats)))
+			elif 0.4 < overlap < 0.6:
+				output['SOME'].append((d, "".join(d_cats)))
 			elif overlap >= 0.6:
-				output['HIGH'].append((d, d_cats))
+				output['HIGH'].append((d, "".join(d_cats)))
 		degrees = ['HIGH', 'SOME', 'MINIMAL']
 		print ('\n')
 		for deg in degrees:

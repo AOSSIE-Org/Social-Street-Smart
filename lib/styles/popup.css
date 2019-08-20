@@ -187,13 +187,13 @@ button:active {
   display: block; overflow: hidden; cursor: pointer;
   height: 36px; padding: 0; line-height: 36px;
   border: 2px solid #E3E3E3; border-radius: 36px;
-  background-color: #800080;
+  background-color: #FFFFFF;
   transition: background-color 0.3s ease-in;
 }
 .onoffswitch-label:before {
   content: "";
   display: block; width: 36px; margin: 0px;
-  background: #FFFFFF;
+  background-color: #FFFFFF;
   position: absolute; top: 0; bottom: 0;
   right: 22px;
   border: 2px solid #E3E3E3; border-radius: 36px;

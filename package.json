@@ -28,13 +28,15 @@
   "devDependencies": {
     "lint-staged": "^8.2.1"
   },
-
-   "husky": {
+  "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.js": ["./node_modules/.bin/eslint --fix", "git add"]
+    "*.js": [
+      "./node_modules/.bin/eslint --fix",
+      "git add"
+    ]
   }
 }
