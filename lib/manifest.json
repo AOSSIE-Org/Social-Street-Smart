@@ -24,7 +24,7 @@
           "https://*/*"
         ],
         "js" : [
-        "scripts/content/youtube.js","scripts/content/twitter.js","scripts/content/facebook.js","scripts/content/sss.js"
+        "scripts/content/youtube_cb_hs.js","scripts/content/twitter_cb_hs.js","scripts/content/facebook_cb_hs.js","scripts/content/sss.js"
         ],
         "run_at" : "document_idle",
         "all_frames" : false
