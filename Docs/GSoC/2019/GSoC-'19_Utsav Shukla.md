@@ -3,7 +3,7 @@
 
 ###### Main Repository Link: [AOSSIE: Social street Smart](https://gitlab.com/aossie/social-street-smart)
 ###### Forked Repository Link: [AOSSIE: Social street Smart (Utsav Shukla's fork)](https://gitlab.com/us241098/social-street-smart)
-###### Download Chrome Extension (CRX): [Packaged Chrome Extension]()
+###### Download Chrome Extension (CRX): [Packaged Chrome Extension](https://drive.google.com/open?id=1mm6YjcnEPDfSX-NjCJnZZ6JF8eTiOO7f)
 <br>
 
 #### APIs links:
