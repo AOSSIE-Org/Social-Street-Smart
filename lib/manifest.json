@@ -200,7 +200,8 @@
 
     "permissions": [
       "tabs",
-      "http://13.233.115.232:8091/predict"
+      "http://13.233.115.232:8091/predict",
+      "notifications"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",
