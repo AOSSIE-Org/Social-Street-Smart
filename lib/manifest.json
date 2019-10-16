@@ -180,7 +180,17 @@
         ],
         "run_at" : "document_end",
         "all_frames" : false
-       
+      },
+      {
+        "matches":[
+          "https://twitter.com/*"
+        ],
+        "js":[
+          "scripts/content/twitter.js"
+        ],
+        "run_at" : "document_end",
+        "all_frames" : false
+        
 
       }
     ],
@@ -189,7 +199,9 @@
 ],
 
     "permissions": [
-      "tabs","notifications"
+      "tabs",
+      "http://13.233.115.232:8091/predict",
+      "notifications"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",
