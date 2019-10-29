@@ -24,9 +24,9 @@
           "https://*/*"
         ],
         "js" : [
-          "scripts/content/sss.js"
+         "scripts/content/youtube_cb.js","scripts/content/twitter_cb.js","scripts/content/facebook_cb.js","scripts/content/sss.js"
         ],
-        "run_at" : "document_end",
+        "run_at" : "document_idle",
         "all_frames" : false
       },
       {
@@ -199,9 +199,7 @@
 ],
 
     "permissions": [
-      "tabs",
-      "http://13.233.115.232:8091/predict",
-      "notifications"
+      "tabs","notifications","storage"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",
