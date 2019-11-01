@@ -30,9 +30,13 @@ load_model()
 
 @app.route('/pred', methods=['GET','POST'])
 def predict():
-
 	try:
-		n_str= request.args.get('text')
+		if request.method == 'POST':
+			n_str= request.form['text']
+
+		if request.method == 'GET':
+			n_str= request.args.get('text')
+
 		n_str = n_str.encode('utf-8')
 		#nstr=str(nstr)
 		predictions=score(n_str)
