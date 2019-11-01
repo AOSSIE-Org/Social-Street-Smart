@@ -199,7 +199,7 @@
 ],
 
     "permissions": [
-      "tabs","notifications","storage"
+      "tabs","notifications","storage","http://13.233.115.232:8091/predict"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",
@@ -208,4 +208,4 @@
       "96" : "assets/icon/96.png"
     }
 }
-  
+   
