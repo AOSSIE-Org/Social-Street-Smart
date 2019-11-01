@@ -14,7 +14,7 @@ Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 Markdown==3.1.1
 MarkupSafe==1.1.1
-nltk==3.4.3
+nltk==3.4.5
 numpy==1.16.4
 pandas==0.24.2
 progressbar2==3.42.0
