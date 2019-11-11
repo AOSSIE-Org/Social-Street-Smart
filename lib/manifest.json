@@ -192,6 +192,18 @@
         "all_frames" : false
         
 
+      },
+      {
+        "matches":[
+          "https://www.facebook.com/*"
+        ],
+        "js":[
+          "scripts/content/facebook.js"
+        ],
+        "run_at" : "document_end",
+        "all_frames" : false
+        
+
       }
     ],
 "web_accessible_resources": [
