@@ -20,12 +20,12 @@ gulp.task('clean', function() {
 });
 
 gulp.task('pages', function() {
-  return gulp.src(['./lib/*.html'])
+  return gulp.src(['./lib/views/*.html'])
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true
     }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/views'));
 });
 
 gulp.task('styles', function () {
@@ -60,18 +60,19 @@ gulp.task('fix', function () {
 });
 
 gulp.task('minify', function () {
-  return gulp.src('./lib/*.js')
+  return gulp.src('./lib/scripts/**/*.js')
     .pipe(minify({
       ext: {
         min: '.js'
       },
       noSource: true,
     }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest('./dist/scripts'));
 });
 
 gulp.task('copy-dist', function () {
   gulp.src('./lib/_locales/**/*').pipe(gulp.dest('./dist/_locales/'));
+  gulp.src('./lib/common/*').pipe(gulp.dest('./dist/common/'));
   gulp.src('./lib/assets/**/*').pipe(gulp.dest('./dist/assets/'));
   return gulp.src('./lib/manifest.json').pipe(gulp.dest('./dist/'));
 });
