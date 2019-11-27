@@ -21,7 +21,7 @@ application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(application)
 
 from DB.newsDB import allnewsDB
-
+from Cache.resultCache import fbCache, tweetCache, newsCache
 @application.route('/predict', methods= ['POST'])
 def predict():
     global model
@@ -59,6 +59,6 @@ def scrap():
 model= load_model()
 
 if __name__=='__main__':
-    
+    # only for API testing without API_manager 
     application.debug= False
     application.run(port= 8091, host="0.0.0.0")
