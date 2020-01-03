@@ -8,6 +8,7 @@ __pycache__/
 *.so
 
 # Distribution / packaging
+server/Fake NEWS/files/glove.6B.100d.txt
 .Python
 build/
 develop-eggs/
