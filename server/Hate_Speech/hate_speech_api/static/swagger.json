@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Social Street Smart's Hate Speech API endpoint",
+    "version": "1.0.0",
+    "title": "Social Street Smart - Hate Speech",
+    "contact": {
+      "email": "us241077@gmail.com"
+    },
+    "license": {
+      "name": "GNU General Public License",
+      "url": "http://www.gnu.org/licenses/"
+    }
+  },"servers": [
+    {
+      "url": "/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Hate Speech API",
+      "description": "Example API for getting the Hate Speech probability of a text piece"
+    }
+  ],
+
+  "paths": {
+    "/pred": {
+      "post": {
+        "tags": [
+          "Hate Speech Score"
+        ],
+        "summary": "Enter the text and get its Hate Speech probability (0-1) across various categories",
+        "requestBody": {
+          "description": "text form",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Text"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/components/schemas/Response"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+
+    }
+},
+  "components": {
+    "schemas": {
+      "Response": {
+        "type": "object",
+        "properties": {
+          "Toxic": {
+            "type": "string",
+            "format": "float"
+          },
+          "Severe Toxic": {
+            "type": "string",
+            "format": "float"
+          },
+          "Obscene": {
+            "type": "string",
+            "format": "float"
+          },
+          "Threat": {
+            "type": "string",
+            "format": "float"
+          },
+          "Insult": {
+            "type": "string",
+            "format": "float"
+          },
+          "Identity Hate": {
+            "type": "string",
+            "format": "float"
+          }
+        }
+      },
+        "Text": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      }
+    }
+  }
+}

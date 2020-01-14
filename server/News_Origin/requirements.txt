@@ -1,0 +1,11 @@
+Keras==2.2.4
+pytest==4.3.1
+numpy==1.16.4
+Flask_Cors==3.0.8
+Flask==1.1.1
+flask_swagger_ui==3.20.9
+tensorflow==1.14.0
+pandas==0.24.2
+gunicorn
+https://github.com/clips/pattern/archive/python3.zip
+
