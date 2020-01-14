@@ -7,4 +7,5 @@ flask_swagger_ui==3.20.9
 tensorflow==1.14.0
 pandas==0.24.2
 gunicorn
+https://github.com/clips/pattern/archive/python3.zip
 

@@ -31,7 +31,7 @@ gulp.task('pages', function() {
 gulp.task('styles', function () {
   return gulp.src('./lib/styles/*.css')
     .pipe(csso())
-    .pipe(gulp.dest('./dist/styles'))
+    .pipe(gulp.dest('./dist/styles'));
 });
 
 gulp.task('esLint',()=>{
@@ -40,13 +40,13 @@ gulp.task('esLint',()=>{
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
     .on('error', function(err) {
-      console.log("Run 'gulp-fix' in terminal to fix these errors"); 
-      process.exit()
+      console.log('Run \'gulp-fix\' in terminal to fix these errors'); 
+      process.exit();
     });
-})
+});
 
 function isFixed(file) {
-  return file.eslint != null && file.eslint.fixed;
+  return file.eslint !== null && file.eslint.fixed;
 }
 
 gulp.task('fix', function () {
@@ -54,7 +54,7 @@ gulp.task('fix', function () {
     .pipe(eslint({fix:true}))
     .pipe(eslint.format())
     .pipe(gulpIf(isFixed, gulp.dest(function (file) {
-        return file.base;
+      return file.base;
     })))
     .pipe(eslint.failAfterError());
 });
@@ -78,5 +78,5 @@ gulp.task('copy-dist', function () {
 });
 
 gulp.task('build', function() {
-    runSequence('clean', 'pages', 'styles', 'esLint', 'minify', 'copy-dist');
+  runSequence('clean', 'pages', 'styles', 'esLint', 'minify', 'copy-dist');
 });
