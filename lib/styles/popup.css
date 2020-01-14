@@ -200,13 +200,14 @@ button:active {
   border: 2px solid #E3E3E3; border-radius: 36px;
   transition: all 0.3s ease-in 0s; 
 }
+
 .onoffswitch-checkbox:checked + .onoffswitch-label {
   background-color: #800080;
 }
 .onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
  border-color: #800080;
 }
-.onoffswitch-checkbox:checked + .onoffswitch-label:before {
+.onoffswitch-checkbox:checked + .onoffswitch-label:before{
   right: 0px; 
 }
 
