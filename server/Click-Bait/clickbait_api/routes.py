@@ -1,10 +1,10 @@
 import pickle
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 import sys, os, re, csv, codecs, numpy as np, pandas as pd
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 from flask import request, jsonify, json
-from keras import backend as K
+from tensorflow.keras import backend as K
 from clickbait_api import app
 import tensorflow as tf
 
@@ -48,17 +48,19 @@ def predict():
 		#respo= {'Result': 'none'}
 		#respo['Result'] = str(kk)
 		#print (jsonify(respo)).json()
-		app.logger.info('API called for string: ' + n_str +'. (returned): ' + kk)
+		#app.logger.info('API called for string: ' + n_str +'. (returned): ' + kk)
 		return jsonify({'Result': kk}), 200
 
 
 	except AssertionError as error:
-		app.logger.error('API called for string: ' + n_str + 'Error: '+ error)
+		app.logger.error('API called for string: ' + n_str.decode("utf-8") + 'Error: '+ error)
 
 
 
 def score(n_str):
+	n_str = n_str.decode("utf-8")
 	n_str=[n_str]
+	print (n_str)
 	new_string = tokenizer.texts_to_sequences(n_str)
 	new_string = pad_sequences(new_string, maxlen=200)
 

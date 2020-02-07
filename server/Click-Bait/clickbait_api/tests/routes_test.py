@@ -2,6 +2,7 @@ import json
 import pytest
 from clickbait_api import app
 
+
 #Test cases for both POST and GET requests
 
 def post_json(client, url, json_dict): 

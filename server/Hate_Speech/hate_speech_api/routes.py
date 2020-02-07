@@ -1,11 +1,11 @@
 import pickle
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 import sys, os, re, csv, codecs, numpy as np, pandas as pd
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 from flask import request, jsonify, json
 from hate_speech_api import app
-from keras import backend as K
+from tensorflow.keras import backend as K
 import tensorflow as tf
 
 
@@ -45,7 +45,7 @@ def predict():
 		#print('Obscene:       {:.0%}'.format(predictions[0][2]))
 		predictions = predictions.tolist()
 		#print predictions
-		app.logger.info('API called for string: ' + n_str +'. (returned): ' + str(predictions))
+		app.logger.info('API called for string: ' + str(n_str) +'. (returned): ' + str(predictions))
 
 		return jsonify({'Toxic': predictions[0][0],
 						'Severe Toxic': predictions[0][1],
@@ -60,7 +60,8 @@ def predict():
 
 
 def score(n_str):
-	n_str=[n_str]
+	n_str = n_str.decode("utf-8")
+	#n_str=[n_str]
 	new_string = tokenizer.texts_to_sequences(n_str)
 	new_string = pad_sequences(new_string, maxlen=200)
 

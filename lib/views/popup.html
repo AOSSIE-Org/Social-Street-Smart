@@ -4,7 +4,7 @@
     <title>Social Street Smart Extension</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
     <link rel="stylesheet" href="../styles/popup.css">
-    <script src="../scripts/popup.js"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -17,7 +17,7 @@
       <li><h1>Social</h1> <h2>Street Smart</h2></li>
       <li>
           <div class="onoffswitch">
-            <input type="checkbox" name="mainonoffswitch" class="onoffswitch-checkbox" id="mainonoffswitch" checked>
+            <input type="checkbox" name="mainonoffswitch" class="onoffswitch-checkbox is_on" id="mainonoffswitch" checked>
             <label class="onoffswitch-label" for="mainonoffswitch"></label>
           </div>
       </li>
@@ -45,12 +45,13 @@
   <div  id="whitelist">
     <strong>Whitelist this website:</strong> 
     <div class="onoffswitch">
-      <input type="checkbox" name="whitelistSwitch" class="onoffswitch-checkbox" id="whitelistSwitch" checked>
+      <input type="checkbox" name="whitelistSwitch" class="onoffswitch-checkbox" id="whitelistSwitch">
       <label class="onoffswitch-label" for="whitelistSwitch"></label>
     </div>
     
   </div>
   
 </body>
-
+<script src="../assets/js/popup.js"></script>
 </html>
+
