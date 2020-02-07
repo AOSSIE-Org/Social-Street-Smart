@@ -1,3 +1,4 @@
+
 {
     "manifest_version": 2,
     "version": "1.0.0",
@@ -24,9 +25,9 @@
           "https://*/*"
         ],
         "js" : [
-         "scripts/content/youtube_cb_hs.js","scripts/content/twitter_cb_hs.js","scripts/content/facebook_cb_hs.js","scripts/content/sss.js"
+         "scripts/content/youtube_cb_hs.js","scripts/content/facebook_cb_hs.js","scripts/content/sss.js"
         ],
-        "run_at" : "document_idle",
+        "run_at" : "document_end",
         "all_frames" : false
       },
       {
@@ -185,8 +186,7 @@
         "matches":[
           "https://twitter.com/*"
         ],
-        "js":[
-          "scripts/content/twitter.js"
+        "js":["scripts/content/twitter_cb_hs.js"
         ],
         "run_at" : "document_end",
         "all_frames" : false
@@ -211,7 +211,7 @@
 ],
 
     "permissions": [
-      "tabs","notifications","storage","http://13.233.115.232:8091/predict"
+      "tabs","notifications","storage","contextMenus","http://13.233.115.232:8091/predict","http://18.221.117.28:7001/predict"
     ],
     "icons" : {
       "36" : "assets/icon/36.png",

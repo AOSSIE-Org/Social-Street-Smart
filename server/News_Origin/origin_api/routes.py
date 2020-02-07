@@ -2,6 +2,14 @@ import sys, os, re, csv, codecs, numpy as np, pandas as pd
 from flask import request, jsonify, json
 from origin_api import app
 from .origin_analyze import SourceChecker 
+import nltk
+
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 @app.route('/')
 def hello_world():

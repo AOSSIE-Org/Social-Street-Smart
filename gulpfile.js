@@ -40,7 +40,7 @@ gulp.task('esLint',()=>{
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
     .on('error', function(err) {
-      console.log('Run \'gulp-fix\' in terminal to fix these errors'); 
+      console.log('Run \'gulp -- fix\' in terminal to fix these errors'); 
       process.exit();
     });
 });
