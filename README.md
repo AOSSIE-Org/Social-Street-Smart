@@ -14,7 +14,9 @@ The aim of this project is to develop a Chrome Extension to make Internet a safe
  3. Install the dependencies : 
 `npm install`
  5. Build the extension : 
-`gulp build`
+`gulp build` (if you have gulp installed globally)
+`node_modules/.bin gulp build =` (if gulp is installed locally)
+ 6. Open the lib or dist folder from the Google Chrome's Settings :
 
 ## How to Contribute 
 This is the first year of the project. Visit the [official website](http://aossie.gitlab.io) for the proposed ideas.
