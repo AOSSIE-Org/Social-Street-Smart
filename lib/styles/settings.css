@@ -177,7 +177,7 @@
 	 line-height: 1;
 	 cursor: pointer;
 }
- .button:hover, .button:focus {
+ .button:hover {
 	 background: #4B0082;
 	 color: white;
 	 transition: all 300ms ease;
