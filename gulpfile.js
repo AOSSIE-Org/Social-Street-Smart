@@ -1,7 +1,5 @@
 var gulp = require('gulp'),
   del = require('del'),
-  rename = require('gulp-rename'),
-  runSequence = require('run-sequence'),
   htmlmin = require('gulp-htmlmin'),
   minify = require('gulp-minify'),
   csso = require('gulp-csso'),
@@ -35,7 +33,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('esLint',()=>{
-  gulp.src(['./lib/assets/js/*.js','./lib/scripts/**/*.js'])
+  return gulp.src(['./lib/assets/js/*.js','./lib/scripts/**/*.js'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
@@ -77,6 +75,5 @@ gulp.task('copy-dist', function () {
   return gulp.src('./lib/manifest.json').pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('build', function() {
-  runSequence('clean', 'pages', 'styles', 'esLint', 'minify', 'copy-dist');
-});
+
+gulp.task('build',gulp.series('clean', 'pages', 'styles', 'esLint', 'minify', 'copy-dist'));

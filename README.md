@@ -6,7 +6,7 @@ The aim of this project is to develop a Chrome Extension to make Internet a safe
 
 ## Installation
 
- 1. Install [node.js](https://nodejs.org), [git](https://git-scm.com)
+ 1. Install [node.js](https://nodejs.org)(12.16.1), [git](https://git-scm.com)
  2. Clone the repository : 
  `git clone https://gitlab.com/aossie/social-street-smart.git`
  3. Change the directory : 
