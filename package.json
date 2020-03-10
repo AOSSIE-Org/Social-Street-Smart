@@ -24,7 +24,6 @@
     "husky": "^2.4.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
     "lint-staged": "^8.2.1"
   },
   "husky": {
