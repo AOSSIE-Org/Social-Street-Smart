@@ -195,10 +195,21 @@
     },
     {
       "matches":[
+        "https://www.reddit.com/*"
+      ],
+      "js":["scripts/content/reddit_cb_hs.js"
+      ],
+      "run_at" : "document_end",
+      "all_frames" : false
+      
+
+    },
+    {
+      "matches":[
         "https://www.facebook.com/*"
       ],
       "js":[
-        "scripts/content/facebook.js"
+        "scripts/content/facebook_cb_hs.js"
       ],
       "run_at" : "document_end",
       "all_frames" : false
