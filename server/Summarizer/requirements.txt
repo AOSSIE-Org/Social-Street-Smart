@@ -1,5 +1,0 @@
-newspaper3k==0.2.8
-gensim==3.8.0
-urllib3==1.25.3
-
-
