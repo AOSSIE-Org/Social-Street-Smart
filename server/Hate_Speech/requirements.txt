@@ -1,0 +1,7 @@
+Keras==2.2.0
+numpy==1.11.0
+tensorflow==1.9.0
+Flask==1.0.2
+Flask_Cors==3.0.8
+pandas==0.17.1
+flask-swagger-ui==3.20.9
