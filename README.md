@@ -1,2 +1,2 @@
-# Social Street Smart - Api
+# Social Street Smart - API
 
