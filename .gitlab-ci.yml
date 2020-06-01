@@ -1,0 +1,13 @@
+image: node:12.17.0
+
+before_script:
+    - npm install
+    
+stages:
+    - test
+
+atest:
+    stage: test
+    script:
+        - node -v
+        - ./node_modules/.bin/gulp build
