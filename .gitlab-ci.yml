@@ -1,13 +1,20 @@
-image: node:12.17.0
+image: python:3.6.10
+
+cache:
+  paths:
+    - .pip
 
 before_script:
-    - npm install
-    
+  - mkdir -p .pip
+  - pip install -U pip
+  - pip --cache-dir=.pip install -r ./server/Hate_Speech/requirements.txt
+  
+  
 stages:
     - test
 
-atest:
+h8test:
     stage: test
     script:
-        - node -v
-        - ./node_modules/.bin/gulp build
+        - cd ./server/Hate_Speech/
+        - pytest
