@@ -7,7 +7,7 @@ cache:
 before_script:
   - mkdir -p .pip
   - pip install -U pip
-  - pip --cache-dir=.pip install -r ./server/Hate_Speech/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
   
   
 stages:
@@ -21,6 +21,6 @@ h8test:
         - cd ..
         - cd Click-Bait
         - pytest
-        - cd..
+        - cd ..
         - cd News_Origin
         - pytest
