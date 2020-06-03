@@ -18,3 +18,9 @@ h8test:
     script:
         - cd ./server/Hate_Speech/
         - pytest
+        - cd ..
+        - cd Click-Bait
+        - pytest
+        - cd..
+        - cd News_Origin
+        - pytest
