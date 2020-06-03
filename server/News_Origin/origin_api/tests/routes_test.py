@@ -1,6 +1,6 @@
 import json
 import pytest
-from clickbait_api import app
+from origin_api import app
 
 #Test cases for both POST and GET requests
 
@@ -30,39 +30,38 @@ def test_dummy(client):
     assert b'Hello, World!' in response.data
 
 
-def test_pred_get_cb(client):
-    response = client.get('/pred?text=you wont believe what happend next')
+def test_ht(client):
+    response = client.get('/pred?text=On Tuesday, Delhi reported 1,298 Covid cases with the total tally reaching 22,132. Eleven more people died over the last 24 hours, taking the toll to 556, according to the Delhi government’s daily bulletin')
     assert response.status_code == 200
-    assert float((json_of_response(response))['Result']) >= 0.9
+    sites = []
+    for site in json_of_response(response)['HIGH']:
+            sites.append(str(site[0]))
+    assert 'hindustantimes.com' in sites
 
 
-def test_pred_get_no_cb(client):
-    response = client.get('/pred?text=Clash between Pygmies and DRC gorilla sanctuary rangers leaves one dead')
+def test_newsbrig(client):
+    response = client.get('/pred?text=New York City looters were caught on camera pulling up in luxury SUVs — including what was claimed to be a pricey Rolls-Royce — before apparently looting an upscale retail store in Manhattan, according to footage shared on social media.')
     assert response.status_code == 200
-    assert float((json_of_response(response))['Result']) <= 0.5
+    sites = []
+    for site in json_of_response(response)['HIGH']:
+            sites.append(str(site[0]))
+    assert 'newsbrig.com' in sites
 
-
-def test_pred_post_cb(client):
-    data = {
-        'text': 'you wont believe what happend next'
-    }
-    url = '/pred'
-    response = client.post(url, data = data)
-    #response = client.post(client, '/pred', {'text': 'you wont believe what happend next'})
+def test_independ(client):
+    response = client.get('/pred?text=As many parts of the UK brace themselves for wetter weather, the prime minister stressed his government had relaxed lockdown rules only for gatherings which take place outdoors')
     assert response.status_code == 200
-    assert float((json_of_response(response))['Result']) >= 0.9
+    sites = []
+    for site in json_of_response(response)['HIGH']:
+            sites.append(str(site[0]))
+    assert 'independent.co.uk' in sites
 
-
-def test_pred_post_no_cb(client):
-    data = {
-        'text': 'Clash between Pygmies and DRC gorilla sanctuary rangers leaves one dead'
-    }
-    url = '/pred'
-    response = client.post(url, data = data)
-    assert response.status_code == 200
-    assert float((json_of_response(response))['Result']) <= 0.5
-
-
+# def test_independ(client):
+#     response = client.get('/pred?text=As many parts of the UK brace themselves for wetter weather, the prime minister stressed his government had relaxed lockdown rules only for gatherings which take place outdoors')
+#     assert response.status_code == 200
+#     sites = []
+#     for site in json_of_response(response)['HIGH']:
+#             sites.append(str(site[0]))
+#     assert 'independent.co.uk' in sites
 
 
 
