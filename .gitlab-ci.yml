@@ -21,3 +21,6 @@ h8test:
         - cd ..
         - cd Click-Bait
         - pytest
+        - cd..
+        - cd News_Origin
+        - pytest
