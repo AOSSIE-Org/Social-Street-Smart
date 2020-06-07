@@ -1,7 +1,7 @@
 image: node:12.16.1
 
 before_script:
-    - sudo apt-get install xvfb
+    - apt-get install xvfb
     - npm install
 
 stages:
