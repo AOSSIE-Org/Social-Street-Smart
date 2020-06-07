@@ -1,6 +1,6 @@
 image: node:12.16.1
 
-before-script:
+before_script:
     - npm install
 
 stages:
