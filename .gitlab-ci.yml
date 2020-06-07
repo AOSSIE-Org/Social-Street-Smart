@@ -4,7 +4,7 @@ before_script:
     - apt-get update
     - apt-get -y --force-yes install xvfb
     - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
-    - curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+    - curl -sL https://deb.nodesource.com/setup_12.x | -E bash -
     - npm install
 
 stages:
