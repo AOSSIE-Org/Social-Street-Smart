@@ -3,6 +3,7 @@ image: ubuntu:20.04
 before_script:
     - apt-get update
     - apt-get -y --force-yes install xvfb
+    - apt-get -y --force-yes install wget
     - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_12.x | bash -
     - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
