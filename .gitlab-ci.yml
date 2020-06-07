@@ -5,7 +5,7 @@ before_script:
     - apt-get -y --force-yes install xvfb
     - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-    - apt install nodejs
+    - apt -y --force-yes install nodejs
     - node -v
     - npm install
 
