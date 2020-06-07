@@ -1,0 +1,12 @@
+image: node:12.16.1
+
+before-script:
+    - npm install
+
+stages:
+    - test
+    
+tryTest:
+    stage: test
+    script:
+        - npm test
