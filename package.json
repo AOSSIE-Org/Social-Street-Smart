@@ -4,7 +4,7 @@
   "description": "Shaping tomorrow's Internet with Artificial Intelligence",
   "repository": "https://gitlab.com/aossie/social-street-smart",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js"
   },
   "author": "SerChirag",
   "license": "GPL-3.0",
@@ -24,6 +24,9 @@
     "husky": "^2.4.1"
   },
   "devDependencies": {
+    "mocha": "^7.2.0",
+    "puppeteer": "^3.3.0",
+    "chai": "^4.2.0",
     "lint-staged": "^8.2.1"
   },
   "husky": {
