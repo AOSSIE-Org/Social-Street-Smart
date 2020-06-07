@@ -5,6 +5,8 @@ before_script:
     - apt-get -y --force-yes install xvfb
     - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
     - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+    - apt-get -y --force-yes install google-chrome-stable
     - apt -y --force-yes install nodejs
     - node -v
     - npm install
