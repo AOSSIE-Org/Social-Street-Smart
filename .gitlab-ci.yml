@@ -1,6 +1,7 @@
 image: node:12.16.1
 
 before_script:
+    - sudo apt-get install xvfb
     - npm install
 
 stages:
@@ -9,4 +10,5 @@ stages:
 tryTest:
     stage: test
     script:
-        - npm test
+        # - npm test
+        - xvfb-run -a --server-args="-screen 0 1280x800x24 -ac -nolisten tcp -dpi 96 +extension RANDR" npm test 
