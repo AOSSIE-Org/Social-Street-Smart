@@ -17,7 +17,7 @@ describe('Extension Test', function(){
 
     // className = ["CB_twitter", "CB_reddit"];
     // className = "CB_twitter";
-    optionsTest()
+    twittercb()
     // test1();
     // test1();
 
@@ -45,86 +45,54 @@ async function boot() {
 
     testingPage = await browser.newPage();
 
+    // Get extensionID
     const dummyPage = await browser.newPage();
-    // await dummyPage.waitFor(10000); // arbitrary wait time.
-  
     const targets = await browser.targets();
     const extensionTarget = targets.find(({ _targetInfo }) => {
-      return _targetInfo.title === 'Social Street Smart';
+        return _targetInfo.title === 'Social Street Smart';
     });
-  
     const extensionUrl = extensionTarget._targetInfo.url || '';
     [,, extensionID] = extensionUrl.split('/');
     dummyPage.close()
-    // optionsPage = await browser.newPage();
-    // await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
-    // const toggle = await optionsPage.$('.' + className, el => el.outerHTML);
-    // await toggle.click();
-    // const saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-    // await optionsPage.waitFor(5000)
-    // await saveSettings.click();
+    
 
 
 }
 
-
-// Opens the options page for SSS
-// async function SSSoptions(){
-
-//     optionsPage = await browser.newPage();
-//     await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
-//     const toggle = await optionsPage.$('.' + className, el => el.outerHTML);
-//     await toggle.click();
-//     const saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-//     await saveSettings.click();
-
-// }
-
-async function optionsTest(){
-    describe ('Options' , async function(){
-        it('IDK', async function(){
-            // await SSSoptions();
+async function twittercb(){
+    describe ('Twitter CB' , async function(){
+        it('Testing...', async function(){
+            className = "CB_twitter";
+            // Enable feature in extension settings
             optionsPage = await browser.newPage();
             await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
-            const toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
-            const saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
             await optionsPage.waitFor(2000)
             await saveSettings.click();
 
+            // Test feature
             let newUrl = "https://twitter.com/BuzzFeed/status/1269750893009870848"
             // await testingPage.waitFor(2000)
             await testingPage.goto(newUrl)
             await testingPage.waitFor(3000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
-            console.log(CB)
+            // console.log(CB)
             let t = CB.includes("Clickbait")
             assert.equal(t, true);
 
+            // Disable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
         })
     });
+};
 
-    // test1()
-}
-
-async function test1(){
-    describe('First test', async function(){
-        it('IDK', async function(){
-            // let newUrl = "https://www.reddit.com/r/testingground4bots/comments/fagpst/you_wont_believe_what_happened_next/"
-            let newUrl = "https://twitter.com/BuzzFeed/status/1269750893009870848"
-            // await testingPage.waitFor(2000)
-            await testingPage.goto(newUrl)
-            await testingPage.waitFor(3000);
-
-            const CB = await testingPage.$eval('.SSS', el => el.textContent)
-            console.log(CB)
-            // let t = true;
-            let t = CB.includes("Clickbait")
-            // assert.equal(CB, "Clickbait")
-            assert.equal(t, true);
-        })
-    });
-
-    return true;
-}
