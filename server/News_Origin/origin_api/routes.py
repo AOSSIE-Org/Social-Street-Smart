@@ -1,15 +1,15 @@
-import sys, os, re, csv, codecs
+import sys, os, re, csv, codecs, numpy as np, pandas as pd
 from flask import request, jsonify, json
 from origin_api import app
 from .origin_analyze import SourceChecker 
 import nltk
-nltk.data.path = ['origin_api/nltk_data']
-# nltk.download('punkt')
-# nltk.download('wordnet')
-# nltk.download('stopwords')
-# nltk.download('averaged_perceptron_tagger')
-# nltk.download('maxent_ne_chunker')
-# nltk.download('words')
+
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 @app.route('/')
 def hello_world():
@@ -32,3 +32,9 @@ def predict():
 	#print (jsonify(kk['HIGH']))
 	return jsonify(kk)
 		#return jsonify({'Result': kk}), 200
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 import pickle
 from tensorflow.keras.models import model_from_json
-import sys, os, re, csv, codecs
+import sys, os, re, csv, codecs, numpy as np, pandas as pd
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from flask import request, jsonify, json
@@ -15,17 +15,9 @@ from tensorflow.python.keras.models import load_model
 session = tf.Session()
 
 
-#data = pd.read_csv("clickbait_api/resources/final_new.csv")
+data = pd.read_csv("clickbait_api/resources/final_new.csv")
 
-#sentences = data["titles"].fillna("DUMMY_VALUE").values
-#print(type(sentences))
-import pickle
-with open('clickbait_api/resources/sentences.pickle', 'rb') as f:
-	sentences= pickle.load(f)
-
-#with open('sentences.pickle', 'wb') as f:
-#    pickle.dump(sentences, f)
-    
+sentences = data["titles"].fillna("DUMMY_VALUE").values
 tokenizer = Tokenizer(num_words=22000)
 tokenizer.fit_on_texts(sentences)
 
@@ -68,8 +60,7 @@ def predict():
 
 
 	except AssertionError as error:
-		pass
-		#app.logger.error('API called for string: ' + n_str.decode("utf-8") + 'Error: '+ error)
+		app.logger.error('API called for string: ' + n_str.decode("utf-8") + 'Error: '+ error)
 
 
 

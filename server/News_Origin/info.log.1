@@ -1,0 +1,46 @@
+Exception on /pred [POST]
+Traceback (most recent call last):
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/pattern/web/__init__.py", line 541, in open
+    return urlopen(request)
+  File "/usr/lib/python3.6/urllib/request.py", line 223, in urlopen
+    return opener.open(url, data, timeout)
+  File "/usr/lib/python3.6/urllib/request.py", line 532, in open
+    response = meth(req, response)
+  File "/usr/lib/python3.6/urllib/request.py", line 642, in http_response
+    'http', request, response, code, msg, hdrs)
+  File "/usr/lib/python3.6/urllib/request.py", line 570, in error
+    return self._call_chain(*args)
+  File "/usr/lib/python3.6/urllib/request.py", line 504, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.6/urllib/request.py", line 650, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/media/pranav/Lemon/code2/gsoc/social-street-smart-api/server/News_Origin/origin_api/routes.py", line 29, in predict
+    domains = sc.get_urls(queries)
+  File "/media/pranav/Lemon/code2/gsoc/social-street-smart-api/server/News_Origin/origin_api/origin_analyze.py", line 130, in get_urls
+    results = self.engine.search(q)
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/pattern/web/__init__.py", line 1283, in search
+    data = url.download(cached=cached, **kwargs)
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/pattern/web/__init__.py", line 603, in download
+    data = self.open(timeout, proxy, user_agent, referrer, authentication).read()
+  File "/media/pranav/Lemon/venvs/py36/lib/python3.6/site-packages/pattern/web/__init__.py", line 546, in open
+    raise HTTP400BadRequest(src=e, url=url)
+pattern.web.HTTP400BadRequest

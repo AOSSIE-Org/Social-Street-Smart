@@ -1,4 +1,3 @@
 {
-    "python.pythonPath": "/home/pranav/.pyenv/versions/3.6.8/bin/python",
-    "git.ignoreLimitWarning": true
+    "python.pythonPath": "/bin/python3.6"
 }
