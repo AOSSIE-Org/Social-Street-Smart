@@ -4,3 +4,5 @@ Flask==1.1.1
 flask_swagger_ui==3.20.9
 pattern
 nltk
+tensorflow==1.11.0
+Keras==
