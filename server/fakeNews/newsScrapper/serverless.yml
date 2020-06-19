@@ -1,0 +1,104 @@
+service: serverless-rest-api-with-dynamodb
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: python3.6
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
+custom:
+  pythonRequirements:
+    packRequirements: true
+    dockerizePip: non-linux
+    slim: true
+    # layer: true
+    # noDeploy:
+    #   - boto3
+    #   - botocore
+    #   - docutils
+    #   - jmespath
+    #   - pip
+    #   - python-dateutil
+    #   - s3transfer
+    #   - setuptools
+    #   - six
+    #   - tensorboard
+    #   - pytest
+    #   - tensorflow
+    #   - tqdm
+    #   - zappa
+    #   - pytest
+    #   - scipy
+    #   - Keras
+
+
+functions:
+  create:
+    handler: todos/create.create
+    timeout: 300
+
+  list:
+    handler: todos/list.list
+    events:
+      - http:
+          path: todos/show
+          method: get
+          cors: true
+
+  # get:
+  #   handler: todos/get.get
+  #   events:
+  #     - http:
+  #         path: todos/{id}
+  #         method: get
+  #         cors: true
+
+  # update:
+  #   handler: todos/update.update
+  #   events:
+  #     - http:
+  #         path: todos/{id}
+  #         method: put
+  #         cors: true
+
+  # delete:
+  #   handler: todos/delete.delete
+  #   events:
+  #     - http:
+  #         path: todos/{id}
+  #         method: delete
+  #         cors: true
+
+resources:
+  Resources:
+    TodosDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+
+plugins:
+  - serverless-python-requirements
