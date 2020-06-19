@@ -36,8 +36,7 @@ def scrape_theWire(wire_url="https://thewire.in/"):
 
 
 def getNewsDetails():
-    # news_url_li= scrape_theHindu()+ scrape_theWire()
-    news_url_li= scrape_theHindu()
+    news_url_li= scrape_theHindu()+ scrape_theWire()
 
     res_list= []
     for url in news_url_li:
