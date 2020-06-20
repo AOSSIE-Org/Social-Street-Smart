@@ -41,14 +41,17 @@ def getNewsDetails():
     res_list= []
     for url in news_url_li:
         # print(url)
-        x= getNews(url)
-        dic= {
-            "id" : hashlib.md5(bytes(url, 'utf-8')).hexdigest(), # Unique ID for each database entry,
-            "link": url,
-            "content":  x['title']+ x['description'],
-            "source": x['source_domain'],
-            # "dateTime" : x["date_publish"]
-        }
-        print(dic["id"])
-        res_list.append(dic)
+        try:
+            x = getNews(url)
+            dic= {
+                "id" : hashlib.md5(bytes(url, 'utf-8')).hexdigest(), # Unique ID for each database entry,
+                "link": url,
+                "content":  x['title']+ x['description'],
+                "source": x['source_domain'],
+                # "dateTime" : x["date_publish"]
+            }
+            print(dic["id"])
+            res_list.append(dic)
+        except:
+            pass
     return res_list
