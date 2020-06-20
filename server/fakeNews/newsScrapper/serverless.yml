@@ -48,7 +48,6 @@ functions:
   create:
     handler: todos/create.create
     timeout: 600
-    
 
   list:
     handler: todos/list.list
