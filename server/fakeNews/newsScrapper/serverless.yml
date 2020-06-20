@@ -47,7 +47,7 @@ custom:
 functions:
   create:
     handler: todos/create.create
-    timeout: 300
+    timeout: 600
 
   list:
     handler: todos/list.list
