@@ -1,4 +1,4 @@
-service: serverless-rest-api-with-dynamodb
+service: fakeNewsScrapper
 
 frameworkVersion: ">=1.1.0 <2.0.0"
 
@@ -6,7 +6,7 @@ provider:
   name: aws
   runtime: python3.6
   environment:
-    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    DYNAMODB_TABLE: serverless-rest-api-with-dynamodb-dev
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -16,7 +16,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+      Resource: "arn:aws:dynamodb:us-east-1:785964984447:table/serverless-rest-api-with-dynamodb-dev"
 
 custom:
   pythonRequirements:
@@ -48,15 +48,22 @@ functions:
   create:
     handler: todos/create.create
     timeout: 600
+    
 
   list:
     handler: todos/list.list
     events:
       - http:
-          path: todos/show
+          path: fakenews/show
           method: get
           cors: true
-
+  getNews:  
+    handler: todos/getNews.getNews
+    events:
+      - http:
+          path: fakenews/getNews/{url}
+          method: get
+          cors: true
   # get:
   #   handler: todos/get.get
   #   events:
@@ -82,23 +89,23 @@ functions:
   #         cors: true
 
 resources:
-  Resources:
-    TodosDynamoDbTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
-      Properties:
-        AttributeDefinitions:
-          -
-            AttributeName: id
-            AttributeType: S
-        KeySchema:
-          -
-            AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:provider.environment.DYNAMODB_TABLE}
+  # Resources:
+  #   TodosDynamoDbTable:
+  #     Type: 'AWS::DynamoDB::Table'
+  #     DeletionPolicy: Retain
+  #     Properties:
+  #       AttributeDefinitions:
+  #         -
+  #           AttributeName: id
+  #           AttributeType: S
+  #       KeySchema:
+  #         -
+  #           AttributeName: id
+  #           KeyType: HASH
+  #       ProvisionedThroughput:
+  #         ReadCapacityUnits: 1
+  #         WriteCapacityUnits: 1
+  #       TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
 plugins:
   - serverless-python-requirements
