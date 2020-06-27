@@ -49,7 +49,7 @@ def getNews(url):
 
 def getNewsContent(reqURL):
     # newsPost= allnewsDB.query.get(reqURL)
-    print("CHECKING")
+    # print("CHECKING")
     newsPost = None
     # try:
     #     newsPost= allTable.get_item(
@@ -93,6 +93,28 @@ def get_prediction(h,b):
 
     return class_
 
+
+def social_query(query):
+    # findDB= tweetCache.query.get(query['tweetID'])
+    findDB= None
+    result= "unknown"
+    # print(query)
+
+    if findDB== None: # result not found in DB
+        query_content = query['content']
+        allDBEntries = authTable.scan()
+        for news in allDBEntries['Items']:
+            # print(news)
+            pred= get_prediction(query_content,news['content'])
+            if pred== "disagree":
+                result= "fake"
+                break
+            elif pred== "agree":
+                result= "genuine"
+                break
+        
+    return result
+
 def newsWeb_query(query):
     # findDB= newsCache.query.get(query['link'])
     findDB = None
@@ -100,10 +122,10 @@ def newsWeb_query(query):
     if findDB== None: # result not found in DB
         query_content = query['description']
         allDBEntries = authTable.scan()
-
         # allauthNews= authenticNewsDB.query.all() #find in db list
         for news in allDBEntries['Items']:
             # news= news.serialize()
+            # print(news)
             pred= get_prediction(query_content,news['content'])
             if pred== "disagree":
                 result= "fake"
@@ -128,10 +150,10 @@ def predict():
     query_body= query['body']
     query_source= query['source']
     result= 'Could not verify / find the source of the query'
-#     # if query_source== "FB" :
-#     #     result= fb_query(query_body)
-#     # elif query_source == "Twitter":
-#     #     result = twitter_query(query_body)
+    if query_source== "FB" :
+        result= social_query(query_body)
+    if query_source == "Twitter":
+        result = social_query(query_body)
     if query_source == "newsWeb":
         query_body= getNewsContent(query_body['link'])
         result = newsWeb_query(query_body)
