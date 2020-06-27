@@ -1,0 +1,109 @@
+service: fakeNewsML
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: python3.6
+  environment:
+    # DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    AUTH_TABLE: serverless-rest-api-with-dynamodb-dev
+    ALL_TABLE: fakeNews-Auth-Table
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: 
+        - "arn:aws:dynamodb:us-east-1:785964984447:table/serverless-rest-api-with-dynamodb-dev"
+        - "arn:aws:dynamodb:us-east-1:785964984447:table/AuthFakeNews"
+
+
+
+custom:
+  wsgi:
+    app: application.application
+  pythonRequirements:
+    # useDownloadCache: false
+    # useStaticCache: false
+    packRequirements: false
+    # dockerImage: ubuntu:20.04
+    dockerizePip: non-linux
+    # dockerFile: ./tflite.dockerfile
+    slim: true
+    slimPatterns:
+      - '**/*.egg-info*'
+    layer: false
+    noDeploy:
+      - boto3
+      - botocore
+      - docutils
+      - jmespath
+      - pip
+      # - nltk
+      - s3transfer
+      - setuptools
+      # - tqdm
+      - zappa
+      - pytest
+      # - numpy
+      # - numpy.libs
+      - regex
+functions:
+  app:
+    handler: wsgi.handler
+    layers:
+      # - { Ref: PythonRequirementsLambdaLayer }
+      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_11_keras:3
+      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_8_keras:3
+      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_keras:1
+    timeout: 300
+    memory: 2048
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+
+
+resources:
+  Resources:
+    # TodosDynamoDbTable:
+    #   Type: 'AWS::DynamoDB::Table'
+    #   DeletionPolicy: Retain
+    #   Properties:
+    #     AttributeDefinitions:
+    #       -
+    #         AttributeName: id
+    #         AttributeType: S
+    #     KeySchema:
+    #       -
+    #         AttributeName: id
+    #         KeyType: HASH
+    #     ProvisionedThroughput:
+    #       ReadCapacityUnits: 1
+    #       WriteCapacityUnits: 1
+    #     TableName: serverless-rest-api-with-dynamodb-dev
+    # AuthTable:
+    #   Type: 'AWS::DynamoDB::Table'
+    #   DeletionPolicy: Retain
+    #   Properties:
+    #     AttributeDefinitions:
+    #       -
+    #         AttributeName: id
+    #         AttributeType: S
+    #     KeySchema:
+    #       -
+    #         AttributeName: id
+    #         KeyType: HASH
+    #     ProvisionedThroughput:
+    #       ReadCapacityUnits: 5
+    #       WriteCapacityUnits: 5
+    #     TableName: fakeNews-Auth-Table
+
+
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
