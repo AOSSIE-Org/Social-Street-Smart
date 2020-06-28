@@ -67,10 +67,9 @@ def getNewsContent(reqURL):
         newsPost = x
     else:
         print("found in db")
-    # newsPost= newsPost.serialize()
-    # newsPost = newsPost['description']
+    
     print(newsPost)
-    # return json.dumps(newsPost['Item'], cls=decimalencoder.DecimalEncoder)
+    
     return newsPost
 
 def get_prediction(h,b):

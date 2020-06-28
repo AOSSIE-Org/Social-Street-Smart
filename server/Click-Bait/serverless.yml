@@ -1,6 +1,6 @@
 # serverless.yml
 
-service: sclickbait-aossie
+service: clickbait-aossie-dev-app
 
 plugins:
   - serverless-python-requirements
@@ -32,6 +32,7 @@ custom:
       - pytest
       - scipy
       - Keras
+      - numpy
 
 provider:
   name: aws
