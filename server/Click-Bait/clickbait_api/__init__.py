@@ -1,5 +1,6 @@
 from flask import Flask
 import os
+import numpy as np
 from flask_cors import CORS, cross_origin
 #import logging
 #from logging.handlers import RotatingFileHandler
