@@ -59,7 +59,7 @@
     "AppLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/sclickbait-aossie-dev-app"
+        "LogGroupName": "/aws/lambda/clickbait-aossie-dev-app-dev-app"
       }
     },
     "IamRoleLambdaExecution": {
@@ -87,7 +87,7 @@
               "Fn::Join": [
                 "-",
                 [
-                  "sclickbait-aossie",
+                  "clickbait-aossie-dev-app",
                   "dev",
                   "lambda"
                 ]
@@ -104,7 +104,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sclickbait-aossie-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/clickbait-aossie-dev-app-dev*:*"
                     }
                   ]
                 },
@@ -115,7 +115,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/sclickbait-aossie-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/clickbait-aossie-dev-app-dev*:*:*"
                     }
                   ]
                 }
@@ -128,7 +128,7 @@
           "Fn::Join": [
             "-",
             [
-              "sclickbait-aossie",
+              "clickbait-aossie-dev-app",
               "dev",
               {
                 "Ref": "AWS::Region"
@@ -146,9 +146,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/sclickbait-aossie/dev/1592318734685-2020-06-16T14:45:34.685Z/sclickbait-aossie.zip"
+          "S3Key": "serverless/clickbait-aossie-dev-app/dev/1592828664980-2020-06-22T12:24:24.980Z/clickbait-aossie-dev-app.zip"
         },
-        "FunctionName": "sclickbait-aossie-dev-app",
+        "FunctionName": "clickbait-aossie-dev-app-dev-app",
         "Handler": "wsgi_handler.handler",
         "MemorySize": 1024,
         "Role": {
@@ -167,20 +167,20 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersiona6JtyPj9HpX7dC6FfNldrIdScO4A6WvWXPgQBGk9rM": {
+    "AppLambdaVersionwl13NWMeMKiM1gSog49P0vWnTC9RGFn6wy7LmF6pU": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "nBuIxgHFXmCgSF1+MMV3EBk8Z6r5ZGkPNOUmd6YhwO8="
+        "CodeSha256": "ECruRaK/XVU0xJrmzC//uISoh/nzwCUbXLyuYH3eH4A="
       }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-sclickbait-aossie",
+        "Name": "dev-clickbait-aossie-dev-app",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -293,7 +293,7 @@
         "MethodResponses": []
       }
     },
-    "ApiGatewayDeployment1592318731086": {
+    "ApiGatewayDeployment1592828659387": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -353,7 +353,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersiona6JtyPj9HpX7dC6FfNldrIdScO4A6WvWXPgQBGk9rM"
+        "Ref": "AppLambdaVersionwl13NWMeMKiM1gSog49P0vWnTC9RGFn6wy7LmF6pU"
       }
     },
     "ServiceEndpoint": {
