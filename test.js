@@ -8,6 +8,10 @@ let optionsPage = null;
 let className = "CB_twitter";
 let extensionID = "";
 
+// This script uses long wait times due to the APIs being hosted on AWS Lambda.
+// If the functions haven't been invoked in a long duration, their state becomes "cold"
+// A fresh invoke then takes a long time to warm the funtion up for the first time
+
 describe('Extension Test', function(){
     
     this.timeout(100000);
@@ -17,7 +21,10 @@ describe('Extension Test', function(){
 
     // className = ["CB_twitter", "CB_reddit"];
     // className = "CB_twitter";
-    twittercb()
+    twittercb();
+    twitterhs();
+    redditcb();
+
     // test1();
     // test1();
 
@@ -76,7 +83,7 @@ async function twittercb(){
             let newUrl = "https://twitter.com/BuzzFeed/status/1269750893009870848"
             // await testingPage.waitFor(2000)
             await testingPage.goto(newUrl)
-            await testingPage.waitFor(3000);
+            await testingPage.waitFor(7000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
             // console.log(CB)
@@ -95,4 +102,115 @@ async function twittercb(){
         })
     });
 };
+
+
+async function twitterhs(){
+    describe ('Twitter HS' , async function(){
+        it('Testing...', async function(){
+            className = "HS_twitter";
+            // Enable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+            // Test feature
+            let newUrl = "https://twitter.com/search?q=fuck%20&src=typed_query"
+            // await testingPage.waitFor(2000)
+            await testingPage.goto(newUrl)
+            await testingPage.waitFor(7000);
+
+            const CB = await testingPage.$eval('.SSS', el => el.textContent)
+            let t = CB.includes("TOXIC")
+            assert.equal(t, true);
+
+            // Disable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+        })
+    });
+};
+
+async function redditcb(){
+    describe ('Reddit CB' , async function(){
+        it('Testing...', async function(){
+            className = "CB_reddit";
+            // Enable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+            // Test feature
+            let newUrl = "https://www.reddit.com/r/buzzfeed/top/?t=all"
+            // await testingPage.waitFor(2000)
+            await testingPage.goto(newUrl)
+            await testingPage.waitFor(7000);
+
+            const CB = await testingPage.$eval('.SSS', el => el.textContent)
+            let t = CB.includes("Clickbait")
+            assert.equal(t, true);
+
+            // Disable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+        })
+    });
+};
+
+async function reddiths(){
+    describe ('Reddit HS' , async function(){
+        it('Testing...', async function(){
+            className = "HS_reddit";
+            // Enable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+            // Test feature
+            let newUrl = "https://www.reddit.com/r/buzzfeed/top/?t=all"
+            // await testingPage.waitFor(2000)
+            await testingPage.goto(newUrl)
+            await testingPage.waitFor(7000);
+
+            const CB = await testingPage.$eval('.SSS', el => el.textContent)
+            let t = CB.includes("TOXIC")
+            assert.equal(t, true);
+
+            // Disable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+        })
+    });
+};
+
+
 
