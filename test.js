@@ -22,9 +22,9 @@ describe('Extension Test', function(){
         await boot();
     });
 
-    // twittercb();
-    // twitterhs();
-    // redditcb();
+    twittercb();
+    twitterhs();
+    redditcb();
     facebookcb()
     
     after(async function(){
