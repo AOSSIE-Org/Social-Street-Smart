@@ -24,10 +24,11 @@
     "husky": "^2.4.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "lint-staged": "^8.2.1",
     "mocha": "^7.2.0",
     "puppeteer": "^3.3.0",
-    "chai": "^4.2.0",
-    "lint-staged": "^8.2.1"
+    "puppeteer-autoscroll-down": "^0.1.5"
   },
   "husky": {
     "hooks": {

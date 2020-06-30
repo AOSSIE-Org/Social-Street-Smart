@@ -1,9 +1,12 @@
 const puppeteer = require('puppeteer');
+const scrollPageToBottom = require('puppeteer-autoscroll-down')
+// import scrollPageToBottom as scrollPageToBottom  
 var assert = require('assert');
 const extensionPath = './lib'
 let browser = null;
 let testingPage = null;
 let optionsPage = null;
+
 // let optionsUrl = "chrome-extension://kgofljnbemgcgneaigebncpcmancipeg/views/settings.html";
 let className = "CB_twitter";
 let extensionID = "";
@@ -19,17 +22,11 @@ describe('Extension Test', function(){
         await boot();
     });
 
-    // className = ["CB_twitter", "CB_reddit"];
-    // className = "CB_twitter";
-    twittercb();
-    twitterhs();
-    redditcb();
-
-    // test1();
-    // test1();
-
-
-
+    // twittercb();
+    // twitterhs();
+    // redditcb();
+    facebookcb()
+    
     after(async function(){
         await browser.close()
     });
@@ -213,4 +210,39 @@ async function reddiths(){
 };
 
 
+async function facebookcb(){
+    describe ('Facebook CB' , async function(){
+        it('Testing...', async function(){
+            className = "CB_facebook";
+            // Enable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
 
+            // Test feature
+            let newUrl = "https://www.facebook.com/BuzzFeed/"
+            // await testingPage.waitFor(2000)
+            await testingPage.goto(newUrl)
+            const lastPosition = await scrollPageToBottom(testingPage)
+            await testingPage.waitFor(7000);
+
+            const CB = await testingPage.$eval('.SSS', el => el.textContent)
+            let t = CB.includes("Clickbait")
+            assert.equal(t, true);
+
+            // Disable feature in extension settings
+            optionsPage = await browser.newPage();
+            await optionsPage.goto("chrome-extension://"+ extensionID +"/views/settings.html")
+            toggle = await optionsPage.$('.' + className, el => el.outerHTML);
+            await toggle.click();
+            saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
+            await optionsPage.waitFor(2000)
+            await saveSettings.click();
+
+        })
+    });
+};
