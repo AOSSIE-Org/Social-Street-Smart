@@ -25,7 +25,8 @@ describe('Extension Test', function(){
     twittercb();
     twitterhs();
     redditcb();
-    facebookcb()
+    reddiths();
+    facebookcb();
     
     after(async function(){
         await browser.close()
@@ -187,9 +188,10 @@ async function reddiths(){
             await saveSettings.click();
 
             // Test feature
-            let newUrl = "https://www.reddit.com/r/buzzfeed/top/?t=all"
+            let newUrl = "https://www.reddit.com/search/?q=fuck"
             // await testingPage.waitFor(2000)
             await testingPage.goto(newUrl)
+            const lastPosition = await scrollPageToBottom(testingPage)
             await testingPage.waitFor(7000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
