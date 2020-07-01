@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const scrollPageToBottom = require('puppeteer-autoscroll-down')
-// import scrollPageToBottom as scrollPageToBottom  
+const fetch = require("node-fetch");
 var assert = require('assert');
 const extensionPath = './lib'
 let browser = null;
@@ -21,7 +21,8 @@ describe('Extension Test', function(){
     before(async function() {
         await boot();
     });
-
+    warmUpCB();
+    warmUpHS();
     twittercb();
     twitterhs();
     redditcb();
@@ -63,6 +64,40 @@ async function boot() {
 
 
 }
+
+async function warmUpCB(){
+    describe ('Warming Up the Clickbait API' , async function(){
+        it('Checking if the API is live...', async function(){
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+              };
+              
+              fetch("https://17u8uun009.execute-api.us-east-1.amazonaws.com/dev/pred?text=hi", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log())
+                .catch(error => console.log('error', error));
+        })
+    });
+};
+
+async function warmUpHS(){
+    describe ('Warming Up the Hatespeech API' , async function(){
+        it('Checking if the API is live...', async function(){
+            var requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+              };
+              
+              fetch("https://wpxmafpmjf.execute-api.us-east-1.amazonaws.com/dev/pred?text=hi", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log())
+                .catch(error => console.log('error', error));
+        })
+    });
+};
+
+
 
 async function twittercb(){
     describe ('Twitter CB' , async function(){
