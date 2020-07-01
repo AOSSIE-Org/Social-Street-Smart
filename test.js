@@ -23,10 +23,10 @@ describe('Extension Test', function(){
     });
 
     twittercb();
-    // twitterhs();
-    // redditcb();
-    // reddiths();
-    // facebookcb();
+    twitterhs();
+    redditcb();
+    reddiths();
+    facebookcb();
     
     after(async function(){
         await browser.close()
