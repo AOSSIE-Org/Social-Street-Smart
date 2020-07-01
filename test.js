@@ -23,10 +23,10 @@ describe('Extension Test', function(){
     });
 
     twittercb();
-    twitterhs();
-    redditcb();
-    reddiths();
-    facebookcb();
+    // twitterhs();
+    // redditcb();
+    // reddiths();
+    // facebookcb();
     
     after(async function(){
         await browser.close()
@@ -79,8 +79,10 @@ async function twittercb(){
 
             // Test feature
             let newUrl = "https://twitter.com/BuzzFeed/status/1269750893009870848"
+            // let newUrl = "https://twitter.com/BuzzFeed"
             // await testingPage.waitFor(2000)
             await testingPage.goto(newUrl)
+            const lastPosition = await scrollPageToBottom(testingPage)
             await testingPage.waitFor(7000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
