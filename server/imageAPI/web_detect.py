@@ -3,6 +3,9 @@ import io
 
 from google.cloud import vision
 from google.cloud.vision import types
+import os
+
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/pranav/diiAPIKeys.json"
 
 
 def annotate(path):
