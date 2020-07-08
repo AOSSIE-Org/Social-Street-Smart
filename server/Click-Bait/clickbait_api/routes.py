@@ -8,6 +8,12 @@ from tensorflow.keras import backend as K
 from clickbait_api import app
 import tensorflow as tf
 
+from tensorflow.python.keras.backend import set_session
+from tensorflow.python.keras.models import load_model
+
+#tf_config = some_custom_config
+session = tf.Session()
+
 
 data = pd.read_csv("clickbait_api/resources/final_new.csv")
 
@@ -26,6 +32,7 @@ def load_model():
 	loaded_model = model_from_json(loaded_model)
 	loaded_model.load_weights("clickbait_api/resources/lstm_clickBait_new.h5")
 
+set_session(session)
 load_model()
 
 @app.route('/')
@@ -63,9 +70,9 @@ def score(n_str):
 	print (n_str)
 	new_string = tokenizer.texts_to_sequences(n_str)
 	new_string = pad_sequences(new_string, maxlen=200)
-
-	with graph.as_default():
-  		prediction=loaded_model.predict(new_string)
+	with session.as_default():
+		with graph.as_default():
+			prediction=loaded_model.predict(new_string)
 
 	#K.clear_session()
 	#prediction = loaded_model.predict(new_string)

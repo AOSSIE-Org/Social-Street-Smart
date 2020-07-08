@@ -17,12 +17,12 @@ from pattern.graph import Graph
 import itertools
 import sys
 
-#nltk.download('punkt')
-#nltk.download('wordnet')
-#nltk.download('stopwords')
-#nltk.download('averaged_perceptron_tagger')
-#nltk.download('maxent_ne_chunker')
-#nltk.download('words')
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
 
 
 
@@ -35,7 +35,7 @@ class SourceChecker(object):
 		self.text = text
 		self.language = language
 		self.cat_dict = defaultdict(list)
-		key = ''
+		key = 'AIzaSyCMcQKjtDcLJ7lVXRyoSiO0MwDBkztyi84'
 		self.engine = Google(license=key, throttle=0.8, language=None)
 
 	def get_queries(self):

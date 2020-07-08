@@ -1,0 +1,26 @@
+image: python:3.6.10
+
+cache:
+  paths:
+    - .pip
+
+before_script:
+  - mkdir -p .pip
+  - pip install -U pip
+  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
+  
+  
+stages:
+    - test
+
+h8test:
+    stage: test
+    script:
+        - cd ./server/Hate_Speech/
+        - pytest
+        - cd ..
+        - cd Click-Bait
+        - pytest
+        # - cd ..
+        # - cd News_Origin
+        # - pytest
