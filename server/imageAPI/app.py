@@ -35,18 +35,23 @@ def lookup():
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/GoogleAppCreds.json"
 
         enc_url = request.args.get('link')
-        url = base64.b64decode(enc_url)
-        res = imgL.report(imgL.annotate(str(url)[2:-1]))
+        # url = base64.b64decode(enc_url)
+        url = enc_url
+        # res = imgL.report(imgL.annotate(str(url)[2:-1]))
+        res = imgL.report(imgL.annotate(str(url)))
         # print(res, file=sys.stderr)
         # try:
-        for iURL in res:
-            try:
-                r = requests.get(iURL['url'], headers=headers)
-                html = bs4.BeautifulSoup(r.text, features="html.parser")
-                title = html.title.text
-                print(title, file = sys.stderr)
-            except: 
-                print("ERROR RETREIVING TITLE: " + iURL['url'])
+        # for iURL in res:
+            # try:
+            #     r = requests.get(iURL['url'], headers=headers)
+            #     html = bs4.BeautifulSoup(r.text, features="html.parser")
+            #     title = html.title.text
+            #     iURL['title'] = title;
+            #     print(title, file = sys.stderr)
+            # except: 
+            #     print("ERROR RETREIVING TITLE: " + iURL['url'])
+            #     iURL['title'] = "Err.";
+
         os.remove("/tmp/GoogleAppCreds.json")
         return jsonify(res), 200
 
