@@ -27,30 +27,27 @@ def lookup():
 
         # Take creds from form data and convert to json 
         # Then set them as an environment variable
-        creds = request.form.get('creds')
+        enc_url = request.args.get('link')
+        # print(enc_url, file = sys.stderr)
+
+        creds = request.args.get('creds')
+        
+        # print(creds, file = sys.stderr)
+        creds = base64.b64decode(creds)
+        # print(creds, file = sys.stderr)
+        
+        creds = creds.decode("utf-8") 
+        
         creds = json.loads(creds)
         with open('/tmp/GoogleAppCreds.json', 'w') as outfile:
             json.dump(creds, outfile)
 
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/tmp/GoogleAppCreds.json"
 
-        enc_url = request.args.get('link')
-        # url = base64.b64decode(enc_url)
-        url = enc_url
-        # res = imgL.report(imgL.annotate(str(url)[2:-1]))
+        url = request.args.get('link')
+        # url = enc_url
         res = imgL.report(imgL.annotate(str(url)))
-        # print(res, file=sys.stderr)
-        # try:
-        # for iURL in res:
-            # try:
-            #     r = requests.get(iURL['url'], headers=headers)
-            #     html = bs4.BeautifulSoup(r.text, features="html.parser")
-            #     title = html.title.text
-            #     iURL['title'] = title;
-            #     print(title, file = sys.stderr)
-            # except: 
-            #     print("ERROR RETREIVING TITLE: " + iURL['url'])
-            #     iURL['title'] = "Err.";
+
 
         os.remove("/tmp/GoogleAppCreds.json")
         return jsonify(res), 200
@@ -59,32 +56,3 @@ def lookup():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-# def annotate(path):
-#     """Returns web annotations given the path to an image."""
-#     client = vision.ImageAnnotatorClient()
-
-#     if path.startswith('http') or path.startswith('gs:'):
-#         image = types.Image()
-#         image.source.image_uri = path
-
-#     else:
-#         with io.open(path, 'rb') as image_file:
-#             content = image_file.read()
-
-#         image = types.Image(content=content)
-
-#     web_detection = client.web_detection(image=image).web_detection
-
-#     return web_detection
-
-
-# def report(annotations):
-#     """Prints detected features in the provided web annotations."""
-#     urls = []
-#     for page in annotations.pages_with_matching_images:
-#         urls.append({"url" : page.url})
-    
-#     return urls

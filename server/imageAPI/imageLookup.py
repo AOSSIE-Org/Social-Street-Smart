@@ -32,17 +32,17 @@ def report(annotations):
     urls = []
     for page in annotations.pages_with_matching_images:
         urls.append({"url" : page.url})
-        # urls.append({"title" : " "})
-        try:
-            r = requests.get(page.url, headers=headers)
-            html = bs4.BeautifulSoup(r.text, features="html.parser")
-            title = html.title.text
-            # iURL['title'] = title;
-            urls.append({"title" : title})
-            # print(title, file = sys.stderr)
-        except: 
-            # print("ERROR RETREIVING TITLE: " + iURL['url'])
-            # iURL['title'] = "Err.";
-            urls.append({"title" : " "})
+        urls.append({"title" : " "})
+        # try:
+        #     r = requests.get(page.url, headers=headers)
+        #     html = bs4.BeautifulSoup(r.text, features="html.parser")
+        #     title = html.title.text
+        #     # iURL['title'] = title;
+        #     urls.append({"title" : title})
+        #     # print(title, file = sys.stderr)
+        # except: 
+        #     # print("ERROR RETREIVING TITLE: " + iURL['url'])
+        #     # iURL['title'] = "Err.";
+        #     urls.append({"title" : " "})
     
     return urls
