@@ -192,6 +192,24 @@
 	 margin-left: 1rem;
 }
 
+ .browse {
+	 border: 0;
+	 background: white;
+	 color: #9c88ff;
+	 text-transform: uppercase;
+	 letter-spacing: 0.05em;
+	 font-weight: 700;
+	 border-radius: 0.4rem;
+	 padding: 0.6rem 1.4rem;
+	 font-size: 1.4rem;
+	 line-height: 1;
+	 cursor: pointer;
+}
+ .browse:hover, .browse:focus {
+	 background: #4B0082;
+	 color: white;
+	 transition: all 300ms ease;
+}
 
  .link--dribbble {
 	 color: #ea4c89;
