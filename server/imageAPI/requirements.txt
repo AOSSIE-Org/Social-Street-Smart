@@ -1,3 +1,4 @@
+beautifulsoup4==4.9.1
 cachetools==4.1.1
 certifi==2020.6.20
 chardet==3.0.4
@@ -19,5 +20,6 @@ pytz==2020.1
 requests==2.24.0
 rsa==4.6
 six==1.15.0
+soupsieve==2.0.1
 urllib3==1.25.9
 Werkzeug==1.0.1
