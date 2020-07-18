@@ -216,10 +216,34 @@
       "all_frames" : false
       
 
+    },
+    {
+      "matches": [
+        "http://*/diiResult*",
+        "https://*/diiResult*"
+      ],
+      "js": [
+        "scripts/content/dii/bootstrap.min.js",
+        "scripts/content/dii/jquery.min.js",
+        "scripts/content/dii/diiResult.js"
+      ],
+      "css":[
+        "scripts/content/dii/bootstrap.min.css"
+      ],
+      "run_at": "document_end"
+
     }
   ],
 "web_accessible_resources": [
-  "common/profanity_list_en.json"
+  "common/profanity_list_en.json",
+  "/scripts/content/dii/modal.html",
+  "scripts/content/dii/modal.html",
+  "scripts/content/dii/modal.js",
+  "scripts/content/dii/jquery.min.js",
+  "scripts/content/dii/bootstrap.min.js",
+  "scripts/content/dii/bootstrap.min.js.map",
+  "scripts/content/dii/bootstrap.min.css"
+
 ],
 
   "permissions": [
