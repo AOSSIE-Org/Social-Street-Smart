@@ -23,8 +23,11 @@ def predict():
 
 	if request.method == 'GET':
 		text = request.args.get('text')
+		key = request.args.get('key')
 	language = 'english'
-	sc = SourceChecker(text, language)
+	if len(key) != 39:
+		key = "AIzaSyCMcQKjtDcLJ7lVXRyoSiO0MwDBkztyi84"
+	sc = SourceChecker(text, language, key)
 	queries = sc.get_queries()
 	domains = sc.get_urls(queries)
 	sc.load_domains()

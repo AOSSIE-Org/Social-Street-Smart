@@ -28,14 +28,14 @@ nltk.data.path = ['origin_api/nltk_data']
 
 class SourceChecker(object):
 
-	def __init__(self, text, language, max_queries = 8, span = 8, threshold = .7):
+	def __init__(self, text, language, key, max_queries = 8, span = 8, threshold = .7):
 		self.max_queries = max_queries
 		self.span = span
 		self.threshold = threshold
 		self.text = text
 		self.language = language
 		self.cat_dict = defaultdict(list)
-		key = 'AIzaSyCMcQKjtDcLJ7lVXRyoSiO0MwDBkztyi84'
+		# key = 'AIzaSyCMcQKjtDcLJ7lVXRyoSiO0MwDBkztyi84'
 		self.engine = Google(license=key, throttle=0.8, language=None)
 
 	def get_queries(self):
