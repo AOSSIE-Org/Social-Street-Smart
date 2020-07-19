@@ -247,7 +247,7 @@
 ],
 
   "permissions": [
-    "tabs","notifications","storage","contextMenus","http://13.233.115.232:8091/predict","http://18.221.117.28:7001/predict", "http://127.0.0.1:5000/lookup/"
+    "tabs","notifications","storage","contextMenus","http://13.233.115.232:8091/predict","http://18.221.117.28:7001/predict", "http://127.0.0.1:5000/lookup/", "http://127.0.0.1:5000/pred"
   ],
   "icons" : {
     "36" : "assets/icon/36.png",
