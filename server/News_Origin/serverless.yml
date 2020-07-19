@@ -14,7 +14,7 @@ custom:
   wsgi:
     app: app.app
   pythonRequirements:
-    packRequirements: false
+    packRequirements: true
     dockerizePip: non-linux
     slim: true
     # layer: true
@@ -35,6 +35,8 @@ custom:
       - zappa
       - pytest
       - scipy
+      - scipy.libs
+      - flask_swagger_ui
       - Keras
       # - numpy
 
@@ -46,7 +48,7 @@ provider:
 
 functions:
   app:
-    handler: wsgi.handler
+    handler: wsgi_handler.handler
     layers:
       # - { Ref: PythonRequirementsLambdaLayer }
       # - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_11_keras:3
