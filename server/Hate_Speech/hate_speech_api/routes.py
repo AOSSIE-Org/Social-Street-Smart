@@ -1,6 +1,6 @@
 import pickle
 from keras.models import model_from_json
-import sys, os, re, csv, codecs, numpy as np, pandas as pd
+import sys, os, re, csv, codecs
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from flask import request, jsonify, json
@@ -9,10 +9,28 @@ from keras import backend as K
 import tensorflow as tf
 
 
-data = pd.read_csv("hate_speech_api/resources/train.csv")
-sentences = data["comment_text"].fillna("DUMMY_VALUE").values
-tokenizer = Tokenizer(num_words=22000)
-tokenizer.fit_on_texts(sentences)
+# data = pd.read_csv("hate_speech_api/resources/train.csv")
+# sentences = data["comment_text"].fillna("DUMMY_VALUE").values
+
+
+
+# data = pd.read_csv("hate_speech_api/resources/train.csv")
+
+# sentences = data["comment_text"].fillna("DUMMY_VALUE").values
+# print(type(sentences))
+# import pickle
+# with open('hate_speech_api/resources/sentences.pickle', 'rb') as f:
+# 	sentences= pickle.load(f)
+
+# with open('sentences.pickle', 'wb') as f:
+#    pickle.dump(sentences, f)
+    
+
+# tokenizer = Tokenizer(num_words=22000)
+# tokenizer.fit_on_texts(sentences)
+
+with open('hate_speech_api/resources/tokenizer.pickle', 'rb') as handle:
+    tokenizer = pickle.load(handle)
 
 graph = tf.get_default_graph()
 
@@ -27,6 +45,9 @@ def load_model():
 
 load_model()
 
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
 
 @app.route('/pred', methods=['GET','POST'])
 def predict():
@@ -45,7 +66,7 @@ def predict():
 		#print('Obscene:       {:.0%}'.format(predictions[0][2]))
 		predictions = predictions.tolist()
 		#print predictions
-		app.logger.info('API called for string: ' + (n_str.decode('utf-8')) +'. (returned): ' + str(predictions))
+		# app.logger.info('API called for string: ' + (n_str.decode('utf-8')) +'. (returned): ' + str(predictions))
 
 		return jsonify({'Toxic': predictions[0][0],
 						'Severe Toxic': predictions[0][1],
@@ -55,7 +76,8 @@ def predict():
 						'Identity Hate': predictions[0][5]}), 200
 
 	except AssertionError as error:
-		app.logger.error('API called for string: ' + (n_str.decode('utf-8')) + 'Error: '+ error)
+		pass
+		# app.logger.error('API called for string: ' + (n_str.decode('utf-8')) + 'Error: '+ error)
 
 
 
@@ -71,9 +93,3 @@ def score(n_str):
 	#K.clear_session()
 	#prediction = loaded_model.predict(new_string)
 	return prediction
-
-
-
-
-
-
