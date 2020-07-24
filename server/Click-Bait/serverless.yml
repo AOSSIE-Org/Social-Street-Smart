@@ -1,0 +1,53 @@
+# serverless.yml
+
+service: sclickbait-aossie
+
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+
+custom:
+  wsgi:
+    app: app.app
+  pythonRequirements:
+    packRequirements: false
+    dockerizePip: non-linux
+    slim: true
+    # layer: true
+    noDeploy:
+      - boto3
+      - botocore
+      - docutils
+      - jmespath
+      - pip
+      - python-dateutil
+      - s3transfer
+      - setuptools
+      - six
+      - tensorboard
+      - pytest
+      - tensorflow
+      - tqdm
+      - zappa
+      - pytest
+      - scipy
+      - Keras
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: us-east-1
+
+functions:
+  app:
+    handler: wsgi.handler
+    layers:
+      # - { Ref: PythonRequirementsLambdaLayer }
+      - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_11_keras:3
+      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_keras:1
+    timeout: 300
+    memory: 2048
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
