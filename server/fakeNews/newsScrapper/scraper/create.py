@@ -1,4 +1,4 @@
-from todos.news import getNewsDetails
+from scraper.news import getNewsDetails
 import json
 import logging
 import os

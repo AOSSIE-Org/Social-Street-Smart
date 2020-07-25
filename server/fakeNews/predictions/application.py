@@ -5,33 +5,24 @@ dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
 import json
 import decimalencoder
-
 from flask import Flask, request, jsonify
-# from flask_sqlalchemy import SQLAlchemy
-# from newsWebScrap import getNews
-#auth news scheduler
-# pip install apscheduler
 import time
 import atexit
 import hashlib
 import numpy as np
-# from News_Scrapper.authNS import authNewsScraper
-# from apscheduler.schedulers.background import BackgroundScheduler
-# scheduler = BackgroundScheduler()
-
 from ML.helperML import get_features, get_classes, loadLite
-# from News_Scrapper.newsWebScrap import getNews
+import requests
+import base64
+# DynamoDB Specific
+import boto3
+import os
 
 getNewsURL = 'https://0nb874owq6.execute-api.us-east-1.amazonaws.com/dev/fakenews/getNews/'
 
 interpreter= None
 # model= None
 application = Flask(__name__)
-import requests
-import base64
-# DynamoDB Specific
-import boto3
-import os
+
 dynamodb = boto3.resource('dynamodb')
 allTable = dynamodb.Table(os.environ['ALL_TABLE'])
 authTable = dynamodb.Table(os.environ['AUTH_TABLE'])
@@ -48,17 +39,7 @@ def getNews(url):
 
 
 def getNewsContent(reqURL):
-    # newsPost= allnewsDB.query.get(reqURL)
-    # print("CHECKING")
     newsPost = None
-    # try:
-    #     newsPost= allTable.get_item(
-    #         Key = {
-    #             'id' : hashlib.md5(bytes(reqURL, 'utf-8')).hexdigest() # MD5 of the URL is used as the id
-    #         }
-    #     )
-    # except:
-    #     newsPost = None
     if newsPost == None :
         # print("not found in db")
         x = getNews(reqURL)
@@ -132,10 +113,6 @@ def newsWeb_query(query):
             elif pred== "agree":
                 result= "genuine"
                 break
-        # resultCard= newsCache(link= query['link'], source= query['source'], dateTime= query['dateTime'], result= result)
-        # authTable.put_item(resultCard)
-    # else:
-        # result= findDB.serialize()['result']
     return result
 
 
@@ -169,7 +146,4 @@ def predict():
 interpreter = loadLite()
 
 if __name__=='__main__':
-    # only for API testing without API_manager 
-    # application.debug= False
-    # application.run(port= 8091, host="0.0.0.0")
     application.run()

@@ -1,5 +1,5 @@
 {
-  "name": "serverless-rest-api-with-dynamodb",
+  "name": "news-scrapper",
   "description": "",
   "version": "0.1.0",
   "dependencies": {},

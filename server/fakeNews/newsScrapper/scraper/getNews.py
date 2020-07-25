@@ -1,7 +1,7 @@
 import json
 import os
-from todos.newsWebScrap import getNews as news
-from todos import decimalencoder
+from scraper.newsWebScrap import getNews as news
+from scraper import decimalencoder
 import boto3
 import base64
 # dynamodb = boto3.resource('dynamodb')

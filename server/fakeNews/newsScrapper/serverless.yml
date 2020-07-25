@@ -23,89 +23,28 @@ custom:
     packRequirements: true
     dockerizePip: non-linux
     slim: true
-    # layer: true
-    # noDeploy:
-    #   - boto3
-    #   - botocore
-    #   - docutils
-    #   - jmespath
-    #   - pip
-    #   - python-dateutil
-    #   - s3transfer
-    #   - setuptools
-    #   - six
-    #   - tensorboard
-    #   - pytest
-    #   - tensorflow
-    #   - tqdm
-    #   - zappa
-    #   - pytest
-    #   - scipy
-    #   - Keras
-
 
 functions:
   create:
-    handler: todos/create.create
+    handler: scraper/create.create
     timeout: 600
-    
 
   list:
-    handler: todos/list.list
+    handler: scraper/list.list
     events:
       - http:
           path: fakenews/show
           method: get
           cors: true
   getNews:  
-    handler: todos/getNews.getNews
+    handler: scraper/getNews.getNews
     events:
       - http:
           path: fakenews/getNews/{url}
           method: get
           cors: true
-  # get:
-  #   handler: todos/get.get
-  #   events:
-  #     - http:
-  #         path: todos/{id}
-  #         method: get
-  #         cors: true
-
-  # update:
-  #   handler: todos/update.update
-  #   events:
-  #     - http:
-  #         path: todos/{id}
-  #         method: put
-  #         cors: true
-
-  # delete:
-  #   handler: todos/delete.delete
-  #   events:
-  #     - http:
-  #         path: todos/{id}
-  #         method: delete
-  #         cors: true
 
 resources:
-  # Resources:
-  #   TodosDynamoDbTable:
-  #     Type: 'AWS::DynamoDB::Table'
-  #     DeletionPolicy: Retain
-  #     Properties:
-  #       AttributeDefinitions:
-  #         -
-  #           AttributeName: id
-  #           AttributeType: S
-  #       KeySchema:
-  #         -
-  #           AttributeName: id
-  #           KeyType: HASH
-  #       ProvisionedThroughput:
-  #         ReadCapacityUnits: 1
-  #         WriteCapacityUnits: 1
-  #       TableName: ${self:provider.environment.DYNAMODB_TABLE}
 
 plugins:
   - serverless-python-requirements
