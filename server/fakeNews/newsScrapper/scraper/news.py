@@ -1,7 +1,7 @@
 import requests
 # from newsScrapeAPI import newsWebScrap
 # from newsScrapeAPI import app
-from todos.newsWebScrap import getNews
+from scraper.newsWebScrap import getNews
 from bs4 import BeautifulSoup
 import hashlib
 
