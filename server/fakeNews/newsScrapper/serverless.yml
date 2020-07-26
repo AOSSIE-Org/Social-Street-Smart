@@ -1,0 +1,50 @@
+service: fakeNewsScrapper
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: python3.6
+  environment:
+    DYNAMODB_TABLE: serverless-rest-api-with-dynamodb-dev
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:us-east-1:785964984447:table/serverless-rest-api-with-dynamodb-dev"
+
+custom:
+  pythonRequirements:
+    packRequirements: true
+    dockerizePip: non-linux
+    slim: true
+
+functions:
+  create:
+    handler: scraper/create.create
+    timeout: 600
+
+  list:
+    handler: scraper/list.list
+    events:
+      - http:
+          path: fakenews/show
+          method: get
+          cors: true
+  getNews:  
+    handler: scraper/getNews.getNews
+    events:
+      - http:
+          path: fakenews/getNews/{url}
+          method: get
+          cors: true
+
+resources:
+
+plugins:
+  - serverless-python-requirements
