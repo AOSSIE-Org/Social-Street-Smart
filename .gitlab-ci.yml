@@ -7,7 +7,7 @@ cache:
 before_script:
   - mkdir -p .pip
   - pip install -U pip
-  # - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
   - apt-get update
   - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
   - curl -sL https://deb.nodesource.com/setup_12.x | bash -
