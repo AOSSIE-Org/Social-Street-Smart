@@ -8,10 +8,13 @@ before_script:
   - mkdir -p .pip
   - pip install -U pip
   # - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
-  - sudo apt install nodejs
+  - apt-get update
+  - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
+  - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+  - apt -y --force-yes install nodejs
   - node -v
   - npm -v
-  # - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
   
   
 stages:
@@ -21,15 +24,16 @@ h8test:
     stage: test
     script:
         - cd ./server/Hate_Speech/
-        # - pytest
-        # - cd ..
-        # - cd Click-Bait
-        # - pytest
+        - pytest
+        - cd ..
+        - cd Click-Bait
+        - pytest
         # - cd ..
         # - cd News_Origin
         # - pytest
         - cd ..
         - cd fakeNews/predictions
-        # - chmod +x ./slsbg.sh
-        # - ./slsbg.sh
-        
+        - npm install -g serverless
+        - npm install serverless-wsgi serverless-python-requirements
+        - chmod +x ./slsbg.sh
+        - ./slsbg.sh
