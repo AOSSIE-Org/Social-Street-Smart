@@ -8,6 +8,7 @@ before_script:
   - mkdir -p .pip
   - pip install -U pip
   - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
   
   
 stages:
@@ -24,3 +25,7 @@ h8test:
         # - cd ..
         # - cd News_Origin
         # - pytest
+        - cd ..
+        - cd fakeNews/predictions
+        - chmod +x ./slsbg.sh
+        - ./slsbg.sh
