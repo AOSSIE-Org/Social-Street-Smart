@@ -7,8 +7,11 @@ cache:
 before_script:
   - mkdir -p .pip
   - pip install -U pip
-  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
-  - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
+  # - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
+  - sudo apt install nodejs
+  - node -v
+  - npm -v
+  # - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
   
   
 stages:
@@ -18,14 +21,15 @@ h8test:
     stage: test
     script:
         - cd ./server/Hate_Speech/
-        - pytest
-        - cd ..
-        - cd Click-Bait
-        - pytest
+        # - pytest
+        # - cd ..
+        # - cd Click-Bait
+        # - pytest
         # - cd ..
         # - cd News_Origin
         # - pytest
         - cd ..
         - cd fakeNews/predictions
-        - chmod +x ./slsbg.sh
-        - ./slsbg.sh
+        # - chmod +x ./slsbg.sh
+        # - ./slsbg.sh
+        
