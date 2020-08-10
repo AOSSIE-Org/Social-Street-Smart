@@ -1,5 +1,5 @@
-./**/node_modules/
-./**/.serverless/
-./**/__pycache__
-./.vscode
-
+**/.serverless
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/.vscode
