@@ -14,40 +14,43 @@ before_script:
   - apt -y --force-yes install nodejs
   - node -v
   - npm -v
+  - npm install -g serverless
   - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
   
 stages:
     - test
     - deploy
-APItest:
+
+HateSpeechTest:
     stage: test
     script:
         - cd ./server/Hate_Speech/
-        # - pytest
-        # - cd ..
-        # - cd Click-Bait
         - pytest
-        # - cd ..
-        # - cd News_Origin
-        # - pytest
-        - cd ..
-        - cd fakeNews/predictions
-        - npm install -g serverless
+
+ClickBaitTest:
+    stage: test
+    script:
+        - cd ./server/Click-Bait/
+        - pytest
+
+# NewsOriginTest:
+#     stage: test
+#     script:
+#         - cd ./server/News_Origin
+#         - pytest
+
+FakeNewsTest:
+    stage: test
+    script:
+        - cd ./server/fakeNews/predictions
+        # - npm install -g serverless
         - npm install serverless-wsgi serverless-python-requirements
         - chmod +x ./slsbg.sh
         - ./slsbg.sh
-APIDeploy:
+
+HateSpeechDeploy:
     stage: deploy
     script:
         - cd ./server/Hate_Speech/
         - npm install serverless-wsgi serverless-python-requirements
         - sls deploy
-        # - cd ..
-        # - cd Click-Bait
-        # - sls deploy
-        # - cd ..
-        # - cd News_Origin
-        # - sls deploy
-        # - cd ..
-        # - cd fakeNews/predictions
-        # - sls deploy
