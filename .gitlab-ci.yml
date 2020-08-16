@@ -23,9 +23,9 @@ APItest:
     stage: test
     script:
         - cd ./server/Hate_Speech/
-        - pytest
-        - cd ..
-        - cd Click-Bait
+        # - pytest
+        # - cd ..
+        # - cd Click-Bait
         - pytest
         # - cd ..
         # - cd News_Origin
@@ -33,21 +33,21 @@ APItest:
         - cd ..
         - cd fakeNews/predictions
         - npm install -g serverless
-        - npm install -g serverless-wsgi
-        - npm install -g serverless-python-requirements
+        - npm install serverless-wsgi serverless-python-requirements
         - chmod +x ./slsbg.sh
         - ./slsbg.sh
 APIDeploy:
     stage: deploy
     script:
         - cd ./server/Hate_Speech/
+        - npm install serverless-wsgi serverless-python-requirements
         - sls deploy
-        - cd ..
-        - cd Click-Bait
-        - sls deploy
-        - cd ..
-        - cd News_Origin
-        - sls deploy
-        - cd ..
-        - cd fakeNews/predictions
-        - sls deploy
+        # - cd ..
+        # - cd Click-Bait
+        # - sls deploy
+        # - cd ..
+        # - cd News_Origin
+        # - sls deploy
+        # - cd ..
+        # - cd fakeNews/predictions
+        # - sls deploy
