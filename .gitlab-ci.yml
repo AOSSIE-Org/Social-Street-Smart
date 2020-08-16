@@ -19,8 +19,8 @@ before_script:
   
 stages:
     - test
-
-h8test:
+    - deploy
+APItest:
     stage: test
     script:
         - cd ./server/Hate_Speech/
@@ -34,6 +34,21 @@ h8test:
         - cd ..
         - cd fakeNews/predictions
         - npm install -g serverless
-        - npm install serverless-wsgi serverless-python-requirements
+        - npm install -g serverless-wsgi serverless-python-requirements
         - chmod +x ./slsbg.sh
         - ./slsbg.sh
+APIDeploy:
+	stage: deploy
+	script:
+		- cd ./server/Hate_Speech/
+        - sls deploy
+        - cd ..
+        - cd Click-Bait
+        - sls deploy
+        - cd ..
+        - cd News_Origin
+        - sls deploy
+        - cd ..
+        - cd fakeNews/predictions
+        - sls deploy
+
