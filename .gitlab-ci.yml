@@ -36,11 +36,10 @@ APItest:
         - npm install -g serverless-wsgi serverless-python-requirements
         - chmod +x ./slsbg.sh
         - ./slsbg.sh
-
 APIDeploy:
     stage: deploy
     script:
-		    - cd ./server/Hate_Speech/
+        - cd ./server/Hate_Speech/
         - sls deploy
         - cd ..
         - cd Click-Bait
@@ -51,4 +50,3 @@ APIDeploy:
         - cd ..
         - cd fakeNews/predictions
         - sls deploy
-
