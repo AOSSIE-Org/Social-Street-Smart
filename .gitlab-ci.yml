@@ -33,7 +33,8 @@ APItest:
         - cd ..
         - cd fakeNews/predictions
         - npm install -g serverless
-        - npm install -g serverless-wsgi serverless-python-requirements
+        - npm install -g serverless-wsgi
+        - npm install -g serverless-python-requirements
         - chmod +x ./slsbg.sh
         - ./slsbg.sh
 APIDeploy:
