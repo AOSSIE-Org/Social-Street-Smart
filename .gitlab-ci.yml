@@ -16,7 +16,6 @@ before_script:
   - npm -v
   - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
   
-  
 stages:
     - test
     - deploy
@@ -37,10 +36,11 @@ APItest:
         - npm install -g serverless-wsgi serverless-python-requirements
         - chmod +x ./slsbg.sh
         - ./slsbg.sh
+
 APIDeploy:
-	stage: deploy
-	script:
-		- cd ./server/Hate_Speech/
+    stage: deploy
+    script:
+		    - cd ./server/Hate_Speech/
         - sls deploy
         - cd ..
         - cd Click-Bait
