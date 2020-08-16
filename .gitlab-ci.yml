@@ -54,3 +54,33 @@ HateSpeechDeploy:
         - cd ./server/Hate_Speech/
         - npm install serverless-wsgi serverless-python-requirements
         - sls deploy
+
+ClickBaitDeploy:
+    stage: deploy
+    script:
+        - cd ./server/Click-Bait/
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
+NewOriginDeploy:
+    stage: deploy
+    script:
+        - cd ./server/News_Origin
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
+# ImageAPIDeploy:
+#     stage: deploy
+#     script:
+#         - cd ./server/imageAPI
+#         - npm install serverless-wsgi serverless-python-requirements
+#         - chmod +x ./deploy.sh
+#         - ./deploy.sh
+
+FakeNewsDeploy:
+    stage: deploy
+    script:
+        - cd ./server/fakeNews/predictions
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
