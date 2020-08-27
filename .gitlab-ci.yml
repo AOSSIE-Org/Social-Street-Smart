@@ -13,8 +13,8 @@ before_script:
     - apt -y --force-yes install nodejs
     - node -v
     - npm install
-    - npm install gulp
-    - npm install gulp-cli
+    - npm install -g gulp
+    - npm install -g gulp-cli
 
 stages:
     # - test
