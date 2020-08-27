@@ -15,12 +15,19 @@ before_script:
     - npm install
 
 stages:
-    - test
+    # - test
+    - deploy
     
-tryTest:
-    stage: test
+# extTest:
+#     stage: test
+#     script:
+#         # - npm test
+#         # - xvfb-run -a --server-args="-screen 0 1280x800x24 -ac -nolisten tcp -dpi 96 +extension RANDR" npm test
+#         - chmod +x ./test.sh
+#         - ./test.sh 
+
+extDeploy:
+    stage: deploy
     script:
-        # - npm test
-        # - xvfb-run -a --server-args="-screen 0 1280x800x24 -ac -nolisten tcp -dpi 96 +extension RANDR" npm test
-        - chmod +x ./test.sh
-        - ./test.sh 
+        - gulp build
+        - CLIENT_ID=${CLIENT_ID} CLIENT_SECRET=${CLIENT_SECRET} EXTENSION_ID=${EXTENSION_ID} REFRESH_TOKEN=${REFRESH_TOKEN} node ./deploy.js
