@@ -17,7 +17,8 @@ before_script:
   - npm install -g serverless
 #   - apt -y --force-yes libmariadbclient-dev
   - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
-  - pip --cache-dir=.pip install -r ./server/News_Origin/predictions/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/Click-Bait/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
 
   
 stages:
