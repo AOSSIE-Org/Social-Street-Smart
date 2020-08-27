@@ -15,7 +15,10 @@ before_script:
   - node -v
   - npm -v
   - npm install -g serverless
+  - apt -y --force-yes libmariadbclient-dev
   - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/News_Origin/predictions/requirements.txt
+
   
 stages:
     - test
@@ -62,12 +65,12 @@ ClickBaitDeploy:
         - npm install serverless-wsgi serverless-python-requirements
         - sls deploy
 
-NewOriginDeploy:
-    stage: deploy
-    script:
-        - cd ./server/News_Origin
-        - npm install serverless-wsgi serverless-python-requirements
-        - sls deploy
+# NewOriginDeploy:
+#     stage: deploy
+#     script:
+#         - cd ./server/News_Origin
+#         - npm install serverless-wsgi serverless-python-requirements
+#         - sls deploy
 
 # ImageAPIDeploy:
 #     stage: deploy
