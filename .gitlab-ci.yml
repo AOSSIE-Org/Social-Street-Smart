@@ -15,7 +15,7 @@ before_script:
   - node -v
   - npm -v
   - npm install -g serverless
-  - apt -y --force-yes libmariadbclient-dev
+#   - apt -y --force-yes libmariadbclient-dev
   - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
   - pip --cache-dir=.pip install -r ./server/News_Origin/predictions/requirements.txt
 
@@ -35,6 +35,11 @@ ClickBaitTest:
     script:
         - cd ./server/Click-Bait/
         - pytest
+# DIIAPITest:
+#     stage: test
+#     script:
+#         - cd ./server/imageAPI/
+#         - pytest tests.py
 
 # NewsOriginTest:
 #     stage: test
