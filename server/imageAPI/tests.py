@@ -26,7 +26,7 @@ def test_one(client):
     # pp.pprint(response.__dict__)
     # pprint(len(response.data))
     assert response.status_code == 200
-    assert len(response.data) > 3
+    assert len(response.data) > 0
 
 def test_two(client):
     link = "https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg"
@@ -34,7 +34,7 @@ def test_two(client):
     # pp.pprint(response.__dict__)
     # pprint(len(response.data))
     assert response.status_code == 200
-    assert len(response.data) > 3
+    assert len(response.data) > 0
 
 def test_three(client):
     link = "https://th.thgim.com/news/national/iogff3/article30067660.ece/alternates/FREE_435/BRICS-SUMMITLEADERSTHNAK"
@@ -42,4 +42,4 @@ def test_three(client):
     # pp.pprint(response.__dict__)
     # pprint(len(response.data))
     assert response.status_code == 200
-    assert len(response.data) > 3
+    assert len(response.data) > 0
