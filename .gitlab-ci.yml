@@ -26,17 +26,17 @@ stages:
     - test
     - deploy
 
-# HateSpeechTest:
-#     stage: test
-#     script:
-#         - cd ./server/Hate_Speech/
-#         - pytest
+HateSpeechTest:
+    stage: test
+    script:
+        - cd ./server/Hate_Speech/
+        - pytest
 
-# ClickBaitTest:
-#     stage: test
-#     script:
-#         - cd ./server/Click-Bait/
-#         - pytest
+ClickBaitTest:
+    stage: test
+    script:
+        - cd ./server/Click-Bait/
+        - pytest
 DIIAPITest:
     stage: test
     script:
@@ -49,48 +49,58 @@ DIIAPITest:
 #         - cd ./server/News_Origin
 #         - pytest
 
-# FakeNewsTest:
-#     stage: test
-#     script:
-#         - cd ./server/fakeNews/predictions
-#         # - npm install -g serverless
-#         - npm install serverless-wsgi serverless-python-requirements
-#         - chmod +x ./slsbg.sh
-#         - ./slsbg.sh
+FakeNewsTest:
+    stage: test
+    script:
+        - cd ./server/fakeNews/predictions
+        # - npm install -g serverless
+        - npm install serverless-wsgi serverless-python-requirements
+        - chmod +x ./slsbg.sh
+        - ./slsbg.sh
 
-# HateSpeechDeploy:
-#     stage: deploy
-#     script:
-#         - cd ./server/Hate_Speech/
-#         - npm install serverless-wsgi serverless-python-requirements
-#         - sls deploy
+HateSpeechDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/Hate_Speech/
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
 
-# ClickBaitDeploy:
-#     stage: deploy
-#     script:
-#         - cd ./server/Click-Bait/
-#         - npm install serverless-wsgi serverless-python-requirements
-#         - sls deploy
+ClickBaitDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/Click-Bait/
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
 
-# NewOriginDeploy:
-#     stage: deploy
-#     script:
-#         - cd ./server/News_Origin
-#         - npm install serverless-wsgi serverless-python-requirements
-#         - sls deploy
+NewOriginDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/News_Origin
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
 
-# ImageAPIDeploy:
-#     stage: deploy
-#     script:
-#         - cd ./server/imageAPI
-#         - npm install serverless-wsgi serverless-python-requirements
-#         - chmod +x ./deploy.sh
-#         - ./deploy.sh
+ImageAPIDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/imageAPI
+        - npm install serverless-wsgi serverless-python-requirements
+        - chmod +x ./deploy.sh
+        - ./deploy.sh
 
-# FakeNewsDeploy:
-#     stage: deploy
-#     script:
-#         - cd ./server/fakeNews/predictions
-#         - npm install serverless-wsgi serverless-python-requirements
-#         - sls deploy
+FakeNewsDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/fakeNews/predictions
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
 
