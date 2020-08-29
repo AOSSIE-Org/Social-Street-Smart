@@ -17,7 +17,7 @@ before_script:
     - npm install chrome-webstore-upload
 
 stages:
-    # - test
+    - test
     - deploy
     
 extTest:
