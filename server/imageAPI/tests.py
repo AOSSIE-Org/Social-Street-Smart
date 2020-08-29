@@ -28,18 +28,18 @@ def test_one(client):
     assert response.status_code == 200
     assert len(response.data) > 0
 
-def test_two(client):
-    link = "https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg"
-    response = client.get('/lookup/?link=' + link)
-    # pp.pprint(response.__dict__)
-    # pprint(len(response.data))
-    assert response.status_code == 200
-    assert len(response.data) > 0
+# def test_two(client):
+#     link = "https://upload.wikimedia.org/wikipedia/commons/5/56/Donald_Trump_official_portrait.jpg"
+#     response = client.get('/lookup/?link=' + link)
+#     # pp.pprint(response.__dict__)
+#     # pprint(len(response.data))
+#     assert response.status_code == 200
+#     assert len(response.data) > 0
 
-def test_three(client):
-    link = "https://th.thgim.com/news/national/iogff3/article30067660.ece/alternates/FREE_435/BRICS-SUMMITLEADERSTHNAK"
-    response = client.get('/lookup/?link=' + link)
-    # pp.pprint(response.__dict__)
-    # pprint(len(response.data))
-    assert response.status_code == 200
-    assert len(response.data) > 0
+# def test_three(client):
+#     link = "https://th.thgim.com/news/national/iogff3/article30067660.ece/alternates/FREE_435/BRICS-SUMMITLEADERSTHNAK"
+#     response = client.get('/lookup/?link=' + link)
+#     # pp.pprint(response.__dict__)
+#     # pprint(len(response.data))
+#     assert response.status_code == 200
+#     assert len(response.data) > 0
