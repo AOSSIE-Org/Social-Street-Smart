@@ -146,4 +146,7 @@ def predict():
 interpreter = loadLite()
 
 if __name__=='__main__':
-    application.run()
+    # only for API testing without API_manager 
+    # application.debug= False
+    # application.run(port= 8091, host="0.0.0.0")
+    application.run(port=81)
