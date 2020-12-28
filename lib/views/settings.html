@@ -176,7 +176,34 @@
                               <div class="toggle__handle"></div>
                            </div>
                         </div>
-                     </div>
+							</div>
+							<br>
+                     <h3>Custom API Keys</h3>
+                     <div class="form-item">
+                        <label class="form-item__label">Use custom API keys for the Disinformation in Images API</label>
+                        <p style ="font-size: 2rem;"> Off </p>
+                        <div class="form-item__control toggle image_keys">
+                           <div class="toggle__handle"></div>
+                        </div>
+								<p style ="font-size: 2rem;">On</p>
+								<br>
+								Browse API Keys JSON File <input type="file" class="browse" accept=".json" id="diiKeys">
+								<!-- <input type="submit" value="Submit" class="button"> -->
+								<button type="button" class="button" id="showKeys">Show</button>
+								<button type="button" class="button" id="uploadDIIKeys">Ok</button>
+								<!-- <button type="file" class=" button">Browse API Keys </button> -->
+							</div>
+                     <div class="form-item">
+								<label class="form-item__label">Use custom API keys for the News Origin API</label>
+                        <p style ="font-size: 2rem;"> Off </p>
+                        <div class="form-item__control toggle origin_Keys">
+									<div class="toggle__handle"></div>
+                        </div>
+                        <p style ="font-size: 2rem;">On</p>
+                        <input type="password" class="form-control" id="newsKeysInput" placeholder="Google Custom Search API Keys">
+                        <button type="button" class=" button" id="showNewsKeys">Show</button>
+                        <button type="button" class=" button" id="uploadNewsKeys">Ok</button>
+							</div>
                      <br>
                      <br>
                      <div class="buttons"><a href="#"></a><button id = "save_settings" class="button">Done</button></div>
@@ -185,7 +212,7 @@
             </div>
          </div>
       </div>
-      <script src="../assets/js/settings.js"></script>
+		<script src="../assets/js/settings.js"></script>
    </body>
 </html>
 

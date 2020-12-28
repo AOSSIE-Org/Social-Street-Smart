@@ -5,6 +5,7 @@
   "name": "Social Street Smart",
   "short_name": "SSS", 
   "description": "Shaping tomorrow's Internet with Artificial Intelligence",
+  // "content_security_policy": "script-src 'unsafe-inline' 'unsafe-eval' 'sha256-wrRS2GHm/ljLiGMZBZqvaQ9Slrdxyz06DsoRvAVIsw8='",
   "default_locale": "en",
   "background" : {
     "scripts" : ["scripts/background/eventPage.js"],
@@ -215,14 +216,38 @@
       "all_frames" : false
       
 
+    },
+    {
+      "matches": [
+        "http://*/diiResult*",
+        "https://*/diiResult*"
+      ],
+      "js": [
+        "scripts/content/dii/bootstrap.min.js",
+        "scripts/content/dii/jquery.min.js",
+        "scripts/content/dii/diiResult.js"
+      ],
+      "css":[
+        "scripts/content/dii/bootstrap.min.css"
+      ],
+      "run_at": "document_end"
+
     }
   ],
 "web_accessible_resources": [
-  "common/profanity_list_en.json"
+  "common/profanity_list_en.json",
+  "/scripts/content/dii/modal.html",
+  "scripts/content/dii/modal.html",
+  "scripts/content/dii/modal.js",
+  "scripts/content/dii/jquery.min.js",
+  "scripts/content/dii/bootstrap.min.js",
+  "scripts/content/dii/bootstrap.min.js.map",
+  "scripts/content/dii/bootstrap.min.css"
+
 ],
 
   "permissions": [
-    "tabs","notifications","storage","contextMenus","http://13.233.115.232:8091/predict","http://18.221.117.28:7001/predict"
+    "tabs","notifications","storage","contextMenus","http://13.233.115.232:8091/predict","http://18.221.117.28:7001/predict", "http://127.0.0.1:5000/lookup/", "http://127.0.0.1:5000/pred"
   ],
   "icons" : {
     "36" : "assets/icon/36.png",
