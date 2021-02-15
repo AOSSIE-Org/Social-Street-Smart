@@ -27,7 +27,7 @@ extTest:
         # - npm test
         - chmod +x ./test.sh
         - ./test.sh 
-        - xvfb-run -a --server-args="-screen 0 1280x800x24 -ac -nolisten tcp -dpi 96 +extension RANDR" npm test
+        # - xvfb-run -a --server-args="-screen 0 1280x800x24 -ac -nolisten tcp -dpi 96 +extension RANDR" npm test
 
 extDeploy:
     stage: deploy
