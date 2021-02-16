@@ -21,16 +21,8 @@ describe('Extension Test', function(){
     before(async function(){
         await boot();
     });
-    // this.timeout(100000);
-    // before(async function() {
-    //     await warmUpCB();
-    // });
-    // this.timeout(100000);
-    // before(async function() {
-    //     await warmUpHS();
-    // });
-    // warmUpCB();
-    // warmUpHS();
+    warmUpCB();
+    warmUpHS();
     // twittercb();
     // twitterhs();
     redditcb();
