@@ -13,6 +13,7 @@
   },
   "homepage": "https://gitlab.com/aossie/social-street-smart#README",
   "dependencies": {
+    "chrome-webstore-upload": "^0.4.0",
     "del": "^2.2.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.0.1",
@@ -21,7 +22,8 @@
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.2",
     "gulp-minify": "^3.1.0",
-    "husky": "^2.4.1"
+    "husky": "^2.4.1",
+    "zip-folder": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
