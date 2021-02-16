@@ -23,8 +23,8 @@ describe('Extension Test', function(){
     });
     warmUpCB();
     warmUpHS();
-    twittercb();
-    twitterhs();
+    // twittercb();
+    // twitterhs();
     redditcb();
     reddiths();
     facebookcb();
