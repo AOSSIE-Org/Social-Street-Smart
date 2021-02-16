@@ -18,7 +18,7 @@ let extensionID = "";
 describe('Extension Test', function(){
     
     this.timeout(100000);
-    before(async function() {
+    before(async function(){
         await boot();
     });
     warmUpCB();
@@ -109,16 +109,16 @@ async function twittercb(){
             let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
             // Test feature
             let newUrl = "https://twitter.com/BuzzFeed/status/1269750893009870848"
             // let newUrl = "https://twitter.com/BuzzFeed"
-            // await testingPage.waitFor(2000)
+            // await testingPage.waitFor(5000)
             await testingPage.goto(newUrl)
             const lastPosition = await scrollPageToBottom(testingPage)
-            await testingPage.waitFor(7000);
+            await testingPage.waitFor(10000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
             // console.log(CB)
@@ -131,7 +131,7 @@ async function twittercb(){
             toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
         })
@@ -149,14 +149,14 @@ async function twitterhs(){
             let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
             // Test feature
             let newUrl = "https://twitter.com/search?q=fuck%20&src=typed_query"
-            // await testingPage.waitFor(2000)
+            // await testingPage.waitFor(5000)
             await testingPage.goto(newUrl)
-            await testingPage.waitFor(7000);
+            await testingPage.waitFor(10000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
             let t = CB.includes("TOXIC")
@@ -168,7 +168,7 @@ async function twitterhs(){
             toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
         })
@@ -185,14 +185,14 @@ async function redditcb(){
             let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
             // Test feature
             let newUrl = "https://www.reddit.com/r/buzzfeed/top/?t=all"
-            // await testingPage.waitFor(2000)
+            // await testingPage.waitFor(5000)
             await testingPage.goto(newUrl)
-            await testingPage.waitFor(7000);
+            await testingPage.waitFor(10000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
             let t = CB.includes("Clickbait")
@@ -204,7 +204,7 @@ async function redditcb(){
             toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
         })
@@ -221,15 +221,15 @@ async function reddiths(){
             let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
             // Test feature
             let newUrl = "https://www.reddit.com/search/?q=fuck"
-            // await testingPage.waitFor(2000)
+            // await testingPage.waitFor(5000)
             await testingPage.goto(newUrl)
             const lastPosition = await scrollPageToBottom(testingPage)
-            await testingPage.waitFor(7000);
+            await testingPage.waitFor(10000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
             let t = CB.includes("TOXIC")
@@ -241,7 +241,7 @@ async function reddiths(){
             toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
         })
@@ -259,15 +259,15 @@ async function facebookcb(){
             let toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             let saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
             // Test feature
             let newUrl = "https://www.facebook.com/BuzzFeed/"
-            // await testingPage.waitFor(2000)
+            // await testingPage.waitFor(5000)
             await testingPage.goto(newUrl)
             const lastPosition = await scrollPageToBottom(testingPage)
-            await testingPage.waitFor(7000);
+            await testingPage.waitFor(10000);
 
             const CB = await testingPage.$eval('.SSS', el => el.textContent)
             let t = CB.includes("Clickbait")
@@ -279,7 +279,7 @@ async function facebookcb(){
             toggle = await optionsPage.$('.' + className, el => el.outerHTML);
             await toggle.click();
             saveSettings = await optionsPage.$('#save_settings', el => el.outerHTML);
-            await optionsPage.waitFor(2000)
+            await optionsPage.waitFor(5000)
             await saveSettings.click();
 
         })

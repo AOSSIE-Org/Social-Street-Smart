@@ -83,11 +83,26 @@ for (var i = 0; toggle.length > i; i++) {
   });
 }
 
+// function uploadDIIKeys(){
+//   var x = document.getElementById("diiKeys");
+//   var reader = new FileReader;
+//   keys = x.files[0];
+//   reader.readAsText(keys);
+//   reader.result;
+
+//   chrome.storage.sync.set({"diiKeys": reader.result}, function() {
+//     console.log('Value is set to ' + value);
+//   });
+// }
+
+
+
 
 save_button.addEventListener('click', function () {
   var selected_options = [];
   var toggles = document.querySelectorAll('.toggle');
-  for (var i = 0; toggles.length > i; i++) {
+  for (var i = 0; toggles.length > i; i++) 
+  {
     if (toggles[i].classList.contains('is-on')) {
       //console.log('SSS');
       //console.log(toggles[i].classList);
@@ -98,7 +113,84 @@ save_button.addEventListener('click', function () {
     }
   }
 
-  chrome.storage.sync.set({ options: selected_options }, function () {
+  var temp={};
+  temp['options']=selected_options;
+  
+  chrome.storage.sync.set(temp, function () {
     console.log('Options: ' + selected_options);
   });
+
+  chrome.storage.sync.get(['options'], function (result) {
+    console.log(result.options);
+  });
+
+  close();
+
+
+});
+
+uploadNewsKeys.addEventListener('click', function(){
+  console.log('TESET');
+  var keys = document.getElementById('newsKeysInput').value;
+  chrome.storage.sync.set({'newsKeys' : keys}, function(result){
+    console.log('News Keys are set to: ' + keys);
+  });
+});
+
+showNewsKeys.addEventListener('click', function(){
+  chrome.storage.sync.get('newsKeys', function(result){
+    console.log('Old News Keys: ' + result.newsKeys);
+  });
+});
+
+uploadDIIKeys.addEventListener('click', function () {
+  
+  var x = document.getElementById('diiKeys');
+  var reader = new FileReader;
+  var b64Keys = '';
+  keys = x.files[0];
+  reader.onload = function(e) {
+    console.log(e.target.result);
+    var b64Keys = btoa(e.target.result);
+    chrome.storage.sync.set({'diiKeys' : b64Keys}, function() {
+      console.log('Value is set to ' + b64Keys);
+    });
+
+  };
+  reader.onerror = function(stuff) {
+    console.log('error', stuff);
+    console.log (stuff.getMessage());
+  };
+  reader.readAsText(keys);
+  // reader.result;
+
+  
+  // console.log("result")
+  console.log(b64Keys);
+
+  // chrome.storage.sync.get('diiKeys', function (result) {
+  //   console.log("Old Keys:")
+  //   console.log(result.diiKeys)
+  // });
+
+  // chrome.storage.sync.set({"diiKeys" : b64Keys}, function() {
+  //   console.log('Value is set to ' + b64Keys);
+  // });
+
+  // chrome.storage.sync.get('diiKeys', function (result) {
+  //   console.log("Old Keys:")
+  //   console.log(result.diiKeys)
+  // });
+
+});
+
+
+
+showKeys.addEventListener('click', function () {
+  chrome.storage.sync.get('diiKeys', function (result) {
+    console.log('Old Keys:');
+    console.log(result);
+  });
+
+
 });

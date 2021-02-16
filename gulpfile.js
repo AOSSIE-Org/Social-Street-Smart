@@ -72,6 +72,7 @@ gulp.task('copy-dist', function () {
   gulp.src('./lib/_locales/**/*').pipe(gulp.dest('./dist/_locales/'));
   gulp.src('./lib/common/*').pipe(gulp.dest('./dist/common/'));
   gulp.src('./lib/assets/**/*').pipe(gulp.dest('./dist/assets/'));
+  gulp.src('./lib/scripts/content/dii/**/*').pipe(gulp.dest('./dist/scripts/content/dii/'));
   return gulp.src('./lib/manifest.json').pipe(gulp.dest('./dist/'));
 });
 
