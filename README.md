@@ -15,8 +15,8 @@ The aim of this project is to develop a Chrome Extension to make Internet a safe
 `npm install`
  5. Build the extension : 
 `gulp build` (if gulp is installed globally) or use `./node_modules/.bin/gulp build` (if gulp is installed locally)
- 6. Add the extension :
- In Chrome Browser : `Settings` > `Extensions` > `load unpacked (with Developer mode on)` > `Open 'dist' or 'lib' folder.` 
+ 6. Add the extension (In the Chrome Browser) :
+`Settings` > `Extensions` > `load unpacked (with Developer mode on)` > `Open 'dist' or 'lib' folder.` 
   
 
 ## How to Contribute 
