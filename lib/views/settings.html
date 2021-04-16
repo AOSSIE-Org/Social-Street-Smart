@@ -145,21 +145,53 @@
 							</div>
 							<br>
                      <h3>Custom API Keys</h3>
+                     <div class="form-item" id="upl">
+                        <table>
+                           <tr>
+                              <td colspan="2">
+                                 <label class="form-item__label">Use custom API keys for the Disinformation in Images API</label>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td>
+                                 Browse API Keys JSON File
+                              </td>
+                              <td>
+                                 <input type="file" class="browse" accept=".json" id="diiKeys">
+                              </td>
+                           </tr>
+                           <tr>
+                              <td id= "warning_dii"></td>
+                              <td>
+                                 <button type="button" class="button" id="showKeys">Show</button>
+                                 <button type="button" class="button" id="uploadDIIKeys">Ok</button>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+                  
                      <div class="form-item">
-                        <label class="form-item__label">Use custom API keys for the Disinformation in Images API</label>
-								<br>
-								Browse API Keys JSON File <input type="file" class="browse" accept=".json" id="diiKeys">
-								<!-- <input type="submit" value="Submit" class="button"> -->
-								<button type="button" class="button" id="showKeys">Show</button>
-								<button type="button" class="button" id="uploadDIIKeys">Ok</button>
-								<!-- <button type="file" class=" button">Browse API Keys </button> -->
-							</div>
-                     <div class="form-item">
-								<label class="form-item__label">Use custom API keys for the News Origin API</label>
-                        <input type="password" class="form-control" id="newsKeysInput" placeholder="Google Custom Search API Keys">
-                        <button type="button" class=" button" id="showNewsKeys">Show</button>
-                        <button type="button" class=" button" id="uploadNewsKeys">Ok</button>
-							</div>
+                        <table>
+                           <tr>
+                              <td>
+                                 <label class="form-item__label">Use custom API keys for the News Origin API</label>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td colspan="3">
+                                 <input type="password" class="form-control" id="newsKeysInput" placeholder="Google Custom Search API Keys">
+                              </td>
+                           </tr>
+                           <tr>
+                              <td id= "warning_norig" colspan="2"></td>
+                              <td>
+                                 <button type="button" class=" button" id="showNewsKeys">Show</button>
+                                 <button type="button" class=" button" id="uploadNewsKeys">Ok</button>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
+
                      <br>
                      <br>
                      <div class="buttons"><a href="#"></a><button id = "save_settings" class="button">Done</button></div>
