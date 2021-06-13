@@ -61,6 +61,48 @@
                         </div>
                      </div>
                      <br>
+
+                     <!-- +++++++++++++++++++++++++++ Add Auto Hide/Unhide feature ++++++++++++++++++++++++++ -->
+
+                     <h3>Auto Hide Flagged Contents </h3>
+                        <div class="form-item">
+                           <label class="form-item__label">Disable this feature</label>
+                           <div class="form-item__control toggle disable_hide_contents">
+                              <div class="toggle__handle"></div>
+                           </div>
+                        </div>
+                        <div id="hide-flagged-opt">
+                           <div class="form-item">
+                              <label class="form-item__label">Enable on Facebook</label>
+                              <div class="form-item__control toggle HC_facebook ">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div class="form-item">
+                              <label class="form-item__label">Enable on Twitter</label>
+                              <div class="form-item__control toggle HC_twitter">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div class="form-item">
+                              <label class="form-item__label">Enable on Reddit</label>
+                              <div class="form-item__control toggle HC_reddit">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div class="form-item">
+                              <label class="form-item__label">Enable on all rest of the web</label>
+                              <div class="form-item__control toggle HC_web">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                        </div>
+                        <br>
+
+                     <!-- Ends here -->
+
+
+
                      <h3>Blur/Hide</h3>
                      <div class="form-item">
                         <label class="form-item__label">Blur/Hide the post</label>
@@ -71,6 +113,18 @@
                         <p style ="font-size: 2rem;">Hide</p>
                      </div>
                      <br>
+
+                     <!-- +++++++++++++++ Delete Stored reported contents +++++++++++++++ -->
+                     
+                     
+                     <div class="form-item">
+                        <h3>Reset reported contents</h3>
+                        <button id = "reset_flagged" class="button">Reset</button>
+                     </div>
+                     <br>
+
+                     <!-- Ends here -->
+
                      <h3>Sites whitelisted by the user:</h3>
                      <ul id="ul_whitelist" class="list-group list-group-horizontal">
                      </ul>
