@@ -205,6 +205,7 @@
 	 line-height: 1;
 	 cursor: pointer;
 }
+
  .browse:hover, .browse:focus {
 	 background: #4B0082;
 	 color: white;
@@ -256,4 +257,11 @@ html::-webkit-scrollbar {
       display: none; 
 } 
 
- 
+
+#warning_dii { 
+	color: red;
+}
+
+#warning_norig {
+	color: red;
+}
