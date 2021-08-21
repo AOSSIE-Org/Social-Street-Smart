@@ -20,7 +20,8 @@ before_script:
   - pip --cache-dir=.pip install -r ./server/Click-Bait/requirements.txt
   - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
   - pip --cache-dir=.pip install -r ./server/imageAPI/requirements.txt
-
+  - pip --cache-dir=.pip install -r ./server/ReportAPI/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/FakeNewsAPI/requirements.txt
   
 stages:
     - test
@@ -42,6 +43,12 @@ DIIAPITest:
     script:
         - cd ./server/imageAPI/
         - pytest tests.py
+
+ReportAPITest:
+    stage: test
+    script:
+        - cd ./server/ReportAPI
+        - pytest
 
 # NewsOriginTest:
 #     stage: test
@@ -95,12 +102,29 @@ ImageAPIDeploy:
         - chmod +x ./deploy.sh
         - ./deploy.sh
 
+# FakeNewsDeploy:
+#     stage: deploy
+#     only:
+#         - master
+#     script:
+#         - cd ./server/fakeNews/predictions
+#         - npm install serverless-wsgi serverless-python-requirements
+#         - sls deploy
+
+ReportAPIDeploy:
+    stage: deploy'
+    only:
+        -master
+    script:
+        - cd ./server/ReportAPI/
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy       
+
 FakeNewsDeploy:
     stage: deploy
     only:
         - master
     script:
-        - cd ./server/fakeNews/predictions
+        - cd ./server/FakeNewsAPI/
         - npm install serverless-wsgi serverless-python-requirements
         - sls deploy
-
