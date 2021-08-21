@@ -1,0 +1,106 @@
+image: python:3.6.10
+
+cache:
+  paths:
+    - .pip
+
+before_script:
+  - mkdir -p .pip
+  - pip install -U pip
+  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
+  - apt-get update
+  - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
+  - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+  - apt -y --force-yes install nodejs
+  - node -v
+  - npm -v
+  - npm install -g serverless
+#   - apt -y --force-yes libmariadbclient-dev
+  - pip --cache-dir=.pip install -r ./server/fakeNews/predictions/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/Click-Bait/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/News_Origin/requirements.txt
+  - pip --cache-dir=.pip install -r ./server/imageAPI/requirements.txt
+
+  
+stages:
+    - test
+    - deploy
+
+HateSpeechTest:
+    stage: test
+    script:
+        - cd ./server/Hate_Speech/
+        - pytest
+
+ClickBaitTest:
+    stage: test
+    script:
+        - cd ./server/Click-Bait/
+        - pytest
+DIIAPITest:
+    stage: test
+    script:
+        - cd ./server/imageAPI/
+        - pytest tests.py
+
+# NewsOriginTest:
+#     stage: test
+#     script:
+#         - cd ./server/News_Origin
+#         - pytest
+
+FakeNewsTest:
+    stage: test
+    script:
+        - cd ./server/fakeNews/predictions
+        # - npm install -g serverless
+        - npm install serverless-wsgi serverless-python-requirements
+        - chmod +x ./slsbg.sh
+        - ./slsbg.sh
+
+HateSpeechDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/Hate_Speech/
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
+ClickBaitDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/Click-Bait/
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
+NewOriginDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/News_Origin
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
+ImageAPIDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/imageAPI
+        - npm install serverless-wsgi serverless-python-requirements
+        - chmod +x ./deploy.sh
+        - ./deploy.sh
+
+FakeNewsDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - cd ./server/fakeNews/predictions
+        - npm install serverless-wsgi serverless-python-requirements
+        - sls deploy
+
