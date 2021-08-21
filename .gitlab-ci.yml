@@ -112,7 +112,7 @@ ImageAPIDeploy:
 #         - sls deploy
 
 ReportAPIDeploy:
-    stage: deploy'
+    stage: deploy
     only:
         -master
     script:
