@@ -114,7 +114,7 @@ ImageAPIDeploy:
 ReportAPIDeploy:
     stage: deploy
     only:
-        -master
+        - master
     script:
         - cd ./server/ReportAPI/
         - npm install serverless-wsgi serverless-python-requirements
