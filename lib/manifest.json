@@ -7,7 +7,7 @@
   "description": "Shaping tomorrow's Internet with Artificial Intelligence",
   "default_locale": "en",
   "background" : {
-    "scripts" : ["scripts/background/eventPage.js"],
+    "scripts" : ["scripts/background/eventPage.js","scripts/background/compromise.js"],
     "persistent": false
   },
 
