@@ -1,5 +1,3 @@
-
-
 <html>
    <head>
       <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -9,251 +7,263 @@
       <title>SSS- Settings</title>
    </head>
    <body>
-      <div class="wrapper">
-         <div class="card">
-            <div class="card__header">
-               <div class="toolbar">
-                  <div class="toolbar__item toolbar__item--close"></div>
-                  <div class="toolbar__item toolbar__item--min"></div>
-                  <div class="toolbar__item toolbar__item--max"></div>
-               </div>
-               <a href="https://gitlab.com/aossie/social-street-smart/"><i title="Contribute" class="fa fa-gitlab" style="font-size:36px"></i></a>
-            </div>
-            <div class="card__body">
-               <div class="container">
-                  <div class="grid">
-                     <h1>Settings</h1>
+      <div class="card__header">
+         <div class="toolbar">
+            <div class="toolbar__item toolbar__item--close"></div>
+            <div class="toolbar__item toolbar__item--min"></div>
+            <div class="toolbar__item toolbar__item--max"></div>
+         </div>
+         <a href="https://gitlab.com/aossie/social-street-smart/"><i title="Contribute" class="fa fa-gitlab" style="font-size:36px"></i></a>
+      </div>
+         <div class="container">
+               <div class="topic">Settings</div>
+               <div class="content">
+                     <input type="radio" name="slider" checked id="hate_speech">
+                     <input type="radio" name="slider" id="click_baits">
+                     <input type="radio" name="slider" id="profanity_words">
+                     <input type="radio" name="slider" id="flagged_content">
+                     <input type="radio" name="slider" id="api_keys">
+                     <input type="radio" name="slider" id="sites_whitelisted">
+                  <div class="list">
+                        <label for="hate_speech" class="hate_speech">
+                           <span class="title">Hate&nbsp;Speech</span>
+                        </label>
+                        <label for="click_baits" class="click_baits">
+                           <span class="title">Click&nbsp;Baits</span>
+                        </label>
+                        <label for="profanity_words" class="profanity_words">
+                           <span class="title">Profanity&nbsp;Words</span>
+                        </label>
+                        <label for="flagged_content" class="flagged_content">
+                           <span class="title">Hide&nbsp;Flagged&nbsp;Content</span>
+                        </label>
+                        <label for="api_keys" class="api_keys">
+                           <span class="title">Set&nbsp;API&nbsp;Keys</span>
+                        </label>
+                        <label for="sites_whitelisted" class="sites_whitelisted">
+                           <span class="title">Sites&nbsp;Whitelisted&nbsp;</span>
+                        </label>
+                        <div class="slider"></div>
+                  </div>
+                  <div class="text-content">
+                        <!-- Hate speech feature -->
+                       <div class="hate_speech text">
+                           <div class="form-item">
+                              <label class="form-item__label">Disable this feature</label>
+                              <div class="form-item__control toggle disable_hate_speech">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div id="hate-speech-opt">
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Facebook</label>
+                                 <div class="form-item__control toggle HS_facebook ">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Twitter</label>
+                                 <div class="form-item__control toggle HS_twitter">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Reddit</label>
+                                 <div class="form-item__control toggle HS_reddit">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on all rest of the web</label>
+                                 <div class="form-item__control toggle HS_web">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                           </div>
+                       </div>
+                        <!-- Ends here -->
+                       <!-- Click Baits features -->
+                       <div class="click_baits text">
+                           <div class="form-item">
+                              <label class="form-item__label">Disable this feature</label>
+                              <div class="form-item__control toggle disable_click_baits">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div id="click-baits-opt">
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Facebook</label>
+                                 <div class="form-item__control toggle CB_facebook">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Twitter</label>
+                                 <div class="form-item__control toggle CB_twitter">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Reddit</label>
+                                 <div class="form-item__control toggle CB_reddit">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on rest of the web</label>
+                                 <div class="form-item__control toggle CB_web">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                           </div>
+                       </div>
+                        <!-- Ends here -->
+                       <!-- Profanity Words features -->
+                       <div class="profanity_words text">
+                           <div class="form-item">
+                              <label class="form-item__label">Disable this feature</label>
+                              <div class="form-item__control toggle disable_profanity_words">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div id="profanity-words-opt">
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Facebook</label>
+                                 <div class="form-item__control toggle PW_facebook">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Twitter</label>
+                                 <div class="form-item__control toggle PW_twitter">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Reddit</label>
+                                 <div class="form-item__control toggle PW_reddit">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on rest of the web</label>
+                                 <div class="form-item__control toggle PW_web">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                           </div>
+                       </div>
+                        <!-- Ends here -->
+                       <!-- Hide Flagged Content -->
+                       <div class="flagged_content text">
+                           <div class="form-item">
+                              <label class="form-item__label">Disable this feature</label>
+                              <div class="form-item__control toggle disable_hide_contents">
+                                 <div class="toggle__handle"></div>
+                              </div>
+                           </div>
+                           <div id="hide-flagged-opt">
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Facebook</label>
+                                 <div class="form-item__control toggle HC_facebook ">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Twitter</label>
+                                 <div class="form-item__control toggle HC_twitter">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on Reddit</label>
+                                 <div class="form-item__control toggle HC_reddit">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                              <div class="form-item">
+                                 <label class="form-item__label">Enable on all rest of the web</label>
+                                 <div class="form-item__control toggle HC_web">
+                                    <div class="toggle__handle"></div>
+                                 </div>
+                              </div>
+                           </div>
+                       </div>
+                        <!-- Ends here -->
+                       <!-- Set Api Keys -->
+                       <div class="api_keys text">
+                           <div class="form-item" id="upl">
+                                 <label >Use custom API keys for the Disinformation in Images API</label>
+                                 <div class="custom-row">
+                                    <div class="col-xs-5 custom-col">
+                                       Browse API Keys JSON File
+                                    </div>
+                                    <div class="col-xs-7">
+                                       <input type="file" class="browse" accept=".json" id="diiKeys">
+                                    </div>
+                                 </div>
+                                 <div class="custom-row">
+                                    <div class="col-xs-5 custom-col" id= "warning_dii"></div>
+                                    <div class="col-xs-7">
+                                       <button type="button" class="button" id="showKeys">Show</button>
+                                       <button type="button" class="button" id="uploadDIIKeys">Ok</button>
+                                    </div>
+                                 </div>
+                           </div>
+                           <div class="form-item">
+                                    <label >Use custom API keys for the News Origin API</label>
+                                 <div class="custom-row" >
+                                       <input type="password" class="form-control" id="newsKeysInput" placeholder="Google Custom Search API Keys" style="display: block;">
+                                 </div>
+                                 <div class="custom-row">
+                                    <div  class="col-xs-5 custom-col" id= "warning_norig" ></div>
+                                    <div class="col-xs-7" style="text-align: right;">
+                                       <button type="button" class=" button" id="showNewsKeys">Show</button>
+                                       <button type="button" class=" button" id="uploadNewsKeys">Ok</button>
+                                   </div>
+                                 </div>
+                           </div>
+                       </div>
+                        <!-- Ends here -->
+                        <!-- sites whitelisted by user -->
+                       <div class="sites_whitelisted text">
+                           <h3>Sites whitelisted by the user:</h3>
+                           <ul id="ul_whitelist" class="list-group list-group-horizontal">
+                           </ul>
+                       </div>
+                       <!-- Ends here -->
                   </div>
                </div>
-               <div class="container">
-                  <div class="grid grid--half">
-                     <h3>Hate Speech</h3>
-                     <div class="form-item">
-                        <label class="form-item__label">Disable this feature</label>
-                        <div class="form-item__control toggle disable_hate_speech">
-                           <div class="toggle__handle"></div>
-                        </div>
-                     </div>
-                     <div id="hate-speech-opt">
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Facebook</label>
-                           <div class="form-item__control toggle HS_facebook ">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Twitter</label>
-                           <div class="form-item__control toggle HS_twitter">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Reddit</label>
-                           <div class="form-item__control toggle HS_reddit">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on all rest of the web</label>
-                           <div class="form-item__control toggle HS_web">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                     </div>
-                     <br>
-
-                     <!-- +++++++++++++++++++++++++++ Add Auto Hide/Unhide feature ++++++++++++++++++++++++++ -->
-
-                     <h3>Auto Hide Flagged Contents </h3>
-                        <div class="form-item">
-                           <label class="form-item__label">Disable this feature</label>
-                           <div class="form-item__control toggle disable_hide_contents">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div id="hide-flagged-opt">
-                           <div class="form-item">
-                              <label class="form-item__label">Enable on Facebook</label>
-                              <div class="form-item__control toggle HC_facebook ">
-                                 <div class="toggle__handle"></div>
-                              </div>
-                           </div>
-                           <div class="form-item">
-                              <label class="form-item__label">Enable on Twitter</label>
-                              <div class="form-item__control toggle HC_twitter">
-                                 <div class="toggle__handle"></div>
-                              </div>
-                           </div>
-                           <div class="form-item">
-                              <label class="form-item__label">Enable on Reddit</label>
-                              <div class="form-item__control toggle HC_reddit">
-                                 <div class="toggle__handle"></div>
-                              </div>
-                           </div>
-                           <div class="form-item">
-                              <label class="form-item__label">Enable on all rest of the web</label>
-                              <div class="form-item__control toggle HC_web">
-                                 <div class="toggle__handle"></div>
-                              </div>
-                           </div>
-                        </div>
-                        <br>
-
-                     <!-- Ends here -->
-
-
-
+               <hr style="height:2px;border-width:0 ; width:70%;margin:0 auto;color:#dad3f8;background-color:#dad3f8" >
+               <div class="row" style="margin: 0px 10px;" >
+                  <div class="col-xs-5" style="margin-right:80px;">
                      <h3>Blur/Hide</h3>
                      <div class="form-item">
                         <label class="form-item__label">Blur/Hide the post</label>
-                        <p style ="font-size: 2rem;"> Blur </p>
-                        <div class="form-item__control toggle HS_hide">
+                        <div class="row" style="width:180px">
+                        <p class="col-xs-4" style ="font-weight: 400;  padding-top:8px"> Blur </p>
+                        <div class="form-item__control col-xs-4 toggle HS_hide">
                            <div class="toggle__handle"></div>
                         </div>
-                        <p style ="font-size: 2rem;">Hide</p>
+                        <p class="col-xs-4" style ="font-weight: 400;padding-top:8px">Hide</p>
                      </div>
-                     <br>
-
-                     <!-- +++++++++++++++ Delete Stored reported contents +++++++++++++++ -->
-                     
-                     
-                     <div class="form-item">
-                        <h3>Reset reported contents</h3>
-                        <button id = "reset_flagged" class="button">Reset</button>
                      </div>
-                     <br>
-
-                     <!-- Ends here -->
-
-                     <h3>Sites whitelisted by the user:</h3>
-                     <ul id="ul_whitelist" class="list-group list-group-horizontal">
-                     </ul>
                   </div>
-                  <div class="grid grid--half">
-                     <h3>Click Baits</h3>
-                     <div class="form-item">
-                        <label class="form-item__label">Disable this feature</label>
-                        <div class="form-item__control toggle disable_click_baits">
-                           <div class="toggle__handle"></div>
-                        </div>
+                   <!-- +++++++++++++++ Delete Stored reported contents +++++++++++++++ -->
+                  <div class="form-item col-xs-6">
+                     <h3>Reset reported contents</h3>
+                        <!-- <div class="custom-row" style="text-align: center;"> -->
+                           <button id = "reset_flagged" class="button" style="margin-top:15px" >Reset</button>
+                        <!-- </div> -->
                      </div>
-                     <div id="click-baits-opt">
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Facebook</label>
-                           <div class="form-item__control toggle CB_facebook">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Twitter</label>
-                           <div class="form-item__control toggle CB_twitter">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Reddit</label>
-                           <div class="form-item__control toggle CB_reddit">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on rest of the web</label>
-                           <div class="form-item__control toggle CB_web">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                     </div>
-                     <br>
-                     <h3>Profanity Words</h3>
-                     <div class="form-item">
-                        <label class="form-item__label">Disable this feature</label>
-                        <div class="form-item__control toggle disable_profanity_words">
-                           <div class="toggle__handle"></div>
-                        </div>
-                     </div>
-                     <div id="profanity-words-opt">
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Facebook</label>
-                           <div class="form-item__control toggle PW_facebook">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Twitter</label>
-                           <div class="form-item__control toggle PW_twitter">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on Reddit</label>
-                           <div class="form-item__control toggle PW_reddit">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-                        <div class="form-item">
-                           <label class="form-item__label">Enable on rest of the web</label>
-                           <div class="form-item__control toggle PW_web">
-                              <div class="toggle__handle"></div>
-                           </div>
-                        </div>
-							</div>
-							<br>
-                     <h3>Custom API Keys</h3>
-                     <div class="form-item" id="upl">
-                        <table>
-                           <tr>
-                              <td colspan="2">
-                                 <label class="form-item__label">Use custom API keys for the Disinformation in Images API</label>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td>
-                                 Browse API Keys JSON File
-                              </td>
-                              <td>
-                                 <input type="file" class="browse" accept=".json" id="diiKeys">
-                              </td>
-                           </tr>
-                           <tr>
-                              <td id= "warning_dii"></td>
-                              <td>
-                                 <button type="button" class="button" id="showKeys">Show</button>
-                                 <button type="button" class="button" id="uploadDIIKeys">Ok</button>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-                  
-                     <div class="form-item">
-                        <table>
-                           <tr>
-                              <td>
-                                 <label class="form-item__label">Use custom API keys for the News Origin API</label>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td colspan="3">
-                                 <input type="password" class="form-control" id="newsKeysInput" placeholder="Google Custom Search API Keys">
-                              </td>
-                           </tr>
-                           <tr>
-                              <td id= "warning_norig" colspan="2"></td>
-                              <td>
-                                 <button type="button" class=" button" id="showNewsKeys">Show</button>
-                                 <button type="button" class=" button" id="uploadNewsKeys">Ok</button>
-                              </td>
-                           </tr>
-                        </table>
-                     </div>
-
-                     <br>
-                     <br>
-                     <div class="buttons"><a href="#"></a><button id = "save_settings" class="button">Done</button></div>
-                  </div>
+                   <!-- Ends here -->
                </div>
-            </div>
+               <div class="buttons">
+                     <a href="#"></a>
+                     <button id = "save_settings" class="button">Save</button>
+               </div>
          </div>
-      </div>
+         
 		<script src="../assets/js/settings.js"></script>
    </body>
 </html>
