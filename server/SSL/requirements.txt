@@ -2,6 +2,7 @@ OpenSSL
 cryptography
 idna
 datetime
-socket
-flask
-urllib.parse
+Flask
+requests
+lxml
+bs4
