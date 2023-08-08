@@ -1,108 +1,77 @@
-
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "version": "1.0.0",
   "name": "Social Street Smart",
-  "short_name": "SSS", 
+  "short_name": "SSS",
   "description": "Shaping tomorrow's Internet with Artificial Intelligence",
   "default_locale": "en",
-  "background" : {
-    "scripts" : ["scripts/background/eventPage.js","scripts/background/compromise.js"],
-    "persistent": false
+
+  "background": {
+    "service_worker": "scripts/background/eventPage.js"
   },
 
-"options_page": "views/settings.html",
-  "browser_action" :
-  {
-    "default_icon" : "assets/icon/pop.png",
-    "default_title" : "Social Street Smart",
-    "default_popup" : "views/popup.html"
+  "action": {
+    "default_icon": "assets/icon/pop.png",
+    "default_title": "Social Street Smart",
+    "default_popup": "views/popup.html"
   },
-  "content_scripts" : [
-    {
-      "matches" : [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js" : [
-       "scripts/content/sss.js"
-      ],
-      "run_at" : "document_end",
-      "all_frames" : false
-    },
-    {
-      "matches":[
-        "https://twitter.com/*"
-      ],
-      "js":["scripts/content/twitter_cb_hs.js"
-      ],
-      "run_at" : "document_end",
-      "all_frames" : false
-      
 
-    },
+  "content_scripts": [
     {
-      "matches":[
-        "https://www.reddit.com/*"
-      ],
-      "js":["scripts/content/reddit_cb_hs.js"
-      ],
-      "run_at" : "document_end",
-      "all_frames" : false
-      
-
-    },
-    {
-      "matches":[
-        "https://www.facebook.com/*"
-      ],
-      "js":[
-        "scripts/content/facebook_cb_hs.js"
-      ],
-      "run_at" : "document_end",
-      "all_frames" : false
-      
-
-    },
-    {
-      "matches": [
-        "http://*/diiResult*",
-        "https://*/diiResult*",
-        "http://*/fnResult*",
-        "https://*/fnResult*"
-      ],
-      "js": [
-        "scripts/content/dii/bootstrap.min.js",
-        "scripts/content/dii/jquery.min.js",
-        "scripts/content/dii/diiResult.js"
-      ],
-      "css":[
-        "scripts/content/dii/bootstrap.min.css"
-      ],
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/content/sss.js"],
       "run_at": "document_end"
-
+    },
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["scripts/content/twitter_cb_hs.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.reddit.com/*"],
+      "js": ["scripts/content/reddit_cb_hs.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["scripts/content/facebook_cb_hs.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/diiResult*", "https://*/diiResult*", "http://*/fnResult*", "https://*/fnResult*"],
+      "js": ["scripts/content/dii/bootstrap.min.js", "scripts/content/dii/jquery.min.js", "scripts/content/dii/diiResult.js"],
+      "css": ["scripts/content/dii/bootstrap.min.css"],
+      "run_at": "document_end"
     }
   ],
-"web_accessible_resources": [
-  "common/profanity_list_en.json",
-  "/scripts/content/dii/modal.html",
-  "scripts/content/dii/modal.html",
-  "scripts/content/dii/modal.js",
-  "scripts/content/dii/jquery.min.js",
-  "scripts/content/dii/bootstrap.min.js",
-  "scripts/content/dii/bootstrap.min.js.map",
-  "scripts/content/dii/bootstrap.min.css"
 
-],
-
-  "permissions": [
-    "tabs","notifications","storage","contextMenus"
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "common/profanity_list_en.json",
+        "/scripts/content/dii/modal.html",
+        "scripts/content/dii/modal.html",
+        "scripts/content/dii/modal.js",
+        "scripts/content/dii/jquery.min.js",
+        "scripts/content/dii/bootstrap.min.js",
+        "scripts/content/dii/bootstrap.min.js.map",
+        "scripts/content/dii/bootstrap.min.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
   ],
-  "icons" : {
-    "36" : "assets/icon/36.png",
-    "48" : "assets/icon/48.png",
-    "72" : "assets/icon/72.png",
-    "96" : "assets/icon/96.png"
+
+  "permissions": ["tabs", "notifications", "storage", "contextMenus"],
+
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "icons": {
+    "36": "assets/icon/36.png",
+    "48": "assets/icon/48.png",
+    "72": "assets/icon/72.png",
+    "96": "assets/icon/96.png"
   }
 }
- 
