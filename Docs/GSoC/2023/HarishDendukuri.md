@@ -1,5 +1,3 @@
-# GSoC 2023 Work Product
-
 <h1 align="center">Google Summer of Code 2023 </h1>
 
 <p align="center"><i>A full report on my Google Summer of Code 2023 work with AOSSIE</i></p>
