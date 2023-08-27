@@ -5,8 +5,20 @@ const fno = document.getElementById('fake-news-opt');
 const hso = document.getElementById('hate-speech-opt');
 const cbo = document.getElementById('click-baits-opt');
 const pwo = document.getElementById('profanity-words-opt');
-const save_button = document.getElementById('save_settings');
 
+// +++++++++ Select hide flagged opt ++++++++++
+
+const hfo = document.getElementById('hide-flagged-opt');
+
+// ++++++++++++++++
+
+const reset_flagged = document.getElementById('reset_flagged');
+
+// +++++++++++++++++
+
+const save_button = document.getElementById('save_settings');
+const warn_dii    = document.getElementById('warning_dii');
+const warn_orig   = document.getElementById('warning_norig');
 
 chrome.storage.sync.get(['white_list'], function(result) {
   if(result.white_list){
@@ -53,6 +65,14 @@ chrome.storage.sync.get(['options'], function (result) {
         pwo.classList.add('hidden');
       }
 
+      // ++++++ added hidden class for disable_hide_flagged ++++++
+
+      if (find_element[0].classList.contains('disable_hide_contents')) {
+        hfo.classList.add('hidden');
+      }
+
+      // 
+
       find_element[0].classList.add('is-on');
 
     }
@@ -80,22 +100,13 @@ for (var i = 0; toggle.length > i; i++) {
     if (this.classList.contains('disable_profanity_words')) {
       pwo.classList.toggle('hidden');
     }
+
+    if (this.classList.contains('disable_hide_contents')) {
+      hfo.classList.toggle('hidden');
+    }
+
   });
 }
-
-// function uploadDIIKeys(){
-//   var x = document.getElementById("diiKeys");
-//   var reader = new FileReader;
-//   keys = x.files[0];
-//   reader.readAsText(keys);
-//   reader.result;
-
-//   chrome.storage.sync.set({"diiKeys": reader.result}, function() {
-//     console.log('Value is set to ' + value);
-//   });
-// }
-
-
 
 
 save_button.addEventListener('click', function () {
@@ -104,11 +115,7 @@ save_button.addEventListener('click', function () {
   for (var i = 0; toggles.length > i; i++) 
   {
     if (toggles[i].classList.contains('is-on')) {
-      //console.log('SSS');
-      //console.log(toggles[i].classList);
       kk = toggles[i].classList;
-      //console.log(kk);
-      //console.log(kk[2]);
       selected_options.push(kk[2]);
     }
   }
@@ -129,19 +136,58 @@ save_button.addEventListener('click', function () {
 
 });
 
+
+// ++++++++++ add reset functionality +++++++++++
+
+reset_flagged.addEventListener('click', function () {
+  
+  temp = {};
+  temp['reported_contents'] = {
+    'reported_fake_news' : {},
+    'reported_hate_speech' : {}
+  };
+
+  chrome.storage.sync.set(temp, function () {
+    console.log(temp);
+  });
+
+});
+
+// ++++++++++++
+
+// News Origin
+
 uploadNewsKeys.addEventListener('click', function(){
   console.log('TESET');
   var keys = document.getElementById('newsKeysInput').value;
-  chrome.storage.sync.set({'newsKeys' : keys}, function(result){
-    console.log('News Keys are set to: ' + keys);
-  });
+  if(keys != ''){ // save only if key is valid( not an empty string)
+    chrome.storage.sync.set({'newsKeys' : keys}, function(result){
+      console.log('News Keys are set to: ' + keys);
+    });
+
+    warn_orig.innerText = 'Saved Successfully !!';
+  }
+  else{
+    warn_orig.innerText = 'Please enter the API key first !!';
+  }
+
 });
 
 showNewsKeys.addEventListener('click', function(){
   chrome.storage.sync.get('newsKeys', function(result){
-    console.log('Old News Keys: ' + result.newsKeys);
+    if(result.newsKeys){ // when keys are found
+      console.log('Old News Keys: ' + result.newsKeys);
+      warn_orig.innerText = ''; 
+    }
+    else{ // when keys are not found
+      console.log('No keys found !!');  
+      warn_orig.innerText = 'No keys found !!';
+    }
   });
+
 });
+
+// DII 
 
 uploadDIIKeys.addEventListener('click', function () {
   
@@ -155,42 +201,36 @@ uploadDIIKeys.addEventListener('click', function () {
     chrome.storage.sync.set({'diiKeys' : b64Keys}, function() {
       console.log('Value is set to ' + b64Keys);
     });
-
+    
   };
   reader.onerror = function(stuff) {
     console.log('error', stuff);
     console.log (stuff.getMessage());
   };
-  reader.readAsText(keys);
-  // reader.result;
 
-  
-  // console.log("result")
-  console.log(b64Keys);
-
-  // chrome.storage.sync.get('diiKeys', function (result) {
-  //   console.log("Old Keys:")
-  //   console.log(result.diiKeys)
-  // });
-
-  // chrome.storage.sync.set({"diiKeys" : b64Keys}, function() {
-  //   console.log('Value is set to ' + b64Keys);
-  // });
-
-  // chrome.storage.sync.get('diiKeys', function (result) {
-  //   console.log("Old Keys:")
-  //   console.log(result.diiKeys)
-  // });
-
+  if(keys){
+    warn_dii.innerText = 'Saved Successfully !!';
+    reader.readAsText(keys);
+       
+  }
+  else{
+    warn_dii.innerText = 'Please choose a file !!';
+  }
 });
 
 
 
 showKeys.addEventListener('click', function () {
   chrome.storage.sync.get('diiKeys', function (result) {
-    console.log('Old Keys:');
-    console.log(result);
+    // typeof(result) = Object, if empty return "No Keys found" 
+    if(Object.keys(result).length != 0){ 
+      console.log('Old Keys:');
+      console.log(result); 
+      warn_dii.innerText = ''; 
+    }
+    else{ // when keys are not found
+      console.log('No keys found !!');  
+      warn_dii.innerText = 'No keys found !!';
+    }
   });
-
-
 });

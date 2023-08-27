@@ -34,11 +34,29 @@
         <legend>Check for:</legend>
         <div id="checkButtons">
             <button type="button" id="NewsOrigin_button">News Origin</button>
+            <button id="ContextAnalysis_button">Context Analysis</button>
+
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend><h3>Rate this website:</h3></legend>
+        <div>
+          <input type="radio" id="1" name="rating" value="1">
+          <label for="1">1</label>
+          <input type="radio" id="2" name="rating" value="2">
+          <label for="2">2</label>
+          <input type="radio" id="3" name="rating" value="3">
+          <label for="3">3</label>
+          <input type="radio" id="4" name="rating" value="4">
+          <label for="4">4</label>
+          <input type="radio" id="5" name="rating" value="5">
+          <label for="5">5</label>
         </div>
       </fieldset>
     </div>
 
     <h3 id="result" > Results: </h3> <span id="resultSpan"> </span> </h3>
+    <h3 id="averageRating">Average Rating: </h3>
   </form>
   
   <div  id="whitelist">
@@ -50,7 +68,8 @@
      <div class="buttons"><a target="_blank" href="settings.html"><button class="button">Settings</button></a></div>
   </div>
   
+  <script src="../assets/js/popup.js"></script>
 </body>
-<script src="../assets/js/popup.js"></script>
+
 </html>
 
