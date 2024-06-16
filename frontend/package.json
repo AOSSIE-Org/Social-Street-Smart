@@ -1,0 +1,47 @@
+{
+  "name": "social-street-smart",
+  "version": "1.0.0",
+  "description": "Shaping tomorrow's Internet with Artificial Intelligence",
+  "repository": "https://gitlab.com/aossie/social-street-smart",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "author": "SerChirag",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://gitlab.com/aossie/social-street-smart/issues"
+  },
+  "homepage": "https://gitlab.com/aossie/social-street-smart#README",
+  "dependencies": {
+    "chrome-webstore-upload": "^0.4.0",
+    "del": "^2.2.0",
+    "gulp": "^4.0.2",
+    "gulp-cli": "^2.0.1",
+    "gulp-csso": "^2.0.0",
+    "gulp-eslint": "^5.0.0",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-if": "^2.0.2",
+    "gulp-minify": "^3.1.0",
+    "husky": "^2.4.1",
+    "zip-folder": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "lint-staged": "^8.2.1",
+    "mocha": "^7.2.0",
+    "node-fetch": "^2.6.0",
+    "puppeteer": "^3.3.0",
+    "puppeteer-autoscroll-down": "^0.1.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "./node_modules/.bin/eslint --fix"
+    ]
+  }
+  
+}

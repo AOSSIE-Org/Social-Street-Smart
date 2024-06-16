@@ -1,11 +1,30 @@
-# Social Street Smart - API
+# Social Street Smart
 
-## API Endpoints (hosted on AWS Lambda)
+## Motive
+With the adevent of Internet, the problems faced by the people have also grown. These include abusive languages, fake news articles, click-baits, malicious websites and security attacks.
+The aim of this project is to develop a Chrome Extension to make Internet a safer and a more productive service for the users. 
 
-Hate Speech API: https://wpxmafpmjf.execute-api.us-east-1.amazonaws.com/dev/pred?text=hi
+## Installation
 
-Click Bait API: https://17u8uun009.execute-api.us-east-1.amazonaws.com/dev/pred?text=hi
+ 1. Install [node.js](https://nodejs.org)(12.16.1), [git](https://git-scm.com)
+ 2. Clone the repository : 
+ `git clone https://gitlab.com/aossie/social-street-smart.git`
+ 3. Change the directory : 
+`cd social-street-smart/`
+ 3. Install the dependencies : 
+`npm install`
+ 5. Build the extension : 
+`gulp build` (if you have gulp installed globally) or use `./node_modules/.bin/gulp build` (if gulp is installed locally)
+ 6. Open the lib or dist folder from the Google Chrome's Settings :
 
-News Origin API: https://phcg4hgf84.execute-api.us-east-1.amazonaws.com/dev/pred?text=
+## How to Contribute 
+This is the first year of the project. Visit the [official website](http://aossie.gitlab.io) for the proposed ideas.
 
-Fake News API: https://59rfocmnrd.execute-api.us-east-1.amazonaws.com/dev/predict
+Candidates are also encouraged to suggest their own ideas.
+
+Visit the [Gitter Channel](https://gitter.im/AOSSIE/SocialStreetSmart) to interact with the community.
+
+## Licenses
+
+* GNU-GPL-3.0
+* CC-By-NC-ND [![License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)

@@ -338,7 +338,7 @@ The following merge requests were made to the project during GSoC 2020.
 
 - [!79 - GSoC 2020 Report (Open)](https://gitlab.com/aossie/social-street-smart/-/merge_requests/79)
 
-   
+  
 
 
 
