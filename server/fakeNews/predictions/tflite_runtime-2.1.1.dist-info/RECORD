@@ -1,0 +1,12 @@
+tflite_runtime-2.1.1.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+tflite_runtime-2.1.1.dist-info/METADATA,sha256=Cux-M3hovDv1JZ3vhZFb2pBCziQUMKT46_OD0KWN0z0,1438
+tflite_runtime-2.1.1.dist-info/RECORD,,
+tflite_runtime-2.1.1.dist-info/WHEEL,sha256=OtOo_3rwwCWAklSC2BhCqBMJ_R3ddO6iBBnDrB96wZw,104
+tflite_runtime-2.1.1.dist-info/top_level.txt,sha256=uNbSt_JkE5qb43UeqR4Wx6_Y6A5613g6gtS49welF08,15
+tflite_runtime/__init__.py,sha256=cvJ2mD2hM8qHbLZyqE9o5A7cEc3YLMSqgUjIwxFAefo,66
+tflite_runtime/__pycache__/__init__.cpython-36.pyc,,
+tflite_runtime/__pycache__/interpreter.cpython-36.pyc,,
+tflite_runtime/__pycache__/interpreter_wrapper.cpython-36.pyc,,
+tflite_runtime/_interpreter_wrapper.cpython-36m-x86_64-linux-gnu.so,sha256=bXLRQ5jdN4VKJuIvs2g4gS3qDnEvuVNzXGGjkQvcMt8,5351976
+tflite_runtime/interpreter.py,sha256=-KmjX7IVUDVFq0hpSrF4VV_4eRxRBMmdVOQkCr0IVy0,19610
+tflite_runtime/interpreter_wrapper.py,sha256=qYG_NHGVP1ZKyFH1VuTyw2yr93s9GocOsu6gOQgw7uM,6973
