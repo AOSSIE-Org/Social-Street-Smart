@@ -1,0 +1,8 @@
+OpenSSL
+cryptography
+idna
+datetime
+Flask
+requests
+lxml
+bs4

@@ -1,0 +1,5 @@
+Flask
+boto3
+requests
+lxml
+bs4

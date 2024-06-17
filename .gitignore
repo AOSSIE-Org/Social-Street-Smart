@@ -3,11 +3,12 @@ node_modules
 __pycache__/
 *.py[cod]
 *$py.class
-
+.vscode
 # C extensions
 *.so
 
 # Distribution / packaging
+server/Fake NEWS/files/glove.6B.100d.txt
 .Python
 build/
 develop-eggs/
@@ -82,7 +83,6 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/

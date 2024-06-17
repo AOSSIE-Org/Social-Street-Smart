@@ -1,0 +1,38 @@
+image: ubuntu:20.04
+# image: aayushdutt/carbonfootprint
+
+before_script:
+    - apt-get update
+    - apt-get -y --force-yes install xvfb
+    - export DEBIAN_FRONTEND=noninteractive
+    - apt-get -y --force-yes install wget
+    - apt -y --force-yes install build-essential apt-transport-https lsb-release ca-certificates curl
+    - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt-get -y --force-yes install ./google-chrome-stable_current_amd64.deb
+    - apt-get -y --force-yes install libxss1
+    - apt -y --force-yes install nodejs
+    - node -v
+    - npm install
+    - npm install -g gulp
+    - npm install chrome-webstore-upload
+
+stages:
+    - test
+    - deploy
+    
+extTest:
+    stage: test
+    script:
+        # - npm test
+        - chmod +x ./test.sh
+        - ./test.sh 
+        # - xvfb-run -a --server-args="-screen 0 1280x800x24 -ac -nolisten tcp -dpi 96 +extension RANDR" npm test
+
+extDeploy:
+    stage: deploy
+    only:
+        - master
+    script:
+        - gulp build
+        - node ./deploy.js

@@ -6,7 +6,7 @@ The aim of this project is to develop a Chrome Extension to make Internet a safe
 
 ## Installation
 
- 1. Install [node.js](https://nodejs.org), [git](https://git-scm.com)
+ 1. Install [node.js](https://nodejs.org)(12.16.1), [git](https://git-scm.com)
  2. Clone the repository : 
  `git clone https://gitlab.com/aossie/social-street-smart.git`
  3. Change the directory : 
@@ -14,7 +14,8 @@ The aim of this project is to develop a Chrome Extension to make Internet a safe
  3. Install the dependencies : 
 `npm install`
  5. Build the extension : 
-`gulp build`
+`gulp build` (if you have gulp installed globally) or use `./node_modules/.bin/gulp build` (if gulp is installed locally)
+ 6. Open the lib or dist folder from the Google Chrome's Settings :
 
 ## How to Contribute 
 This is the first year of the project. Visit the [official website](http://aossie.gitlab.io) for the proposed ideas.

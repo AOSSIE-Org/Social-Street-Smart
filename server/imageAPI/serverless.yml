@@ -1,0 +1,49 @@
+# serverless.yml
+
+service: dii-aossie-dev-app
+
+plugins:
+  - serverless-python-requirements
+  - serverless-wsgi
+
+package:
+  exclude: 
+    - node_modules/**
+    - ./awsPackages.zip
+custom:
+  wsgi:
+    app: app.app
+  pythonRequirements:
+    packRequirements: false
+    dockerizePip: non-linux
+    slim: true
+    # layer: true
+    noDeploy: 
+      - google-api-core
+      - google-auth
+      - google-cloud-vision
+      - googleapis-common-protos
+      - grpcio
+      - idna
+      - rsa
+      - pyasn1
+      - pyasn1-modules
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: us-east-1
+
+functions:
+  app:
+    handler: wsgi.handler
+    layers:
+      # - { Ref: PythonRequirementsLambdaLayer }
+      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_11_keras:3
+      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_keras:1
+    timeout: 300
+    memory: 2048
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
