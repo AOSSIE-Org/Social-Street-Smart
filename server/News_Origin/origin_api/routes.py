@@ -25,7 +25,7 @@ def predict():
 		text = request.args.get('text')
 		key = request.args.get('key')
 	language = 'english'
-	if len(key) != 39 OR key == None:
+	if len(key) != 39 or key == None:
 		key = "AIzaSyCMcQKjtDcLJ7lVXRyoSiO0MwDBkztyi84"
 		
 	sc = SourceChecker(text, language, key)
