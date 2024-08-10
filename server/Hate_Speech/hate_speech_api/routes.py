@@ -1,95 +1,61 @@
 import pickle
-from keras.models import model_from_json
-import sys, os, re, csv, codecs
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from flask import request, jsonify, json
-from hate_speech_api import app
-from keras import backend as K
 import tensorflow as tf
+from tensorflow.keras.models import model_from_json
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from flask import Flask, request, jsonify
 
+app = Flask(__name__)
 
-# data = pd.read_csv("hate_speech_api/resources/train.csv")
-# sentences = data["comment_text"].fillna("DUMMY_VALUE").values
-
-
-
-# data = pd.read_csv("hate_speech_api/resources/train.csv")
-
-# sentences = data["comment_text"].fillna("DUMMY_VALUE").values
-# print(type(sentences))
-# import pickle
-# with open('hate_speech_api/resources/sentences.pickle', 'rb') as f:
-# 	sentences= pickle.load(f)
-
-# with open('sentences.pickle', 'wb') as f:
-#    pickle.dump(sentences, f)
-    
-
-# tokenizer = Tokenizer(num_words=22000)
-# tokenizer.fit_on_texts(sentences)
-
+# Load the tokenizer
 with open('hate_speech_api/resources/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
-graph = tf.get_default_graph()
+# Load the model architecture
+with open('hate_speech_api/resources/lstm_hate_speech.json', 'r') as json_file:
+    loaded_model_json = json_file.read()
+loaded_model = model_from_json(loaded_model_json)
 
-
-def load_model():
-	global loaded_model
-	json_file = open('hate_speech_api/resources/lstm_hate_speech.json', 'r')
-	loaded_model = json_file.read()
-	json_file.close()
-	loaded_model = model_from_json(loaded_model)
-	loaded_model.load_weights("hate_speech_api/resources/lstm_hate_speech.h5")
-
-load_model()
+# Load the model weights
+loaded_model.load_weights('hate_speech_api/resources/lstm_hate_speech.h5')
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/pred', methods=['GET','POST'])
+@app.route('/pred', methods=['GET', 'POST'])
 def predict():
-	try:
-		if request.method == 'POST':
-			n_str= request.form['text']
+    try:
+        if request.method == 'POST':    
+            n_str = request.form['text']
+        elif request.method == 'GET':
+            n_str = request.args.get('text')
 
-		if request.method == 'GET':
-			n_str= request.args.get('text')
+        if n_str:
+            n_str = n_str.encode('utf-8')
+            predictions = score(n_str)
+            predictions = predictions.tolist()
+            return jsonify({
+                'Toxic': predictions[0][0],
+                'Severe Toxic': predictions[0][1],
+                'Obscene': predictions[0][2],
+                'Threat': predictions[0][3],
+                'Insult': predictions[0][4],
+                'Identity Hate': predictions[0][5]
+            }), 200
+        else:
+            return jsonify({'error': 'No text provided'}), 400
 
-		n_str = n_str.encode('utf-8')
-		#nstr=str(nstr)
-		predictions=score(n_str)
-		#print('Toxic:         {:.0%}'.format(predictions[0][0]))
-		#print('Severe Toxic:  {:.0%}'.format(predictions[0][1]))
-		#print('Obscene:       {:.0%}'.format(predictions[0][2]))
-		predictions = predictions.tolist()
-		#print predictions
-		# app.logger.info('API called for string: ' + (n_str.decode('utf-8')) +'. (returned): ' + str(predictions))
-
-		return jsonify({'Toxic': predictions[0][0],
-						'Severe Toxic': predictions[0][1],
-						'Obscene': predictions[0][2],
-						'Threat': predictions[0][3],
-						'Insult': predictions[0][4],
-						'Identity Hate': predictions[0][5]}), 200
-
-	except AssertionError as error:
-		pass
-		# app.logger.error('API called for string: ' + (n_str.decode('utf-8')) + 'Error: '+ error)
-
-
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500
 
 def score(n_str):
-	n_str=n_str.decode('utf-8')
-	n_str=[n_str]
-	new_string = tokenizer.texts_to_sequences(n_str)
-	new_string = pad_sequences(new_string, maxlen=200)
+    n_str = n_str.decode('utf-8')
+    n_str = [n_str]
+    new_string = tokenizer.texts_to_sequences(n_str)
+    new_string = pad_sequences(new_string, maxlen=200)
+    prediction = loaded_model.predict(new_string)
+    return prediction
 
-	with graph.as_default():
-		prediction=loaded_model.predict(new_string)
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=8000, debug=True)
 
-	#K.clear_session()
-	#prediction = loaded_model.predict(new_string)
-	return prediction
