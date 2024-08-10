@@ -36,5 +36,7 @@ app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 
 
 cors = CORS(app)
-from hate_speech_api import routes
+
+from .routes import main
+app.register_blueprint(main)
 
