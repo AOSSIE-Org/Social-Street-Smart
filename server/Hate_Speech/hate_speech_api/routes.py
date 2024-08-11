@@ -53,9 +53,11 @@ def score(n_str):
     # print(n_str)
     n_str = n_str.decode('utf-8')
     n_str = [n_str]
+    print(n_str)
     new_string = tokenizer.texts_to_sequences(n_str)
+    print(new_string)
     new_string = pad_sequences(new_string, maxlen=200)
-    # print(new_string)
+    print(new_string)
     prediction = loaded_model.predict(new_string)
     return prediction
 
