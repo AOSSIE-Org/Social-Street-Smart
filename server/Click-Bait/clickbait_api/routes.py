@@ -11,10 +11,13 @@ main = Blueprint("main", __name__)
 # Set up TensorFlow session and graph
 session = tf.compat.v1.Session(graph=tf.compat.v1.get_default_graph())
 # Load the tokenizer
-with open('clickbait_api/resources/sentences.pickle', 'rb') as f:
+with open('clickbait_api/resources/tokenizer.pickle', 'rb') as f:
     tokenizer = pickle.load(f)
     print(tokenizer)
-
+# n_str = ["this is the best product for you"]
+# new_string = tokenizer.texts_to_sequences(n_str)
+# print("\n\n")
+# print(new_string)
 # print("\n\n"+sentences+"\n\n")
 # tokenizer = Tokenizer()
 # tokenizer.fit_on_texts(sentences)
@@ -56,7 +59,7 @@ def score(n_str):
     n_str = n_str.decode("utf-8")
     n_str = [n_str]
     print(n_str)
-    new_string = tokenizer.fit_on_texts(n_str)
+    new_string = tokenizer.texts_to_sequences(n_str)
     print(new_string)
     new_string = pad_sequences(new_string, maxlen=200)
     print(new_string)
