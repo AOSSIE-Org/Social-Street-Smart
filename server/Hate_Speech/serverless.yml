@@ -1,6 +1,8 @@
-# serverless.yml
-
-service: hateSpeech-aossie
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: keshavnischal
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: aossie
+service: hateSpeech
 
 plugins:
   - serverless-python-requirements
@@ -39,17 +41,17 @@ custom:
 
 provider:
   name: aws
-  runtime: python3.6
+  runtime: python3.12
   stage: dev
-  region: us-east-1
+  region: ap-south-1
 
 functions:
   app:
     handler: wsgi.handler
-    layers:
-      # - { Ref: PythonRequirementsLambdaLayer }
-      - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_11_keras:3
-      # - arn:aws:lambda:us-east-1:347034527139:layer:tf_keras:1
+    # layers:
+    #   # - { Ref: PythonRequirementsLambdaLayer }
+    #   - arn:aws:lambda:us-east-1:347034527139:layer:tf_1_11_keras:3
+    #   # - arn:aws:lambda:us-east-1:347034527139:layer:tf_keras:1
     timeout: 300
     memory: 2048
     events:
