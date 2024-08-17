@@ -6,9 +6,9 @@ from tflite_runtime.interpreter import Interpreter
 # import tflite_runtime.interpreter as tflite
 
 
-embeddingFilePath= r'/tmp/files/glove.6B.100d.txt'
+embeddingFilePath= r'ML/glove.6B.100d.txt'
 modelDescPath= r'ML/model_FNC.json' #model description json path
-modelWeightPath= r'ML/weights-improvement-04-0.85.hdf5' #model wieths path
+modelWeightPath= r'ML/ML/fakenews.weights.h5' #model wieths path
 liteModelPath = r'ML/model.tflite'
 hf= HandFeatures()
 embed_= Embed(embeddingFilePath)
