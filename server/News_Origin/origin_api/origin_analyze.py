@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from pattern.en import ngrams
 from pattern.web import Google, SEARCH
@@ -17,13 +16,6 @@ from pattern.graph import Graph
 import itertools
 import sys
 nltk.data.path = ['origin_api/nltk_data']
-# nltk.download('punkt')
-# nltk.download('wordnet')
-# nltk.download('stopwords')
-# nltk.download('averaged_perceptron_tagger')
-# nltk.download('maxent_ne_chunker')
-# nltk.download('words')
-
 
 
 class SourceChecker(object):
@@ -118,8 +110,8 @@ class SourceChecker(object):
 
 
 	def pairwise(self, t):
-	    it = iter(t)
-	    return zip(it,it)
+		it = iter(t)
+		return zip(it,it)
 
 	def get_urls(self, queries):
 		"""runs search query through search API and collects returned domain information"""
