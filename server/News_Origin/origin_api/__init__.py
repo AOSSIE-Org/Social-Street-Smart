@@ -5,6 +5,8 @@ from flask_cors import CORS, cross_origin
 # from logging.handlers import RotatingFileHandler
 from flask_swagger_ui import get_swaggerui_blueprint
 import nltk
+nltk.download('punkt')
+nltk.download('maxent_ne_chunker')
 nltk.data.path = ['origin_api/nltk_data']
 # initialize the log handler
 # logHandler = RotatingFileHandler('info.log', maxBytes=1000, backupCount=1)

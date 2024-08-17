@@ -3,7 +3,9 @@ from flask import request, jsonify, json
 from origin_api import app
 from .origin_analyze import SourceChecker 
 import nltk
+nltk.download('punkt')
 nltk.data.path = ['origin_api/nltk_data']
+from nltk.corpus import stopwords
 # nltk.download('punkt')
 # nltk.download('wordnet')
 # nltk.download('stopwords')
