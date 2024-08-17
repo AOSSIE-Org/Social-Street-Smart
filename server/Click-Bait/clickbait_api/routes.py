@@ -1,23 +1,28 @@
 import pickle
+import tensorflow as tf
 from tensorflow.keras.models import model_from_json
 import os
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from flask import Flask, request, jsonify
-import tensorflow as tf
+# import tflite_runtime.interpreter as tflite
+from flask import Blueprint, request, jsonify
+import numpy as np
 
-app = Flask(__name__)
 
+main = Blueprint("main", __name__)
 # Set up TensorFlow session and graph
-session = tf.compat.v1.Session(graph=tf.compat.v1.get_default_graph())
 # Load the tokenizer
-with open('clickbait_api/resources/sentences.pickle', 'rb') as f:
-    sentences = pickle.load(f)
+with open('clickbait_api/resources/tokenizer.pickle', 'rb') as f:
+    tokenizer = pickle.load(f)
+    # print(tokenizer)
+# n_str = ["this is the best product for you"]
+# new_string = tokenizer.texts_to_sequences(n_str)
+# print("\n\n")
+# print(new_string)
+# print("\n\n"+sentences+"\n\n")
+# tokenizer = Tokenizer()
+# tokenizer.fit_on_texts(sentences)
 
-text = 'how are you bro wtf bro'
-tokenizer = Tokenizer()
-tokenizer.fit_on_texts(text)
-graph = tf.compat.v1.get_default_graph()
 
 def load_model_func():
     global loaded_model
@@ -25,15 +30,19 @@ def load_model_func():
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
-    loaded_model.load_weights("clickbait_api/resources/lstm_clickBait_new.weights.h5")
+    loaded_model.load_weights("clickbait_api/resources/lstm_clickbait_new.weights.h5")
 
 load_model_func()
 
-@app.route('/')
+# Initialize the TFLite interpreter
+# interpreter = tf.lite.Interpreter(model_path='clickbait_api/resources/lstm_clickbait_new.tflite')
+# interpreter.allocate_tensors()
+
+@main.route('/')
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/pred', methods=['GET', 'POST'])
+@main.route('/pred', methods=['GET', 'POST'])
 def predict():
     try:
         if request.method == 'POST':
@@ -54,14 +63,24 @@ def predict():
 def score(n_str):
     n_str = n_str.decode("utf-8")
     n_str = [n_str]
+     # Tokenize and pad the input string
+    
     new_string = tokenizer.texts_to_sequences(n_str)
-    new_string = pad_sequences(new_string, maxlen=200)
+    print(new_string)
+    new_string = pad_sequences(new_string, maxlen=40,  padding='post')
     
-    with session.as_default():
-        with graph.as_default():
-            prediction = loaded_model.predict(new_string)
+    # # Get input tensor details
+    # input_details = interpreter.get_input_details()
+    # output_details = interpreter.get_output_details()
     
-    return prediction[0][0]
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    # # Set the input tensor
+    # interpreter.set_tensor(input_details[0]['index'], new_string.astype(np.float32))
+    
+    # # Run inference
+    # interpreter.invoke()
+    
+    # Get the output tensor
+    # output = interpreter.get_tensor(output_details[0]['index'])
+    
+    output = loaded_model.predict(new_string)
+    return output[0][0]
