@@ -61,5 +61,5 @@ def predict():
     r.headers.add('Access-Control-Allow-Origin', '*')     #to solve cross origin request problem, modify this in future
     return r
 
-#app.run(port = 9999,debug=True)
+app.run(port = 5000,debug=True)
 
