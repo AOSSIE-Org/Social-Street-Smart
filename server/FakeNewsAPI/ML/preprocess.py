@@ -1,6 +1,7 @@
 import os
 import re
 import nltk
+nltk.download('punkt')
 import string
 import numpy as np
 from sklearn import feature_extraction

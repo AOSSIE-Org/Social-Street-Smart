@@ -1,14 +1,13 @@
 import numpy as np 
-# from keras.models import model_from_json 
+from keras.models import model_from_json 
 from ML.glove_embeddings import Embed
 from ML.handFeature import HandFeatures
 
 from tflite_runtime.interpreter import Interpreter
 
-
-embeddingFilePath= r'/tmp/files/glove.6B.100d.txt'
-modelDescPath= r'ML/model_FNC.json' #model description json path
-modelWeightPath= r'ML/weights-improvement-04-0.85.hdf5' #model wieths path
+embeddingFilePath= r'ML/glove.6B.100d.txt'
+modelDescPath= r'ML/fakenews.json' #model description json path
+modelWeightPath= r'ML/ML/fakenews.weights.h5' #model wieths path
 liteModelPath = r'ML/model.tflite'
 
 hf= HandFeatures()
@@ -26,7 +25,6 @@ def get_classes(prediction):
     elif cls== 3:
         return "unrelated"
 
-
 def get_features(headline, body):
     global embed_
     if embed_ ==None:
@@ -41,15 +39,15 @@ def get_features(headline, body):
     feature= np.concatenate((headGlovefeat,bodyGloveFeat,handFeat),axis=-1)
     return feature
 
-# def load_model():
-#     global modelDescPath, modelWeightPath
-#     json_file= open(modelDescPath,'r')
-#     model_des= json_file.read()
-#     json_file.close()
-#     loaded_model= model_from_json(model_des)
-#     loaded_model.load_weights(modelWeightPath)
-#     # loaded_model._make_predict_function() #don't remove this untill this bug is solved officially
-#     return loaded_model
+def load_model():
+    global modelDescPath, modelWeightPath
+    json_file= open(modelDescPath,'r')
+    model_des= json_file.read()
+    json_file.close()
+    loaded_model= model_from_json(model_des)
+    loaded_model.load_weights(modelWeightPath)
+    loaded_model.make_predict_function() #don't remove this untill this bug is solved officially
+    return loaded_model
 
 def loadLite():
     # interpreter = tflite.Interpreter(model_path="ML/model.tflite")

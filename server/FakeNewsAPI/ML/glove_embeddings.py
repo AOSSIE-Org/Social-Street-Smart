@@ -9,7 +9,7 @@ import botocore
 
 BUCKET_NAME = 'fakenewsml-dev-serverlessdeploymentbucket-c949nmsfqdh6'
 MODEL_FILE_NAME ='glove.6B.100d.txt'
-SAVED_MODEL_FILE_NAME ='/tmp/glove.6B.100d.txt'
+SAVED_MODEL_FILE_NAME ='ML/glove.6B.100d.txt'
 
 
 def downloadGlove():

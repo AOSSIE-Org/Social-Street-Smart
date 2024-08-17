@@ -8,7 +8,7 @@ app = Flask(__name__)
 interpreter = loadLite()
 
 def get_prediction(h,b):
-    global interpreter
+    global interpreterd
     if interpreter==None:
         print( "error in loading trained model\n")
         exit
