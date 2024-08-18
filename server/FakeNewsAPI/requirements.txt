@@ -1,0 +1,17 @@
+boto3
+Flask
+flask_script
+nltk
+numpy
+python-dotenv
+tqdm
+wget
+requests
+pytest
+tensorflow
+tflite-runtime
+tflite
+keras
+scikit-learn
+pandas
+joblib
