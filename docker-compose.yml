@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  hate_speech:
+    container_name: hate_speech_service
+    volumes:
+      - ./server/Hate_Speech:/app/Hate_Speech
+    working_dir: /app/Hate_Speech
+    command: ["python", "app.py"]
+    ports:
+      - "5001:5001"
+
+  click_bait:
+    container_name: click_bait_service
+    volumes:
+      - ./server/Click-Bait:/app/Click-Bait
+    working_dir: /app/Click-Bait
+    command: ["python", "app.py"]
+    ports:
+      - "5002:5002"
+
+  security_header:
+    container_name: security_header_service
+    volumes:
+      - ./server/Security-Header:/app/Security-Header
+    working_dir: /app/Security-Header
+    command: ["python", "app.py"]
+    ports:
+      - "5003:5003"
+
+  ssl:
+    container_name: ssl_service
+    volumes:
+      - ./server/SSL:/app/SSL
+    working_dir: /app/SSL
+    command: ["python", "app.py"]
+    ports:
+      - "5004:5004"
+
+  supervisor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: supervisor
+    volumes:
+      - .:/app  # Optional: Only if supervisor needs access to this volume
+    command: ["/usr/bin/supervisord"]
+    depends_on:
+      - hate_speech
+      - click_bait
+      - security_header
+      - ssl
