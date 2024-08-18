@@ -1,6 +1,0 @@
-Flask_Cors==4.0.0
-Flask==3.0.0
-flask_swagger_ui==4.11.1
-tensorflow==2.16.0
-Keras==3.4.1
-Keras-Preprocessing==1.1.2
