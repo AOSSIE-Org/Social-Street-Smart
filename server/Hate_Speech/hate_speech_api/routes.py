@@ -1,34 +1,60 @@
 import pickle
 import tensorflow as tf
-from tensorflow.keras.models import model_from_json
-from tensorflow.keras.preprocessing.sequence import pad_sequences
-from flask import Flask, request, jsonify
+from keras.models import model_from_json
+from keras.preprocessing.sequence import pad_sequences
+from flask import Blueprint, request, jsonify
+import numpy as np
+# import tflite_runtime.interpreter as tflite
 
-app = Flask(__name__)
-
+# app = Flask(__name__)
+main = Blueprint("main", __name__)
 # Load the tokenizer
 with open('hate_speech_api/resources/tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
+def custom_pad_sequences(sequences, maxlen, padding='pre', truncating='post', value=0):
+    padded_sequences = np.full((len(sequences), maxlen), value, dtype=np.int32)
+    
+    for i, seq in enumerate(sequences):
+        if len(seq) > maxlen:
+            if truncating == 'pre':
+                truncated_seq = seq[-maxlen:]
+            else:
+                truncated_seq = seq[:maxlen]
+            padded_sequences[i] = truncated_seq
+        else:
+            if padding == 'pre':
+                padded_sequences[i, -len(seq):] = seq
+            else:
+                padded_sequences[i, :len(seq)] = seq
 
+    return padded_sequences
 # Load the model architecture
 with open('hate_speech_api/resources/lstm_hate_speech.json', 'r') as json_file:
     loaded_model_json = json_file.read()
 loaded_model = model_from_json(loaded_model_json)
 
 # Load the model weights
-loaded_model.load_weights('hate_speech_api/resources/lstm_hate_speech.h5')
+loaded_model.load_weights('hate_speech_api/resources/lstm_hate_speech.weights.h5')
 
-@app.route('/')
+# interpreter = tflite.Interpreter('hate_speech_api/resources/model.tflite')
+# interpreter.allocate_tensors()
+
+# # Get input and output tensor details
+# input_details = interpreter.get_input_details()
+# output_details = interpreter.get_output_details()
+
+@main.route('/')
 def hello_world():
     return 'Hello, World!'
 
-@app.route('/pred', methods=['GET', 'POST'])
+@main.route('/pred', methods=['GET', 'POST'])
 def predict():
     try:
         if request.method == 'POST':    
             n_str = request.form['text']
         elif request.method == 'GET':
             n_str = request.args.get('text')
+            # print(n_str)
 
         if n_str:
             n_str = n_str.encode('utf-8')
@@ -52,10 +78,21 @@ def score(n_str):
     n_str = n_str.decode('utf-8')
     n_str = [n_str]
     new_string = tokenizer.texts_to_sequences(n_str)
-    new_string = pad_sequences(new_string, maxlen=200)
+    print(new_string)
+    new_string = pad_sequences(new_string, maxlen=200, padding='post')
+
+
+    # new_string = custom_pad_sequences(new_string, maxlen=200)
+
+    # print(new_string)
+    # new_string = np.array(new_string, dtype=np.float32)  # dtype may vary based on model
+    # # Set input tensor
+    # interpreter.set_tensor(input_details[0]['index'], new_string)
+    # # Run inference
+    # interpreter.invoke()
+    # # Get output tensor
+    # prediction = interpreter.get_tensor(output_details[0]['index'])
     prediction = loaded_model.predict(new_string)
     return prediction
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8000, debug=True)
 
