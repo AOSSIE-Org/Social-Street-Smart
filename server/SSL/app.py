@@ -7,7 +7,7 @@ from flask import Flask, jsonify, request
 from urllib.parse import urlparse
 import requests
 from bs4 import BeautifulSoup
-
+import re
 
 app = Flask(__name__)
 
@@ -45,18 +45,28 @@ def check_url():
 
 
 def getLinkFromUrl(url):
+        
     if 'l.facebook.com' in url:
-        url = url.split("=")[1]
-        url = url.split("?")[0]
+        # Use regex to find the URL after 'u='
+        match = re.search(r'u=(https?://[^\s&]+)', url)
+        if match:
+            url = match.group(1)
+        return url
     elif 'reddit.com' in url:
         pageReq = requests.head(url,allow_redirects=True)
         soup = BeautifulSoup(pageReq.content,'lxml')
         url = soup.find("meta", property="og:url")
-    elif 'twitter.com' or 't.co' in url:
-        pageReq = requests.get(url)
-        url = pageReq.url
+    if ('twitter.com' in url) or ('t.co/' in url):
+        print("twitter url", url, "\n\n")
+        try:
+            res = requests.get(url, timeout=10, allow_redirects=True)  # Set a timeout of 10 seconds
+            res.raise_for_status()  # Raises an HTTPError for bad responses (4xx or 5xx)
+            print("Request successful:", res is not None)
+            url = res.url
+        except requests.exceptions.RequestException as e:
+            print("Request failed:", e)
+        
     return url
-
 
 def get_hostname(url):
     if not urlparse(url).scheme:
