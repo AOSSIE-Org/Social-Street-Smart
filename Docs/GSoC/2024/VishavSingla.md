@@ -11,13 +11,14 @@
 
 #### Summary
 
-This year's GSoC tasks focused on consolidating the project, improving its infrastructure, and enhancing both backend and frontend components. Here's a quick summary of the work done:
+This year's GSoC tasks focused on consolidating the project, improving its infrastructure, enhancing both backend and frontend components, and Dockerizing the application for streamlined deployment. Here's a quick summary of the work done:
 
 - 🔄 **Project Migration and Consolidation**
 - 🧠 **Machine Learning Model Updates**
 - 🖥️ **Backend Improvements**
 - 🎨 **Frontend Development**
 - 📁 **Project Structure and Documentation Enhancements**
+- 🐳 **Dockerization and Deployment**
 - 🚀 **Ongoing Improvements**
 
 #### Project Migration and Consolidation
@@ -57,6 +58,20 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 - 📚 Added comprehensive documentation in the README for running models
 - 🗂️ Created dedicated input and output folders for ML models to enhance understanding
 
+#### Dockerization and Deployment
+
+- 🐳 Dockerized all critical APIs and services, including:
+  - Fake News API
+  - Image API
+  - News Scraper
+  - News Predictor
+  - News Origin
+- 🔐 Implemented SSL and security headers across all services
+- ⚙️ Added `Dockerfile` and `docker-compose.yml` for easy local deployment
+- 🌐 Integrated Terraform scripts for DynamoDB and automated deployment processes
+- 🚀 Tested and deployed all endpoints, ensuring they are production-ready
+- 🛠️ Streamlined deployment processes, reducing downtime and improving maintainability
+
 #### Ongoing Work
 
 - 📝 Preparing to publish the extension on various platforms
@@ -66,9 +81,23 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 
 Here are some significant commits and pull requests made during the GSoC period:
 
-- **Commits on Aug 10, 2024:**
-  - 🛠️ *Resolved errors for hate speech Flask server* - `vishavsingla`
-  - 📦 *Added updated requirements.txt file for environment* - `vishavsingla`
+- **Aug 19, 2024:**
+  - 📄 *Added documentation with links to datasets and APIs related to servers and models* ([#28](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/28)) - `vishavsingla`
+
+
+- **Aug 18, 2024:**
+  - 📄 *Added updated README files for contributors and project* ([#26](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/26)) - `vishavsingla`
+  - 📦 *Updated `requirements.txt` for Fake News API* ([#25](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/25)) - `vishavsingla`
+
+- **Aug 17, 2024:**
+  - 🐳 *Added Docker files for FakeNews API, ImageAPI, NewsOrigin, and FakeNews - Predictor and Scraper* ([#24](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/24)) - `vishavsingla`
+  - ⚙️ *Fixed Fake News API server, restructured folders, and ensured all endpoints are functional* ([#20](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/20)) - `vishavsingla`
+
+- **Aug 16, 2024:**
+  - 🔧 *Fixed Fake News issues, added Terraform for DynamoDB, and ensured prediction endpoints are functional* ([#23](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/23)) - `vishavsingla`
+  - ⚙️ *Fixed News Origin API, ensuring all endpoints are functional* ([#22](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/22)) - `vishavsingla`
+  - 🖼️ *Added GoogleAPI integration to ImageAPI, tested all endpoints, and prepared for deployment* ([#21](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/21)) - `vishavsingla`
+
 
 - **Commits on Jun 22, 2024:**
   - 🖼️ *Image API*: Updated `app.py`, `node.js`, and deployment files to run all routes in Image API Flask server ([#15](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/15)) - `vishavsingla`
@@ -82,8 +111,10 @@ Here are some significant commits and pull requests made during the GSoC period:
 
 ### Future Scope
 
-- 🌐 Expansion of supported social media platforms
+- 🌐 Expansion of supported social media platforms for broader applicability
 - 📊 Enhanced user activity tracking and analysis features, including site blocking capabilities
+- 🤖 Integration of AI-driven content moderation tools for automated filtering
+- 🔄 Continuous improvement of ML models for higher accuracy and efficiency
 
 ### Project Links
 
@@ -93,4 +124,3 @@ Here are some significant commits and pull requests made during the GSoC period:
 ### Acknowledgements
 
 I would like to thank my mentors and the AOSSIE organization for their support and guidance throughout this GSoC period.
-

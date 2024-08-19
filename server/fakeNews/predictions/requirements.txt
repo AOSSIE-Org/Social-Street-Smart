@@ -8,3 +8,6 @@ tqdm
 wget
 requests
 pytest
+scikit-learn
+tflite
+tflite-runtime

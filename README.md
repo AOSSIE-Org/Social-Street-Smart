@@ -1,30 +1,79 @@
 # Social Street Smart
 
-## Motive
-With the adevent of Internet, the problems faced by the people have also grown. These include abusive languages, fake news articles, click-baits, malicious websites and security attacks.
-The aim of this project is to develop a Chrome Extension to make Internet a safer and a more productive service for the users. 
+Social Street Smart is a Chrome extension aimed at making the internet a safer and more productive space for users. It addresses issues like abusive language, fake news, clickbait, malicious websites, and security attacks.
 
-## Installation
+## Project Overview
 
- 1. Install [node.js](https://nodejs.org)(12.16.1), [git](https://git-scm.com)
- 2. Clone the repository : 
- `git clone https://gitlab.com/aossie/social-street-smart.git`
- 3. Change the directory : 
-`cd social-street-smart/`
- 3. Install the dependencies : 
-`npm install`
- 5. Build the extension : 
-`gulp build` (if you have gulp installed globally) or use `./node_modules/.bin/gulp build` (if gulp is installed locally)
- 6. Open the lib or dist folder from the Google Chrome's Settings :
+- **Frontend**: Chrome extension built with React and TypeScript
+- **Backend**: Multiple Python-based APIs for various detection tasks
+- **ML Models**: Pre-trained models for clickbait, hate speech, and fake news detection
 
-## How to Contribute 
-This is the first year of the project. Visit the [official website](http://aossie.gitlab.io) for the proposed ideas.
+## Features
 
-Candidates are also encouraged to suggest their own ideas.
+- Clickbait detection
+- Hate speech detection
+- Fake news detection
+- Disinformation in images detection
+- Web activity tracking
+- Website reputation checking
 
-Visit the [Gitter Channel](https://gitter.im/AOSSIE/SocialStreetSmart) to interact with the community.
+## Quick Start
 
-## Licenses
+### Frontend (Chrome Extension)
 
-* GNU-GPL-3.0
-* CC-By-NC-ND [![License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+```bash
+cd client
+npm install
+npm run build
+
+```
+### Load the 'dist' folder as an unpacked extension in Chrome
+
+
+### Backend Servers
+
+```bash
+cd server
+docker compose up
+````
+
+## Project Structure
+
+```
+Social-Street-Smart/
+├── client/                 # Frontend (Chrome extension)
+├── server/                 # Backend services
+│   ├── clickbait/
+│   ├── hate-speech/
+│   ├── fake-news/
+│   ├── image-api/
+│   └── news-origin/
+├── ML/              # Machine learning models
+│   ├── clickbait/
+│   ├── hate-speech/
+│   └── fake-news/
+└── docker-compose.yml
+```
+
+## API Endpoints
+
+- Clickbait API: `http://localhost:5000/predict`
+- Hate Speech API: `http://localhost:5001/predict`
+- Fake News API: `http://localhost:5002/predict`
+- Image Disinformation API: `http://localhost:5003/analyze`
+- News Origin API: `http://localhost:5004/origin`
+
+## Contributing
+
+We welcome contributions to Social Street Smart! For detailed setup instructions and how to contribute, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the CC-By-NC-ND 4.0 License - see the [LICENSE](LICENSE) file for details.
+
+[![License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
+
+## Acknowledgements
+
+- [AOSSIE](https://aossie.gitlab.io/) for organizing and supporting this project
+- All contributors and mentors who have helped shape Social Street Smart
