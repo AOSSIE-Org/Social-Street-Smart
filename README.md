@@ -25,15 +25,17 @@ Social Street Smart is a Chrome extension aimed at making the internet a safer a
 cd client
 npm install
 npm run build
-# Load the 'dist' folder as an unpacked extension in Chrome
+
 ```
+### Load the 'dist' folder as an unpacked extension in Chrome
+
 
 ### Backend Servers
 
 ```bash
 cd server
-docker-compose up --build
-```
+docker compose up
+````
 
 ## Project Structure
 
@@ -46,7 +48,7 @@ Social-Street-Smart/
 │   ├── fake-news/
 │   ├── image-api/
 │   └── news-origin/
-├── ml-models/              # Machine learning models
+├── ML/              # Machine learning models
 │   ├── clickbait/
 │   ├── hate-speech/
 │   └── fake-news/
