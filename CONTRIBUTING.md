@@ -6,10 +6,11 @@ Thank you for your interest in contributing to Social Street Smart! This documen
 
 1. [Project Structure](#project-structure)
 2. [Setting Up the Project](#setting-up-the-project)
-3. [Running the Components](#running-the-components)
-4. [Contributing Guidelines](#contributing-guidelines)
-5. [Code Style](#code-style)
-6. [Reporting Issues](#reporting-issues)
+3. [Extracting Data and Models](#extracting-data-and-models)
+4. [Running the Components](#running-the-components)
+5. [Contributing Guidelines](#contributing-guidelines)
+6. [Code Style](#code-style)
+7. [Reporting Issues](#reporting-issues)
 
 ## Project Structure
 
@@ -19,13 +20,13 @@ Social-Street-Smart/
 ├── server/                 # Backend services
 │   ├── clickbait/
 │   ├── hate-speech/
-│   ├── fake-news/
-│   ├── image-api/
+│   ├── fakenews/
+│   ├── imageAPI/
 │   └── news-origin/
-├── ml-models/              # Machine learning models
+├── ML/              # Machine learning models
 │   ├── clickbait/
 │   ├── hate-speech/
-│   └── fake-news/
+│   └── fakenews/
 └── docker-compose.yml
 ```
 
@@ -70,7 +71,48 @@ The backend services are containerized using Docker:
 
 2. Start all services:
    ```bash
-   docker-compose up --build
+   docker-compose up
+   ```
+
+## Extracting Data and Models
+
+Some data and models are too large to be included in the GitHub repository. Follow these steps to obtain and set up the necessary files:
+
+### Fake News Model
+
+1. Download the Fake News datasets from Kaggle: [AOSSIE Fake News Detection Datasets](https://www.kaggle.com/ad6398/aossie-fake-news-detection-datasets)
+2. Extract and place the files in `server/fakeNewsAPI/ML/` and `server/fakeNews/predictions/ML/`
+3. Download the GloVe word embeddings (glove.6B.100d.txt) from [Stanford NLP](https://nlp.stanford.edu/projects/glove/) and place it in both directories mentioned above
+
+### Click-Bait Model
+
+1. Download the Click-Bait dataset from Kaggle: [AOSSIE Click-Bait Dataset](https://www.kaggle.com/ad6398/aossie-click-bait-dataset)
+2. Extract and place the files in the appropriate directory under `ML/clickbait/`
+
+### Google News Vectors
+
+1. Download the Google News vector dataset from Kaggle: [Google News Vectors](https://www.kaggle.com/datasets/adarshsng/googlenewsvectors)
+2. Extract and place the files in the appropriate directory under `ML/`
+
+### Toxic Comment/Hate Speech Models
+
+1. Download the GloVe word embeddings (glove.6B.zip) from [Stanford NLP](https://nlp.stanford.edu/data/glove.6B.zip)
+2. Extract and place the files in `Toxic Comment/Data/glove.6B/`
+3. Download the Toxic Comment Classification Challenge dataset from Kaggle: [Jigsaw Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data)
+4. Extract and place the files in `Toxic Comment/Data/toxic-comment/`
+
+### Image API Credentials
+
+1. Follow the instructions in this video to generate Google App Credentials: [Generate Google App Credentials](https://youtu.be/1Oz5TfwvhfQ)
+2. Save the generated JSON file as `GoogleAppCreds.json` in `server/imageAPI/tmp/`
+
+### News Origin API Key
+
+1. Go to [Google Custom Search API](https://developers.google.com/custom-search/v1/introduction)
+2. Click on "Get a Key" and follow the instructions to create a new project and generate an API key
+3. Create a `.env` file in `server/News_Origin/` and add your API key:
+   ```
+   GOOGLE_API_KEY=your_api_key_here
    ```
 
 ## Running the Components
