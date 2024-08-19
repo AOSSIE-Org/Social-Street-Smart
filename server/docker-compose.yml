@@ -1,0 +1,65 @@
+
+services:
+  hate_speech:
+    build:
+      context: ./Hate_Speech
+      dockerfile: Dockerfile
+    container_name: hate_speech_service
+    ports:
+      - "5001:5000"
+
+  click_bait:
+    build:
+      context: ./Click-Bait
+      dockerfile: Dockerfile
+    container_name: click_bait_service
+    ports:
+      - "5002:5000"
+
+  security_header:
+    build:
+      context: ./Security-Header
+      dockerfile: Dockerfile
+    container_name: security_header_service
+    ports:
+      - "5003:5000"
+
+  ssl:
+    build:
+      context: ./SSL
+      dockerfile: Dockerfile
+    container_name: ssl_service
+    ports:
+      - "5004:5000"
+
+  fake_news_api:
+    build:
+      context: ./FakeNewsAPI
+      dockerfile: Dockerfile
+    container_name: fake_news_api_service
+    ports:
+      - "5005:5000"
+
+  image_api:
+    build:
+      context: ./imageAPI
+      dockerfile: Dockerfile
+    container_name: image_api_service
+    ports:
+      - "5006:5000"
+
+  news_origin:
+    build:
+      context: ./News_Origin
+      dockerfile: Dockerfile
+    container_name: news_origin_service
+    ports:
+      - "5007:5000"
+
+  report_api:
+    build:
+      context: ./ReportAPI
+      dockerfile: Dockerfile
+    container_name: report_api_service
+    ports:
+      - "5008:5000"
