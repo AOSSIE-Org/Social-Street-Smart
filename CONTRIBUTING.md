@@ -6,11 +6,14 @@ Thank you for your interest in contributing to Social Street Smart! This documen
 
 1. [Project Structure](#project-structure)
 2. [Setting Up the Project](#setting-up-the-project)
+
 3. [Extracting Data and Models](#extracting-data-and-models)
 4. [Running the Components](#running-the-components)
 5. [Contributing Guidelines](#contributing-guidelines)
 6. [Code Style](#code-style)
 7. [Reporting Issues](#reporting-issues)
+
+
 
 ## Project Structure
 
@@ -20,6 +23,7 @@ Social-Street-Smart/
 ├── server/                 # Backend services
 │   ├── clickbait/
 │   ├── hate-speech/
+
 │   ├── fakenews/
 │   ├── imageAPI/
 │   └── news-origin/
@@ -27,6 +31,7 @@ Social-Street-Smart/
 │   ├── clickbait/
 │   ├── hate-speech/
 │   └── fakenews/
+
 └── docker-compose.yml
 ```
 
@@ -71,6 +76,7 @@ The backend services are containerized using Docker:
 
 2. Start all services:
    ```bash
+
    docker compose up
    ```
 
@@ -113,6 +119,7 @@ Some data and models are too large to be included in the GitHub repository. Foll
 3. Create a `.env` file in `server/News_Origin/` and add your API key:
    ```
    GOOGLE_API_KEY=your_api_key_here
+
    ```
 
 ## Running the Components
