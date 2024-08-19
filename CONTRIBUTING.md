@@ -71,7 +71,7 @@ The backend services are containerized using Docker:
 
 2. Start all services:
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
 ## Extracting Data and Models

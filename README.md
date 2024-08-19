@@ -32,7 +32,7 @@ npm run build
 
 ```bash
 cd server
-docker-compose up
+docker compose up
 ```
 
 ## Project Structure
