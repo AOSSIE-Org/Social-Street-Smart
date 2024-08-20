@@ -1,0 +1,65 @@
+{
+  "background": {
+    "service_worker": "./scripts/background/background.js",
+    "type": "module"
+  },
+  "action" :
+  {
+    "default_icon" : "assets/icon/pop.png",
+    "default_title" : "Social Street Smart",
+    "default_popup" : "src/popup/index.html"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : [
+       "scripts/content/sss.js"
+      ],
+      "run_at" : "document_end"
+    },
+    
+    {
+      "matches":[
+        "https://www.facebook.com/*"
+      ],
+      "js":[
+        "scripts/content/facebook_cb_hs.js"
+      ],
+      "run_at" : "document_end"
+    },
+    {
+      "matches":[
+        "https://www.reddit.com/*"
+      ],
+      "js":["scripts/content/reddit_cb_hs.js"
+      ],
+      "run_at" : "document_start"
+    }
+    
+  ],
+  
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "name": "Social Street Smart",
+  "short_name": "SSS", 
+  "description": "Shaping tomorrow's Internet with Artificial Intelligence",
+  "default_locale": "en",
+  "options_page": "src/settings/index.html",
+  "web_accessible_resources": [{
+    "resources": ["common/profanity_list_en.json"],
+    "matches": ["<all_urls>"]
+  }],
+  "permissions": [
+    "tabs","notifications","storage","contextMenus","webNavigation", "activeTab"
+  ],
+  "icons" : {
+    "36" : "assets/icon/36.png",
+    "48" : "assets/icon/48.png",
+    "72" : "assets/icon/72.png",
+    "96" : "assets/icon/96.png"
+  }
+}
+ 
