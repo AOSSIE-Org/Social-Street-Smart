@@ -14,17 +14,21 @@ COPY server/Hate_Speech/requirements.txt /app/Hate_Speech/requirements.txt
 COPY server/Click-Bait/requirements.txt /app/Click-Bait/requirements.txt
 COPY server/Security-Header/requirements.txt /app/Security-Header/requirements.txt
 COPY server/SSL/requirements.txt /app/SSL/requirements.txt
+COPY server/Summarizer/requirements.txt /app/Summarizer/requirements.txt
 
 
 RUN pip install --no-cache-dir -r /app/Hate_Speech/requirements.txt && \
     pip install --no-cache-dir -r /app/Click-Bait/requirements.txt && \
     pip install --no-cache-dir -r /app/Security-Header/requirements.txt && \
-    pip install --no-cache-dir -r /app/SSL/requirements.txt
+    pip install --no-cache-dir -r /app/SSL/requirements.txt && \
+    pip install --no-cache-dir -r /app/Summarizer/requirements.txt
+
 # Copy both applications' code into the container
 COPY server/Hate_Speech /app/Hate_Speech
 COPY server/Click-Bait /app/Click-Bait
 COPY server/Security-Header /app/Security-Header
 COPY server/SSL /app/SSL
+COPY server/Summarizer /app/Summarizer
 
 # Copy supervisor configuration file
 COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
