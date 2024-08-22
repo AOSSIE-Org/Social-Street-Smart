@@ -8,7 +8,18 @@ from reportStuff import ReportStuffs
 
 app = Flask(__name__)
 
-db = boto3.resource('dynamodb')
+# Replace these placeholder values with your actual credentials and region
+aws_access_key_id = 'ACCESS KEY'
+aws_secret_access_key = 'SECRET KEY'
+region_name = 'ap-south-1'  # Mumbai region
+
+# Create a DynamoDB resource instance
+db = boto3.resource(
+    'dynamodb',
+    region_name=region_name,
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key
+)
 
 tableFake      = db.Table("Reported-Fake")
 tableHate      = db.Table("Reported-Hate")

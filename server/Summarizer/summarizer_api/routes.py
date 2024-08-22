@@ -1,8 +1,26 @@
 from summarizer_api import app
 from newspaper import Article
 from flask import request, jsonify, json
-from gensim.summarization.summarizer import summarize 
 from urllib.parse import unquote
+
+from openai import OpenAI
+
+def summarize(text, ratio):
+	summaryLength = int(len(text)*ratio)
+	client = OpenAI(api_key = "API_KEY")
+
+	completion = client.chat.completions.create(
+		model="gpt-4o-mini",
+		messages=[
+			{"role": "system", "content": "You are a helpful assistant."},
+			{
+				"role": "user",
+				"content": f"Write a summer of the following text:\n{text}\nThe summary should be in {summaryLength} words"
+			}
+		],
+		max_tokens=100
+	)
+	return completion.choices[0].message.content
 
 @app.route('/')
 def hello_world():
@@ -19,8 +37,6 @@ def predict():
 		
 		n_str = str(n_str)
 		n_str=unquote(n_str)
-		n_str=n_str.split('?u=')[1]
-		n_str=n_str.split('/?ref')[0]
 		article = Article(n_str, language="en")
 		article.download() 
 		article.parse()

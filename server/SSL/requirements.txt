@@ -1,8 +1,6 @@
-OpenSSL
-cryptography
-idna
-datetime
-Flask
-requests
-lxml
-bs4
+pyOpenSSL==24.2.1
+cryptography==43.0.0
+idna==3.7
+Flask==3.0.0
+requests==2.32.3
+beautifulsoup4==4.12.3

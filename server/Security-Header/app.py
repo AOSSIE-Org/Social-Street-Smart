@@ -1,10 +1,15 @@
 from flask import Flask, jsonify, request
 import requests
 from urllib.parse import urlparse
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
+import re
+
+from createBloomFilter import load_bloom_filter
+
 
 app = Flask(__name__)
 
+bloom_filter = load_bloom_filter("./bloomfilter/bloomFilterObj")
 
 @app.route("/")
 def home():
@@ -28,6 +33,7 @@ def scan_url():
             return jsonify({"Error": "No URL Found"})
     try:
         url = getLinkFromUrl(url)
+        print("\nUrl scheme", urlparse(url),"\n\n")
         if not urlparse(url).scheme:
             url = 'https://' + url
         isValid = "True"
@@ -39,19 +45,27 @@ def scan_url():
 
 
 def getLinkFromUrl(url):
+        
     if 'l.facebook.com' in url:
-        url = url.split("=")[1]
-        url = url.split("?")[0]
-    elif 'reddit.com' in url:
-        pageReq = requests.head(url, allow_redirects=True)
-        soup = BeautifulSoup(pageReq.content, 'lxml')
-        url = soup.find("meta", property="og:url")
-    elif 'twitter.com' or 't.co/' in url:
-        pageReq = requests.get(url)
-        url = pageReq.url
-
+        # Use regex to find the URL after 'u='
+        match = re.search(r'u=(https?://[^\s&]+)', url)
+        if match:
+            url = match.group(1)
+        return url
+    if ('twitter.com' in url) or ('t.co/' in url):
+        print("twitter url", url, "\n\n")
+        try:
+            res = requests.get(url, timeout=10, allow_redirects=True)  # Set a timeout of 10 seconds
+            res.raise_for_status()  # Raises an HTTPError for bad responses (4xx or 5xx)
+            print("Request successful:", res is not None)
+            url = res.url
+        except requests.exceptions.RequestException as e:
+            print("Request failed:", e)
+        
     return url
 
+def ScanForMaliciousLink(url):
+    return url in bloom_filter
 
 def scan_headers(url, score):
     headers = (requests.get(url)).headers
