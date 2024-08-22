@@ -11,6 +11,14 @@ from nltk.corpus import stopwords
 from nltk import ne_chunk, pos_tag
 import pandas as pd
 from dotenv import load_dotenv
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger_eng')
+nltk.download('punkt_tab')
+nltk.download('wordnet')
+nltk.download('maxent_ne_chunker')
+nltk.download('maxent_ne_chunker_tab')
+nltk.download('stopwords')
+nltk.download('words')
 
 # Load environment variables from .env file
 load_dotenv()
