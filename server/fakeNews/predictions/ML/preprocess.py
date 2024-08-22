@@ -5,7 +5,8 @@ import string
 import numpy as np
 from sklearn import feature_extraction
 from tqdm import tqdm
-nltk.data.path = ['./nltk_data']
+nltk.download('punkt_tab')
+nltk.download('wordnet')
 
 _wnl = nltk.WordNetLemmatizer()
 class Preprocess:
@@ -14,8 +15,6 @@ class Preprocess:
         self.processedData=[]
         self._remove_stop= remove_stop
         self.lowercase= lower
-
-
 
  
     def join_tok(self, text):

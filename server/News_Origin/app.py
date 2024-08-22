@@ -20,7 +20,7 @@ NLTK_DATA_PATH = os.getenv('NLTK_DATA_PATH')
 API_KEY = os.getenv('API_KEY')
 
 # Set NLTK data path
-nltk.data.path = [NLTK_DATA_PATH]
+# nltk.data.path = [NLTK_DATA_PATH]
 
 app = Flask(__name__)
 app.config['TESTING'] = True

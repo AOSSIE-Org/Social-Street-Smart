@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.10-slim
+FROM python:3.9
 
 RUN pip install --upgrade pip
 # Set the working directory in the container
@@ -14,7 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Expose the port the app runs on
 EXPOSE 5000
 
-ENV AWS_DEFAULT_REGION=us-east-1
 # Define environment variable for Flask
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production

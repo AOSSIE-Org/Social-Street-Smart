@@ -25,15 +25,17 @@ Social Street Smart is a Chrome extension aimed at making the internet a safer a
 cd client
 npm install
 npm run build
+
 ```
-#### Load the 'dist' folder as an unpacked extension in Chrome
+### Load the 'dist' folder as an unpacked extension in Chrome
+
 
 ### Backend Servers
 
 ```bash
 cd server
-docker-compose up
-```
+docker compose up
+````
 
 ## Project Structure
 
