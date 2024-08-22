@@ -1,14 +1,10 @@
 import json
-import os
 import hashlib
 import decimal
 import requests
 from bs4 import BeautifulSoup
-import boto3
+import sqlite3
 from newsplease import NewsPlease
-
-# Initialize DynamoDB
-dynamodb = boto3.resource('dynamodb')
 
 # Custom Decimal Encoder for JSON
 class DecimalEncoder(json.JSONEncoder):
@@ -20,16 +16,33 @@ class DecimalEncoder(json.JSONEncoder):
 # Function to scrape URLs from The Hindu
 def scrape_theHindu(hindu_url="https://www.thehindu.com/news/international/"):
     print("Scraping The Hindu...")
-    news = requests.get(hindu_url)
-    url_list = []
+    article_urls = []
+    news_urls = ['https://www.thehindu.com/']
+    for section_url in news_urls:
+        section_response = requests.get(section_url)
+        section_soup = BeautifulSoup(section_response.text, 'html.parser')
+        
+        # Adjust this selector based on the structure of the section pages
+        article_links = section_soup.select('a[href^="https://www.thehindu.com/news/"]')
+        
+        for link in article_links:
+            article_url = link['href']
+            if article_url not in article_urls:
+                article_urls.append(article_url)
+        
     
-    if news.status_code == 200:
-        soup = BeautifulSoup(news.text, 'html.parser')
-        feed = soup.find_all('div', class_='Other-StoryCard')
-        for x in feed:
-            url_list.append(x.find("a")["href"])
-    
-    return url_list
+    international_response = requests.get('https://www.thehindu.com/news/international/')
+    international_soup = BeautifulSoup(international_response.text, 'html.parser')
+
+    # Adjust this selector based on the structure of the page
+    more_article_links = international_soup.select('a[href^="https://www.thehindu.com/news/international/"]')
+
+    for link in more_article_links:
+        article_url = link['href']
+        if article_url not in article_urls:
+            article_urls.append(article_url)
+
+    return article_urls
 
 # Function to scrape URLs from The Wire
 def scrape_theWire(wire_url="https://thewire.in/"):
@@ -81,19 +94,50 @@ def getNews(url):
     }
     return news
 
-# Function to store news articles in DynamoDB
-def storeNewsInDynamoDB(news_list):
-    table = dynamodb.Table('NewsTable')
+# Function to store news articles in SQLite3
+def storeNewsInSQLite(news_list, db_connection):
+    cursor = db_connection.cursor()
     
+    # Create table if not exists
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS NewsTable (
+        id TEXT PRIMARY KEY,
+        link TEXT,
+        content TEXT,
+        source TEXT
+    )
+    ''')
+    
+    # Insert news articles into the table
     for item in news_list:
-        table.put_item(Item=item)
-        print(f"Wrote {item['id']} to DynamoDB")
+        cursor.execute('''
+        INSERT OR REPLACE INTO NewsTable (id, link, content, source)
+        VALUES (?, ?, ?, ?)
+        ''', (item['id'], item['link'], item['content'], item['source']))
+        print(f"Wrote {item['id']} to SQLite")
+    
+    # Commit the changes
+    db_connection.commit()
 
 # Main function to orchestrate the scraping and storage process
 def main():
     print("Starting news scraping and storage process...")
+    
+    # Connect to a SQLite database file (this will create the file if it doesn't exist)
+    conn = sqlite3.connect('news_articles.db')
+    
     news_details = getNewsDetails()
-    storeNewsInDynamoDB(news_details)
+    storeNewsInSQLite(news_details, conn)
+    
+    # Fetch and display the stored news articles (for verification)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM NewsTable")
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+    
+    # Close the database connection
+    conn.close()
     print("Process completed successfully.")
 
 if __name__ == "__main__":
