@@ -4,8 +4,13 @@ from urllib.parse import urlparse
 # from bs4 import BeautifulSoup
 import re
 
+
+from createBloomFilter import load_bloom_filter
+
+
 app = Flask(__name__)
 
+bloom_filter = load_bloom_filter("./bloomfilter/bloomFilterObj")
 
 @app.route("/")
 def home():
@@ -60,6 +65,8 @@ def getLinkFromUrl(url):
         
     return url
 
+def ScanForMaliciousLink(url):
+    return url in bloom_filter
 
 def scan_headers(url, score):
     headers = (requests.get(url)).headers
