@@ -36,7 +36,15 @@ def scan_url():
         print("\nUrl scheme", urlparse(url),"\n\n")
         if not urlparse(url).scheme:
             url = 'https://' + url
-        isValid = "True"
+        isValid = True
+
+        if(ScanForMaliciousLink(url)==True):
+            score = -1
+            isValid = False
+            print({"Score": score, "isValid": isValid, "url": url})
+            return jsonify({"Score": score, "isValid": isValid, "url": url})
+
+        
         score = scan_headers(url, score)
     except:
         return jsonify({"Error": "Invalid Url", "url": url})
