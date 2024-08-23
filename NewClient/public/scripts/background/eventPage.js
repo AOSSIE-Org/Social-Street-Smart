@@ -134,6 +134,12 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Report For Hate Speech',
     contexts: ['link', 'selection'],
   });
+
+  chrome.contextMenus.create({
+    id: 'summarizar',
+    title: 'summarize text or link',
+    contexts: ['link', 'selection'],
+  });
 });
 
 
@@ -281,7 +287,27 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
         console.log('error', error);
     });
   }
+  
 
+
+  // ############################# summarizar ############################
+  if (clickData.menuItemId === 'summarizar') {
+    let targetUrl = clickData.selectionText;
+    fetch('http://127.0.0.1:5000/pred?text=' + encodeURIComponent(targetUrl))
+      .then(response => response.json())
+      .then(data => {
+        // Extract the result from the response
+        let resultText = data.Result;
+        
+        chrome.windows.create({
+          url: 'scripts/content/summarizar/summarizar.html?summary=' + encodeURIComponent(resultText),
+          focused: true,
+          type: 'popup'
+        });
+      })
+      .catch(error => console.error('Error fetching the summary:', error));
+  }
+  
   // // ######################### Fake News New API ##################################
 
   // if(clickData.menuItemId === 'fnMenu'){
