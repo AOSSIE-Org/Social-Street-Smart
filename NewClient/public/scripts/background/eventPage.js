@@ -106,23 +106,23 @@ var comments= msgs.Comments;
 //   // }
 // };
 
-// // ################################## Context Menu Options For Report#####################################
 
 
 
-// ########### Context Menu Options For SSL & Security Header Checker############
 chrome.runtime.onInstalled.addListener(() => {
+  // ########### Context Menu Options For SSL & Security Header Checker############
   chrome.contextMenus.create({
     id: 'CheckShcMenu',
     title: 'Check Url Safety',
     contexts: ['link', 'selection'],
   });
-
+  
   chrome.contextMenus.create({
     id: 'CheckSslMenu',
     title: 'Check SSL Validity',
     contexts: ['link', 'selection'],
   });
+  // // ################################## Context Menu Options For Report#####################################
   chrome.contextMenus.create({
     id: 'reportFNMenu',
     title: 'Report For Fake News',
@@ -132,6 +132,12 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: 'reportHSMenu',
     title: 'Report For Hate Speech',
+    contexts: ['link', 'selection'],
+  });
+
+  chrome.contextMenus.create({
+    id: 'summarizar',
+    title: 'summarize text or link',
     contexts: ['link', 'selection'],
   });
 });
@@ -244,53 +250,107 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
     };
 
     fetch('http://127.0.0.1:5000/shc?url=' + encodeURIComponent(targetUrl), requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            chrome.windows.create({
-                url: 'scripts/content/shc/shcResult.html?api=shc&safe=' + btoa(result.isSafe) + '&valid=' + btoa(result.isValid) + '&target=' + btoa(result.url),
-                focused: true,
-                type: 'popup'
-            });
-        })
-        .catch(error => {
-            console.log('error', error);
-        });
-}
+      .then(response => response.json())
+      .then(result => {
+          console.log(result);
+          chrome.windows.create({
+              url: 'scripts/content/shc/shcResult.html?api=shc&score=' + btoa(result.Score) + '&valid=' + btoa(result.isValid) + '&target=' + btoa(result.url),
+              focused: true,
+              type: 'popup'
+          });
+      })
+      .catch(error => {
+          console.log('error', error);
+      });
+  }
 
-if (clickData.menuItemId === 'CheckSslMenu') {
-    console.log("clickData", clickData);
+  if (clickData.menuItemId === 'CheckSslMenu') {
+  console.log("clickData", clickData);
+  let targetUrl = clickData.selectionText;
+
+  console.log(targetUrl);
+  var requestOptions = {
+      method: 'GET',
+  };
+
+  fetch('http://127.0.0.1:5000/ssl?url=' + encodeURIComponent(targetUrl), requestOptions)
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+        chrome.windows.create({
+            url: 'scripts/content/shc/shcResult.html?api=ssl&safe=' + btoa(result.isSafe) + '&valid=' + btoa(result.isValid) + '&target=' + btoa(result.url),
+            focused: true,
+            type: 'popup'
+        });
+    })
+    .catch(error => {
+        console.log('error', error);
+    });
+  }
+  
+
+
+  // ############################# summarizar ############################
+  if (clickData.menuItemId === 'summarizar') {
     let targetUrl = clickData.selectionText;
-
-    console.log(targetUrl);
-    var requestOptions = {
-        method: 'GET',
-    };
-
-    fetch('http://127.0.0.1:5000/ssl?url=' + encodeURIComponent(targetUrl), requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
-            chrome.windows.create({
-                url: 'scripts/content/shc/shcResult.html?api=ssl&safe=' + btoa(result.isSafe) + '&valid=' + btoa(result.isValid) + '&target=' + btoa(result.url),
-                focused: true,
-                type: 'popup'
-            });
-        })
-        .catch(error => {
-            console.log('error', error);
+    fetch('http://127.0.0.1:5000/pred?text=' + encodeURIComponent(targetUrl))
+      .then(response => response.json())
+      .then(data => {
+        // Extract the result from the response
+        let resultText = data.Result;
+        
+        chrome.windows.create({
+          url: 'scripts/content/summarizar/summarizar.html?summary=' + encodeURIComponent(resultText),
+          focused: true,
+          type: 'popup'
         });
-}
+      })
+      .catch(error => console.error('Error fetching the summary:', error));
+  }
+  
+  // // ######################### Fake News New API ##################################
 
-//   // ######################### Fake News New API ##################################
+  // if(clickData.menuItemId === 'fnMenu'){
+    
+  //   let text = '';
 
-//   if(clickData.menuItemId === 'fnMenu'){
+  //   if(clickData.selectionText){
+  //     text = clickData.selectionText;
+  //     checkFakeNews(text);
+  //   }
+  //   else{
+
+  //     let data = JSON.stringify({'link': clickData.linkUrl});
+
+  //     let getText = {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: data
+  //     };
+
+  //     fetch('https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/getText',getText)
+  //       .then(response => response.json())
+  //       .then(result =>{
+  //         text = result['searchText'];
+  //         checkFakeNews(text);
+  //       });
+  //   }
+
+  // }
+
+  // ###############################################################################
+
+  
+  // fact checker
+//   if(clickData.menuItemId === 'fcMenu'){
     
 //     let text = '';
 
 //     if(clickData.selectionText){
 //       text = clickData.selectionText;
-//       checkFakeNews(text);
+//       getFactCheck(text);
 //     }
 //     else{
 
@@ -308,181 +368,221 @@ if (clickData.menuItemId === 'CheckSslMenu') {
 //         .then(response => response.json())
 //         .then(result =>{
 //           text = result['searchText'];
-//           checkFakeNews(text);
+//           getFactCheck(text);
 //         });
+//     }  
+//   }
+// });   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// report a post
+// if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportHSMenu'){
+//   saveToLocalAndDB(clickData.menuItemId , clickData);
+// }
+// // report posts helper function
+// function saveToLocalAndDB(menuItemId,clickData){
+//   if( menuItemId === 'reportFNMenu'){
+//     //do FN stuffs
+
+//     var xhttp = new XMLHttpRequest();
+
+//     xhttp.onreadystatechange = function() {
+//       if (this.readyState === 4 && this.status === 200) {
+    
+//         var data = JSON.parse(xhttp.responseText);
+    
+//         chrome.storage.sync.get('reported_contents', function (result) {
+    
+//           if( Object.keys(result).length === 0 ){
+//             result = {
+//               'reported_contents': {
+//                 'reported_fake_news' : {}, // local storage only stores arrays or dict
+//                 'reported_hate_speech' : {}
+//               },
+//             }; 
+//           }
+    
+//           result['reported_contents']['reported_fake_news'][data['text']] = null ;
+    
+//           chrome.storage.sync.set(result, function() {
+//             console.log(result);
+//           });
+    
+//         });
+        
+
+//         var notific = {
+//           type: 'basic',
+//           title: 'Reported Successfully ',
+//           message: 'Thanks for your feedback!! ',
+//           // expandedMessage: 'High' + info_minimal,
+//           iconUrl: '../../assets/icon/72.png'
+//         };
+//         chrome.notifications.create(notific); 
+//       }
+//     };
+
+//     if (clickData.selectionText){
+
+//       chrome.storage.sync.get('reported_contents', function (result) {
+
+//         // request only if not reported earlier
+//         if(result.reported_contents.reported_fake_news[clickData.selectionText] === undefined){
+//           xhttp.open('GET', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reportfake?text=' + clickData.selectionText, true);
+//           xhttp.send();
+//         }
+
+//       });
+
+//     }
+//     else{
+//       var raw = JSON.stringify({'link':clickData.linkUrl});
+
+//       xhttp.open('POST', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reportfake', true);
+//       xhttp.setRequestHeader('Content-type', 'application/json');
+//       xhttp.send(raw);
 //     }
 
 //   }
 
-  // ###############################################################################
+//   else if ( menuItemId === 'reportHSMenu' ){
+//     //do HS stuffs
 
-  // report a post
-  if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportHSMenu'){
-    saveToLocalAndDB(clickData.menuItemId , clickData);
-  }
+//     var xhttp = new XMLHttpRequest();
 
-  // fact checker
-  if(clickData.menuItemId === 'fcMenu'){
+//     xhttp.onreadystatechange = function() {
+//       if (this.readyState === 4 && this.status === 200) {
+
+//         var data = JSON.parse(xhttp.responseText);
+
+//         chrome.storage.sync.get('reported_contents', function (result) {
     
-    let text = '';
-
-    if(clickData.selectionText){
-      text = clickData.selectionText;
-      getFactCheck(text);
-    }
-    else{
-
-      let data = JSON.stringify({'link': clickData.linkUrl});
-
-      let getText = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: data
-      };
-
-      fetch('https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/getText',getText)
-        .then(response => response.json())
-        .then(result =>{
-          text = result['searchText'];
-          getFactCheck(text);
-        });
-    }  
-  }
-});   
-
-// report posts helper function
-function saveToLocalAndDB(menuItemId,clickData){
-  if( menuItemId === 'reportFNMenu'){
-    //do FN stuffs
-
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
+//           if( Object.keys(result).length === 0 ){
+//             result = {
+//               'reported_contents': {
+//                 'reported_fake_news' : {}, // local storage only stores arrays or dict
+//                 'reported_hate_speech' : {}
+//               },
+//             }; 
+//           }
     
-        var data = JSON.parse(xhttp.responseText);
+//           result['reported_contents']['reported_hate_speech'][data['text']] = null ;
     
-        chrome.storage.sync.get('reported_contents', function (result) {
+//           chrome.storage.sync.set(result, function() {
+//             console.log(result);
+//           });
     
-          if( Object.keys(result).length === 0 ){
-            result = {
-              'reported_contents': {
-                'reported_fake_news' : {}, // local storage only stores arrays or dict
-                'reported_hate_speech' : {}
-              },
-            }; 
-          }
-    
-          result['reported_contents']['reported_fake_news'][data['text']] = null ;
-    
-          chrome.storage.sync.set(result, function() {
-            console.log(result);
-          });
-    
-        });
+//         });
         
 
-        var notific = {
-          type: 'basic',
-          title: 'Reported Successfully ',
-          message: 'Thanks for your feedback!! ',
-          // expandedMessage: 'High' + info_minimal,
-          iconUrl: '../../assets/icon/72.png'
-        };
-        chrome.notifications.create(notific); 
-      }
-    };
+//         var notific = {
+//           type: 'basic',
+//           title: 'Reported Successfully ',
+//           message: 'Thanks for your feedback!! ',
+//           // expandedMessage: 'High' + info_minimal,
+//           iconUrl: '../../assets/icon/72.png'
+//         };
+//         chrome.notifications.create(notific); 
+//       }
+//     };
 
-    if (clickData.selectionText){
+//     if (clickData.selectionText){
 
-      chrome.storage.sync.get('reported_contents', function (result) {
+//       chrome.storage.sync.get('reported_contents', function (result) {
 
-        // request only if not reported earlier
-        if(result.reported_contents.reported_fake_news[clickData.selectionText] === undefined){
-          xhttp.open('GET', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reportfake?text=' + clickData.selectionText, true);
-          xhttp.send();
-        }
+//         // request only if not reported earlier
+//         if(result['reported_contents']['reported_hate_speech'][clickData.selectionText] === undefined){
+//           xhttp.open('GET', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reporthate?text=' + clickData.selectionText, true);
+//           xhttp.send();
+//         }
 
-      });
+//       });
 
-    }
-    else{
-      var raw = JSON.stringify({'link':clickData.linkUrl});
+//     }
+//     else{
 
-      xhttp.open('POST', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reportfake', true);
-      xhttp.setRequestHeader('Content-type', 'application/json');
-      xhttp.send(raw);
-    }
+//       var raw = JSON.stringify({'link':clickData.linkUrl});
 
-  }
+//       xhttp.open('POST', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reporthate', true);
+//       xhttp.setRequestHeader('Content-type', 'application/json');
+//       xhttp.send(raw);
+//     }
 
-  else if ( menuItemId === 'reportHSMenu' ){
-    //do HS stuffs
+//   }
+// }
 
-    var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
 
-        var data = JSON.parse(xhttp.responseText);
 
-        chrome.storage.sync.get('reported_contents', function (result) {
-    
-          if( Object.keys(result).length === 0 ){
-            result = {
-              'reported_contents': {
-                'reported_fake_news' : {}, // local storage only stores arrays or dict
-                'reported_hate_speech' : {}
-              },
-            }; 
-          }
-    
-          result['reported_contents']['reported_hate_speech'][data['text']] = null ;
-    
-          chrome.storage.sync.set(result, function() {
-            console.log(result);
-          });
-    
-        });
-        
 
-        var notific = {
-          type: 'basic',
-          title: 'Reported Successfully ',
-          message: 'Thanks for your feedback!! ',
-          // expandedMessage: 'High' + info_minimal,
-          iconUrl: '../../assets/icon/72.png'
-        };
-        chrome.notifications.create(notific); 
-      }
-    };
 
-    if (clickData.selectionText){
 
-      chrome.storage.sync.get('reported_contents', function (result) {
 
-        // request only if not reported earlier
-        if(result['reported_contents']['reported_hate_speech'][clickData.selectionText] === undefined){
-          xhttp.open('GET', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reporthate?text=' + clickData.selectionText, true);
-          xhttp.send();
-        }
 
-      });
 
-    }
-    else{
 
-      var raw = JSON.stringify({'link':clickData.linkUrl});
 
-      xhttp.open('POST', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reporthate', true);
-      xhttp.setRequestHeader('Content-type', 'application/json');
-      xhttp.send(raw);
-    }
 
-  }
+
+
+
+
+
+// Handles user clicks to report posts
+if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportHSMenu') {
+  saveToLocalAndDB(clickData.menuItemId, clickData);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // // generate keywords
 // function getSearchKeywords(query){
@@ -679,7 +779,7 @@ function checkWebsite(myWebsite){
 //       }
 //     });
   // }
-});
+// });
 
 
 
@@ -729,4 +829,99 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     }
   });
 });
+})
 
+
+// Helper function to report content and save to local storage
+// Helper function to report content and save to local storage
+async function saveToLocalAndDB(menuItemId, clickData) {
+  const isFakeNews = menuItemId === 'reportFNMenu';
+  const apiUrl = isFakeNews
+    ? 'http://127.0.0.1:5000/reportfake'
+    : 'http://127.0.0.1:5000/reporthate';
+
+  try {
+    const requestOptions = buildRequestOptions(clickData, isFakeNews);
+    const response = await fetch(apiUrl, requestOptions);
+
+    // Check if the response is OK
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    // Check if the 'text' key is in the response data
+    if (!data['text']) {
+      throw new Error('Response data does not contain text');
+    }
+
+    // Retrieve and update local storage
+    let result = await chrome.storage.sync.get('reported_contents', (result)=>{console.log(result)});
+    result = initializeStorageIfEmpty(result);
+
+    const contentKey = isFakeNews ? 'reported_fake_news' : 'reported_hate_speech';
+    result['reported_contents'][contentKey][data['text']] = null;
+
+    await chrome.storage.sync.set(result);
+
+    // Show success notification
+    showNotification('Reported Successfully', 'Thanks for your feedback!!');
+  } catch (error) {
+    console.error(`Error reporting ${isFakeNews ? 'fake news' : 'hate speech'}:`, error);
+  }
+}
+
+
+// Build request options based on the click data and content type
+function buildRequestOptions(clickData, isFakeNews) {
+  const isText = clickData.selectionText && !isUrl(clickData.selectionText);
+
+  if (isText) {
+    return {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: clickData.selectionText })
+    };
+  }
+
+  return {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ link: clickData.selectionText })
+  };
+}
+
+// Check if the string is a URL
+function isUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+// Initialize storage if it is empty
+function initializeStorageIfEmpty(result) {
+  if (Object.keys(result).length === 0) {
+    return {
+      'reported_contents': {
+        'reported_fake_news': {},
+        'reported_hate_speech': {}
+      }
+    };
+  }
+  return result;
+}
+
+// Show a notification to the user
+function showNotification(title, message) {
+  const notificationOptions = {
+    type: 'basic',
+    title,
+    message,
+    iconUrl: '../../assets/icon/72.png'
+  };
+  chrome.notifications.create(notificationOptions);
+}
