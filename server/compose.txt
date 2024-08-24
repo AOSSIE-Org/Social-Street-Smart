@@ -1,0 +1,100 @@
+
+services:
+  news_scrapper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/fakeNews/newsScrapper/app.py
+    volumes:
+      - ./fakeNews/newsScrapper:/app/fakeNews/newsScrapper
+    depends_on:
+      - predictions
+
+  predictions:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/fakeNews/predictions/app.py --host=0.0.0.0
+    volumes:
+      - ./fakeNews/predictions:/app/fakeNews/predictions
+    ports:
+      - "5005:5005"
+
+  hate_speech:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/Hate_Speech/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5001:5001"
+
+  click_bait:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/Click-Bait/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5002:5002"
+
+  security_header:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/Security-Header/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5003:5003"
+
+  ssl:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/SSL/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5004:5004"
+
+  image_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/imageAPI/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5006:5006"
+
+  report_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/ReportAPI/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5007:5007"
+
+  summarizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python /app/Summarizer/app.py
+    volumes:
+      - .:/app
+    ports:
+      - "5008:5008"
+
+  news_origin:
+    build:
+      context: ./News_Origin
+    command: python /app/app.py
+    volumes:
+      - ./News_Origin:/app
+    ports:
+      - "5009:5009"
