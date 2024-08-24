@@ -8,10 +8,10 @@ from tflite_runtime.interpreter import Interpreter
 
 embeddingFilePath= r'ML/glove.6B.100d.txt'
 modelDescPath= r'ML/model_FNC.json' #model description json path
-modelWeightPath= r'ML/ML/fakenews.weights.h5' #model wieths path
+modelWeightPath= r'ML/fakenews.weights.h5' #model wieths path
 liteModelPath = r'ML/model.tflite'
 hf= HandFeatures()
-embed_= Embed(embeddingFilePath)
+embed_= Embed()
 
 def get_classes(prediction):
     cls=  prediction.argmax(axis=-1)[0]

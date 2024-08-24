@@ -18,8 +18,6 @@ COPY server/SSL/requirements.txt /app/SSL/requirements.txt
 COPY server/Summarizer/requirements.txt /app/Summarizer/requirements.txt
 COPY server/ReportAPI/requirements.txt /app/ReportAPI/requirements.txt
 
-
-
 RUN pip install --no-cache-dir -r /app/Hate_Speech/requirements.txt && \
     pip install --no-cache-dir -r /app/Click-Bait/requirements.txt && \
     pip install --no-cache-dir -r /app/Security-Header/requirements.txt && \
