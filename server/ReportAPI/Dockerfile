@@ -19,3 +19,6 @@ ENV FLASK_ENV=production
 
 # Run the application
 CMD ["flask", "run", "--host=0.0.0.0"]
+
+# docker build -t my-flask-app .
+# docker run --env-file .env -p 5000:5000 report

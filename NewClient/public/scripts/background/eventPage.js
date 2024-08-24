@@ -783,6 +783,7 @@ function checkWebsite(myWebsite){
 
 
 
+})
 console.log("Event page started");
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
@@ -814,22 +815,21 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 });
 
-chrome.tabs.onActivated.addListener(function(activeInfo) {
-  chrome.tabs.get(activeInfo.tabId, function(tab) {
-    console.log('Active Tab URL:', tab.url);
-    var myURL = tab.url;
-    var match = myURL.match(r);
-    console.log(match)
-    if (match) {
-      var k = match[1];
-      var myWebsite = k.replace(/^(https?:\/\/)?(www\.)?/, '');
-      chrome.storage.sync.set({'website': myWebsite}, function() {
-        console.log('Website stored: ' + myWebsite);
-      });
-    }
-  });
-});
-})
+// chrome.tabs.onActivated.addListener(function(activeInfo) {
+//   chrome.tabs.get(activeInfo.tabId, function(tab) {
+//     console.log('Active Tab URL:', tab.url);
+//     var myURL = tab[0].url;
+//     var match = myURL.match(r);
+//     console.log(match)
+//     if (match) {
+//       var k = match[1];
+//       var myWebsite = k.replace(/^(https?:\/\/)?(www\.)?/, '');
+//       chrome.storage.sync.set({'website': myWebsite}, function() {
+//         console.log('Website stored: ' + myWebsite);
+//       });
+//     }
+//   });
+// });
 
 
 // Helper function to report content and save to local storage
