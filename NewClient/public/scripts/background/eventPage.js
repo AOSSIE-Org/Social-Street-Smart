@@ -843,7 +843,7 @@ async function saveToLocalAndDB(menuItemId, clickData) {
   try {
     const requestOptions = buildRequestOptions(clickData, isFakeNews);
     const response = await fetch(apiUrl, requestOptions);
-
+  
     // Check if the response is OK
     if (!response.ok) {
       throw new Error(`Network response was not ok: ${response.statusText}`);
