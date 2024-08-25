@@ -42,7 +42,7 @@ class Embed:
         self.text = X
         if self.clean_text:
             p = Preprocess()
-            p.preprocessData(self.text)
+            p.preprocseesData(self.text)
             self.text = p.processedData
         self.embeddingMatrix = []
         for x in tqdm(self.text):

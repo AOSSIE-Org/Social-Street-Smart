@@ -1,23 +1,23 @@
 services:
-  news-scrapper:
-    build:
-      context: .
-    working_dir: /app/newsScrapper
-    command: python /app/newsScrapper/app.py
-    volumes:
-      - ./newsScrapper:/app/newsScrapper
-    depends_on:
-      - predictions
-    dns:
-      - 8.8.8.8
-      - 8.8.4.4
+  # news-scrapper:
+  #   build:
+  #     context: .
+  #   working_dir: /app/newsScrapper
+  #   command: python /app/newsScrapper/app.py
+  #   volumes:
+  #     - ./newsScrapper:/app/newsScrapper
+  #   depends_on:
+  #     - predictions
+  #   dns:
+  #     - 8.8.8.8
+  #     - 8.8.4.4
 
   predictions:
     build:
       context: .
     working_dir: /app/predictions
-    command: python /app/predictions/app.py --host=0.0.0.0
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./predictions:/app/predictions
     ports:
-      - "5005:5005"  # Map host port 5005 to container port 5000
+      - "5008:5000"  # Map host port 5005 to container port 5000

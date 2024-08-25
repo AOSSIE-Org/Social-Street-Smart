@@ -39,9 +39,9 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 
 #### Backend Improvements
 
-- 🛠️ Upgraded versions and resolved errors in all backend servers
+- 🛠️ Upgraded versions and resolved dependency errors in all backend servers - Click bait, Hate Speech, FakeNews, ImageAPI, ReportAPI, NewsOrigin, Summariser
 - ⚙️ Ensured all servers, models, and APIs are functioning without issues
-- 🚀 Improved overall backend stability and performance
+- 🚀 Improved overall backend stability and performance 
 
 #### Frontend Development
 
@@ -72,10 +72,17 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 - 🚀 Tested and deployed all endpoints, ensuring they are production-ready
 - 🛠️ Streamlined deployment processes, reducing downtime and improving maintainability
 
+#### CI/CD
+- Made Github Workflow CI for all servers
+
+#### Frontend integration for News Origin and FakeNews
+- Added scripts for FakeNews and News Origin in eventPage
+- Upgraded outdated code for manifest version 3 for fakenews, ImageAPI and NewsOrigin
+
 #### Ongoing Work
 
 - 📝 Preparing to publish the extension on various platforms
-- 🔧 Addressing existing issues in the codebase due to changes in social media sites
+- 🔧 Addressing existing issues in the codebase
 
 ### Commits and Pull Requests
 

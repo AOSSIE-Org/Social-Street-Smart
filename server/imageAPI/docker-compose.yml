@@ -10,4 +10,4 @@ services:
       FLASK_ENV: production
     volumes:
       - .:/app
-    command: ["python", "app.py", "--host=0.0.0.0"]
+    command: ["flask", "run", "--host=0.0.0.0"]
