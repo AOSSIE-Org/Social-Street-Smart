@@ -1,5 +1,5 @@
-chrome.storage.sync.remove("settings", ()=>{console.log("removed")})
-console.log("sss.js")
+// chrome.storage.sync.remove("settings", ()=>{console.log("removed")})
+// console.log("sss.js")
 let profanityWords=[];
 let reported_contents = ''; // make it globally accessible
 
@@ -33,7 +33,7 @@ async function initializeStorage() {
 
   // Initialize white_list if not present
   if (!result.white_list) {
-      console.log('test');
+      // console.log('test');
       temp['white_list'] = '|stackoverflow.com';
       await chrome.storage.sync.set(temp);
   }
@@ -149,13 +149,13 @@ var callback = async function(mutationsList, observer) {
   }
   var profanity_settings = settings["Profanity Words"]
   if(profanityWords.length==0){
-    console.log("fetching...")
+    // console.log("fetching...")
     profanityWords = await fetchProfanityWords();
-    console.log(profanityWords);
+    // console.log(profanityWords);
   }
   // console.log(profanityWords)
   if(profanity_settings["isEnabled"]){
-    console.log("executing profanity")
+    // console.log("executing profanity")
     var profanity_web = profanity_settings["otherWebsites"]
     var profanity_facebook = profanity_settings["facebook"]
     var profanity_twitter = profanity_settings["twitter"]
@@ -175,7 +175,7 @@ var callback = async function(mutationsList, observer) {
         }    
       }
     });
-    console.log("debug 160")
+    // console.log("debug 160")
   }
 
   counter=counter+1;
@@ -183,17 +183,18 @@ var callback = async function(mutationsList, observer) {
   mutationsList.forEach(function (mutation) {
     mutation.addedNodes.forEach(function (node) {
       if (node.nodeType === 1) { 
-        console.log(curWebsite);
+        // console.log(curWebsite);
         // facebook_clickbait(node,true);
         // reddit_clickbait(node,true);
         chrome.storage.sync.get(['white_list','Main_Switch'], function(result) {
           // console.log(settings);
-          console.log("fb today", curWebsite)
+          // console.log("fb today", curWebsite)
+          console.log(curWebsite)
           if((result.Main_Switch)&&(!(result.white_list).includes(curWebsite))){
             if (curWebsite==='facebook.com'){
               if(settings["Click Bait"]["isEnabled"] && settings["Click Bait"]["facebook"]){
                 if(settings["General"]["blur/hide"]){
-                  console.log("sss fb")
+                  // console.log("sss fb")
                   facebook_clickbait(node,true); //hide
                 }
               }
@@ -208,7 +209,7 @@ var callback = async function(mutationsList, observer) {
             if (curWebsite==='twitter.com'){
               if(settings["Click Bait"]["isEnabled"] && settings["Click Bait"]["twitter"]){
                 if(settings["General"]["blur/hide"]){
-                  console.log("sss fb")
+                  // console.log("sss fb")
                   twitter_clickbait(node,true); //hide
                 }
               }
@@ -223,13 +224,13 @@ var callback = async function(mutationsList, observer) {
             }
 
             if (curWebsite==='reddit.com'){
-              console.log(settings)
-              console.log(settings["Click Bait"])
+              // console.log(settings)
+              // console.log(settings["Click Bait"])
               if(settings["Click Bait"]["isEnabled"] && settings["Click Bait"]["reddit"]){
-                console.log("reddit");
-                console.log(settings["General"]["blur/hide"])
+                // console.log("reddit");
+                // console.log(settings["General"]["blur/hide"])
                 if(settings["General"]["blur/hide"]){
-                  console.log("sss reddit")
+                  // console.log("sss reddit")
                   reddit_clickbait(node,true); //hide
                 }
               }
@@ -248,7 +249,7 @@ var callback = async function(mutationsList, observer) {
 };
 
 
-console.log("sss mutation")
+// console.log("sss mutation")
 var observer = new MutationObserver(callback);
 observer.observe(targetNode, config);
 

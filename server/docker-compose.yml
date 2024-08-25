@@ -7,8 +7,6 @@ services:
     command: python /app/newsScrapper/app.py
     volumes:
       - ./fakeNews/newsScrapper:/app/newsScrapper
-    depends_on:
-      - predictions
     dns:
       - 8.8.8.8
       - 8.8.4.4
@@ -17,88 +15,90 @@ services:
     build:
       context: ./fakeNews
       dockerfile: Dockerfile
-    command: python /app/predictions/app.py --host=0.0.0.0
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./fakeNews/predictions:/app/predictions
+    
     ports:
-      - "5005:5005"
+      - "5008:5000"
+    
 
   hate_speech:
     build:
       context: ./Hate_Speech
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./Hate_Speech:/app
     ports:
-      - "5001:5001"
+      - "5001:5000"
 
   click_bait:
     build:
       context: ./Click-Bait
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./Click-Bait:/app
     ports:
-      - "5002:5002"
+      - "5002:5000"
 
   security_header:
     build:
       context: ./Security-Header
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./Security-Header:/app
     ports:
-      - "5003:5003"
+      - "5003:5000"
 
   ssl:
     build:
       context: ./SSL
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./SSL:/app
     ports:
-      - "5004:5004"
+      - "5004:5000"
 
   image_api:
     build:
       context: ./imageAPI
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./imageAPI:/app
     ports:
-      - "5006:5006"
+      - "5007:5000"
 
   report_api:
     build:
       context: ./ReportAPI
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./ReportAPI:/app
     ports:
-      - "5007:5007"
+      - "5006:5000"
 
   summarizer:
     build:
       context: ./Summarizer
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./Summarizer:/app
     ports:
-      - "5008:5008"
+      - "5005:5000"
 
   news_origin:
     build:
       context: ./News_Origin
       dockerfile: Dockerfile
-    command: python /app/app.py
+    command: ["flask", "run", "--host=0.0.0.0"]
     volumes:
       - ./News_Origin:/app
     ports:
-      - "5009:5009"
+      - "5009:5000"

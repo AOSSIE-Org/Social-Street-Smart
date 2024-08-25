@@ -5,69 +5,60 @@ function facebook_clickbait(node, hide=true) {
   const class2 = 'mbs _6m6 _2cnj _5s6c';  // when signed out
   const images = [...node.getElementsByClassName(class1)].concat([...node.getElementsByClassName(class2)]);
   console.log(images);
+  
   images.forEach(function (el) {
-
     var link = el.textContent;
 
-    var request = new XMLHttpRequest();
- 
-    request.onreadystatechange = function () {
-      if (request.readyState === 4) {
-        if (request.status === 200) {
-          console.log(request.responsetext)
-          // var data = JSON.parse(request.responseText);
-          var data = {Result:1}
-          console.log("keshav: ",data.Result);
-          var clickbait_probability = data.Result;
-          var clickbait_label = document.createElement('div');
-          clickbait_label.setAttribute('class', 'SSS');
-
-          if (clickbait_probability > 0.9) {
-            clickbait_label.style.textDecoration = 'underline';
-            clickbait_label.style.color = 'rgb(128, 0, 0)';
-            clickbait_label.style.fontSize = '18px';
-            clickbait_label.style.textAlign = 'right';
-            clickbait_label.textContent = 'Clickbait';
-
-            if(hide){ // set display none
-              if([...node.getElementsByClassName(class1)].length >0 ){
-                rootElement = getParentNode(el,20);
-              }
-              else{
-                rootElement = getParentNode(el,17); // when logged out
-              }
-              rootElement.style.display = 'none';
-              rootElement.classList.add('SSS-Hide'); // easy for testing
-
-            }
-                    
-          } else if ( (clickbait_probability > 0.6) && (clickbait_probability < 0.9) ) {
-            clickbait_label.style.textDecoration = 'underline';
-            clickbait_label.style.color = 'rgb(' + Number((clickbait_probability) * 1.28).toFixed(0) + ', ' + Number((100 - clickbait_probability) * 1.28).toFixed(0) + ', 0)';
-            clickbait_label.style.textAlign = 'right';
-            clickbait_label.style.fontSize = '18px';
-            var probability= Math.round(clickbait_probability*100);
-            clickbait_label.textContent = (probability) + '% Clickbait';
-
-          }
-          var elParent = el.parentNode;
-          var parentParent= elParent.parentNode; //.parentNode; 
-
-
-          parentParent.append(clickbait_label);
-
+    fetch('https://jsonplaceholder.typicode.com/posts/1')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-      }
-    };
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        // For demo purposes, assuming data.Result comes from the actual API.
+        var clickbait_probability = data.Result || 1; // Defaulting to 1 for this example.
+        var clickbait_label = document.createElement('div');
+        clickbait_label.setAttribute('class', 'SSS');
 
-    // request.open('GET', 'https://17u8uun009.execute-api.us-east-1.amazonaws.com/dev/pred?text=' + link, true);
-    // request.open('GET', 'https://17u8uun009.execute-api.us-east-1.amazonaws.com/dev/pred?text=' + link, true);
-    request.open('GET', 'https://jsonplaceholder.typicode.com/posts/1', true);
+        if (clickbait_probability > 0.9) {
+          clickbait_label.style.textDecoration = 'underline';
+          clickbait_label.style.color = 'rgb(128, 0, 0)';
+          clickbait_label.style.fontSize = '18px';
+          clickbait_label.style.textAlign = 'right';
+          clickbait_label.textContent = 'Clickbait';
 
-    request.send();
+          // if(hide){ // set display none
+          //   let rootElement;
+          //   if([...node.getElementsByClassName(class1)].length > 0) {
+          //     rootElement = getParentNode(el, 20);
+          //   } else {
+          //     rootElement = getParentNode(el, 17); // when logged out
+          //   }
+          //   rootElement.style.display = 'none';
+          //   rootElement.classList.add('SSS-Hide'); // easy for testing
+          // }
+        } else if (clickbait_probability > 0.6 && clickbait_probability < 0.9) {
+          clickbait_label.style.textDecoration = 'underline';
+          clickbait_label.style.color = `rgb(${Number((clickbait_probability) * 1.28).toFixed(0)}, ${Number((100 - clickbait_probability) * 1.28).toFixed(0)}, 0)`;
+          clickbait_label.style.textAlign = 'right';
+          clickbait_label.style.fontSize = '18px';
+          var probability = Math.round(clickbait_probability * 100);
+          clickbait_label.textContent = `${probability}% Clickbait`;
+        }
+
+        var elParent = el.parentNode;
+        var parentParent = elParent.parentNode;
+        parentParent.append(clickbait_label);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
   });
+}
 
-};
 
 function facebook_hatespeech(node,hide=false) {
 
