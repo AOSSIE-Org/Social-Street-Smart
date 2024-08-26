@@ -104,6 +104,7 @@ Here are some significant commits and pull requests made during the GSoC period:
 
 - [Project Repository](https://github.com/AOSSIE-Org/Social-Street-Smart)
 - [Download the Extension](https://chromewebstore.google.com/detail/social-street-smart/ddjcjpfkmcgpgpjhlmdenmionhbnpagm?hl=en&pli=1)
+- [Demo video link](https://drive.google.com/file/d/1N-AS6fYFcRA741JNuWn_pTUWCnyNERh8/view?usp=drive_link)
 
 ### Acknowledgements
 
