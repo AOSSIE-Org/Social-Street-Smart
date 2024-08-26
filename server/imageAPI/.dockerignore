@@ -1,0 +1,4 @@
+GoogleAppCreds.json
+.env
+app/__pycache__
+tmp

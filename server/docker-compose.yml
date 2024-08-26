@@ -102,3 +102,5 @@ services:
       - ./News_Origin:/app
     ports:
       - "5009:5000"
+
+
