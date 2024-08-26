@@ -65,6 +65,17 @@ Social-Street-Smart/
    - Enable "Developer mode"
    - Click "Load unpacked" and select the `dist` folder
 
+
+#### Deployed Docker Images on Render
+
+  - DockerHub : https://hub.docker.com/repository/docker/vishav9933
+
+  - Click bait Api : https://sss-click-bait-latest.onrender.com/
+  - Ssl Api : https://sss-ssl-latest.onrender.com/
+  - Hate speech Api: https://sss-hate-speech-latest.onrender.com/
+  - FakeNews Api - https://social-street-smart-latest.onrender.com/
+
+
 ### Backend Setup
 
 The backend services are containerized using Docker:
