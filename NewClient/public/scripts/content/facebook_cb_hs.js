@@ -1,7 +1,8 @@
 console.log("fb_cb_hs.js");
 function facebook_clickbait(node, hide=true) {
   console.log("facebook_clickbait")
-  const class1 = 'x9f619 x1n2onr6 x1ja2u2z x1jx94hy x1qpq9i9 xdney7k xu5ydu1 xt3gfkd xh8yej3 x6ikm8r x10wlt62 xquyuld'; // when signed in
+  // html-div xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd 
+  const class1 = 'html-div xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd'; // when signed in
   const class2 = 'mbs _6m6 _2cnj _5s6c';  // when signed out
   const images = [...node.getElementsByClassName(class1)].concat([...node.getElementsByClassName(class2)]);
   console.log(images);
@@ -60,71 +61,60 @@ function facebook_clickbait(node, hide=true) {
 }
 
 
-function facebook_hatespeech(node,hide=false) {
-
+function facebook_hatespeech(node, hide=false) {
   const class1 = 'enqfppq2 muag1w35 ni8dbmo4 stjgntxs e5nlhep0 ecm0bbzt rq0escxv a5q79mjw r9c01rrb'; // when signed in
   const class2 = 'mbs _6m6 _2cnj _5s6c';  // when signed out
   const images = [...node.getElementsByClassName(class1)].concat([...node.getElementsByClassName(class2)]);
   
-  images.forEach(function (el) {
-
+  images.forEach(async function (el) {
     var link = el.textContent;
 
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function () {
-      if (request.readyState === 4) {
-        if (request.status === 200) {
-          var data = JSON.parse(request.responseText);
-          var toxic_probability = data.Toxic;
-          var clickbait_label = document.createElement('div');
-          clickbait_label.setAttribute('class', 'SSS'); // added attributes
-
-          if (toxic_probability > 0.9) {
-            clickbait_label.style.textDecoration = 'underline';
-            clickbait_label.style.color = 'rgb(128, 0, 0)';
-            clickbait_label.style.fontSize = '18px';
-            console.log('toxic '+ link); 
-            clickbait_label.style.textAlign = 'right';
-            clickbait_label.textContent = 'TOXIC';
-
-            if(hide){ // set display none
-              if([...node.getElementsByClassName(class1)].length >0 ){
-                rootElement = getParentNode(el,20);
-              }
-              else{
-                rootElement = getParentNode(el,17); // when logged out
-              }
-              rootElement.style.display = 'none';
-              rootElement.classList.add('SSS-Hide'); // easy for testing
-
-            }
-
-          } else if ( (toxic_probability > 0.6) && (toxic_probability < 0.9) ) {
-            clickbait_label.style.textDecoration = 'underline';
-            clickbait_label.style.color = 'rgb(' + Number((toxic_probability) * 1.28).toFixed(0) + ', ' + Number((100 - toxic_probability) * 1.28).toFixed(0) + ', 0)';
-           
-            clickbait_label.style.textAlign = 'right';
-            clickbait_label.style.fontSize = '18px';
-            var probability= Math.round(toxic_probability*100);
-
-            clickbait_label.textContent = (probability) + '% TOXIC';
-          }
-          var elParent = el.parentNode;
-          var parentParent= elParent.parentNode.parentNode;
-
-	        parentParent.append(clickbait_label);
-
-        }
+    try {
+      const response = await fetch(`https://wpxmafpmjf.execute-api.us-east-1.amazonaws.com/dev/pred?text=${encodeURIComponent(link)}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
-    };
-    
-    request.open('GET', 'https://wpxmafpmjf.execute-api.us-east-1.amazonaws.com/dev/pred?text=' + link, true);
-    request.send();
-	 																																																																																								
+      const data = await response.json();
+      const toxic_probability = data.Toxic;
+      const clickbait_label = document.createElement('div');
+      clickbait_label.setAttribute('class', 'SSS');
+
+      if (toxic_probability > 0.9) {
+        clickbait_label.style.textDecoration = 'underline';
+        clickbait_label.style.color = 'rgb(128, 0, 0)';
+        clickbait_label.style.fontSize = '18px';
+        console.log('toxic ' + link); 
+        clickbait_label.style.textAlign = 'right';
+        clickbait_label.textContent = 'TOXIC';
+
+        if (hide) { // set display none
+          let rootElement;
+          if ([...node.getElementsByClassName(class1)].length > 0) {
+            rootElement = getParentNode(el, 20);
+          } else {
+            rootElement = getParentNode(el, 17); // when logged out
+          }
+          rootElement.style.display = 'none';
+          rootElement.classList.add('SSS-Hide'); // easy for testing
+        }
+      } else if (toxic_probability > 0.6 && toxic_probability < 0.9) {
+        clickbait_label.style.textDecoration = 'underline';
+        clickbait_label.style.color = `rgb(${Number(toxic_probability * 1.28).toFixed(0)}, ${Number((100 - toxic_probability) * 1.28).toFixed(0)}, 0)`;
+        clickbait_label.style.textAlign = 'right';
+        clickbait_label.style.fontSize = '18px';
+        const probability = Math.round(toxic_probability * 100);
+        clickbait_label.textContent = `${probability}% TOXIC`;
+      }
+
+      const elParent = el.parentNode;
+      const parentParent = elParent.parentNode.parentNode;
+      parentParent.append(clickbait_label);
+
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   });
-
-};
-
+}
 
 function hideReported_facebook(node) {
   const class1 = 'enqfppq2 muag1w35 ni8dbmo4 stjgntxs e5nlhep0 ecm0bbzt rq0escxv a5q79mjw r9c01rrb'; // when signed in
