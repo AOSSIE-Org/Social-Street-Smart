@@ -80,7 +80,7 @@ I enhanced data storage and lookup operations by integrating a Bloom Filter. Thi
 
 Here are some significant commits and pull requests made during the GSoC period:
 
-  - New Frontend ([#31](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/31))
+  - New Frontend and adblocker and bug fixes(many changes squashed into 1) ([#31](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/31))
   - Bloom Filter support([30](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/30)) 
   -  ChatGPT integration in summarizer([#32](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/32))
   - *Dockerizing SSL and security headers* ([#27](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/27))
