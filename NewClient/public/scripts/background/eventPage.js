@@ -1,3 +1,5 @@
+import { CONFIG } from './config.js';
+
 var r = /:\/\/(.[^/]+)/;
  
 var prevWebsite='';
@@ -227,8 +229,8 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
     var requestOptions = {
         method: 'GET',
     };
-
-    fetch('http://127.0.0.1:5000/shc?url=' + encodeURIComponent(targetUrl), requestOptions)
+    fetch(`${CONFIG.SHC_API_URL}/shc?url=${encodeURIComponent(targetUrl)}`, requestOptions)
+    // fetch('http://127.0.0.1:5000/shc?url=' + encodeURIComponent(targetUrl), requestOptions)
       .then(response => response.json())
       .then(result => {
           console.log(result);
@@ -252,7 +254,8 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
       method: 'GET',
   };
 
-  fetch('http://127.0.0.1:5000/ssl?url=' + encodeURIComponent(targetUrl), requestOptions)
+  // fetch('http://127.0.0.1:5000/ssl?url=' + encodeURIComponent(targetUrl), requestOptions)
+  fetch(`${CONFIG.SSL_API_URL}/ssl?url=` + encodeURIComponent(targetUrl), requestOptions)
     .then(response => response.json())
     .then(result => {
         console.log(result);
@@ -272,7 +275,7 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
   // ############################# summarizar ############################
   if (clickData.menuItemId === 'summarizar') {
     let targetUrl = clickData.selectionText;
-    fetch('http://127.0.0.1:5000/pred?text=' + encodeURIComponent(targetUrl))
+    fetch(`${CONFIG.SUMMARIZE_API_URL}/pred?text=` + encodeURIComponent(targetUrl))
       .then(response => response.json())
       .then(data => {
         // Extract the result from the response
@@ -758,8 +761,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 async function saveToLocalAndDB(menuItemId, clickData) {
   const isFakeNews = menuItemId === 'reportFNMenu';
   const apiUrl = isFakeNews
-    ? 'http://127.0.0.1:5000/reportfake'
-    : 'http://127.0.0.1:5000/reporthate';
+    ? `${CONFIG.REPORT_API_URL}/reportfake`
+    : `${CONFIG.REPORT_API_URL}/reporthate`;
 
   try {
     const requestOptions = buildRequestOptions(clickData, isFakeNews);

@@ -1,0 +1,19 @@
+Exception on /pred [GET]
+Traceback (most recent call last):
+  File "/home/keshav/.local/lib/python3.10/site-packages/flask/app.py", line 1455, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/keshav/.local/lib/python3.10/site-packages/flask/app.py", line 869, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/keshav/.local/lib/python3.10/site-packages/flask_cors/extension.py", line 178, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/keshav/.local/lib/python3.10/site-packages/flask/app.py", line 867, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/keshav/.local/lib/python3.10/site-packages/flask/app.py", line 852, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
+  File "/home/keshav/Desktop/ssmIntegration/Social-Street-Smart/server/Summarizer/summarizer_api/routes.py", line 42, in predict
+    article.parse()
+  File "/home/keshav/.local/lib/python3.10/site-packages/newspaper/article.py", line 191, in parse
+    self.throw_if_not_downloaded_verbose()
+  File "/home/keshav/.local/lib/python3.10/site-packages/newspaper/article.py", line 531, in throw_if_not_downloaded_verbose
+    raise ArticleException('Article `download()` failed with %s on URL %s' %
+newspaper.article.ArticleException: Article `download()` failed with No connection adapters were found for ':/"https:/www.thehindu.com/incoming/bytedance-joins-openais-sora-rivals-with-ai-video-app-launch/article68495318.ece' on URL :/"https:/www.thehindu.com/incoming/bytedance-joins-openais-sora-rivals-with-ai-video-app-launch/article68495318.ece

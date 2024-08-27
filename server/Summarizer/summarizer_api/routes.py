@@ -7,7 +7,7 @@ from openai import OpenAI
 
 def summarize(text, ratio):
 	summaryLength = int(len(text)*ratio)
-	client = OpenAI(api_key = "API_KEY")
+	client = OpenAI(api_key = "sk-quXV-Cuxe-_yPloGspA1D3a6Xx7lqFKF9xFq4H-O4ET3BlbkFJGFDZJIMDVOOtSF-Itczi_FsI2pdxl97vo-DB3TXJoA")
 
 	completion = client.chat.completions.create(
 		model="gpt-4o-mini",

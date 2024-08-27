@@ -3,15 +3,16 @@ import boto3
 from boto3.dynamodb.conditions import Key
 import urllib.parse , requests
 from bs4 import BeautifulSoup
-
+from dotenv import load_dotenv
+import os
 from reportStuff import ReportStuffs
-
+load_dotenv()
 app = Flask(__name__)
 
 # Replace these placeholder values with your actual credentials and region
-aws_access_key_id = 'ACCESS KEY'
-aws_secret_access_key = 'SECRET KEY'
-region_name = 'ap-south-1'  # Mumbai region
+aws_access_key_id = os.getenv("AWS_ACCESS_KEY_DYNAMODB_REPORT_API")
+aws_secret_access_key = os.getenv('AWS_SCRETE_KEY_DYNAMODB_REPORT_API')
+region_name = os.getenv('AWS_REGION_DYNAMODB_REPORT_API')  # Mumbai region
 
 # Create a DynamoDB resource instance
 db = boto3.resource(
@@ -74,31 +75,64 @@ def getTexts():
     except AssertionError as error:
             pass
 
-@app.route("/reportfake",methods=['GET','POST'])
+import urllib.parse
+
+@app.route("/reportfake", methods=['GET', 'POST'])
 def reportfake():
     try:
-            if request.method == 'POST':
-                reported_link = request.get_json()['link']
+        if request.method == 'POST':
+            data = request.get_json()
+            if 'link' in data:
+                reported_link = data['link']
                 reported_text = getTextFromLink(reported_link)
-            if request.method == 'GET':
-                reported_text = request.args.get('text')
-            return fake_query.updateTable(reported_text)
+            elif 'text' in data:
+                reported_text = data['text']
+            else:
+                return "No link or text provided", 400
+            
+            # Ensure reported_text is a string before encoding
+            reported_text = urllib.parse.quote(str(reported_text), safe='')
+        elif request.method == 'GET':
+            reported_text = request.args.get('text')
+            if reported_text is None:
+                return "Text parameter is required", 400
+            
+            # Ensure reported_text is a string before encoding
+            reported_text = urllib.parse.quote(str(reported_text), safe='')
+        
+        return fake_query.updateTable(reported_text)
 
     except AssertionError as error:
-            pass
-    
-@app.route("/reporthate",methods=['GET','POST'])
+        return str(error), 400
+
+@app.route("/reporthate", methods=['GET', 'POST'])
 def reporthate():
     try:
-            if request.method == 'POST':
-                reported_link = request.get_json()['link']
+        if request.method == 'POST':
+            data = request.get_json()
+            if 'link' in data:
+                reported_link = data['link']
                 reported_text = getTextFromLink(reported_link)
-            if request.method == 'GET':
-                reported_text = request.args.get('text')
-            return hate_query.updateTable(reported_text)
+            elif 'text' in data:
+                reported_text = data['text']
+            else:
+                return "No link or text provided", 400
+            
+            # Ensure reported_text is a string before encoding
+            reported_text = urllib.parse.quote(str(reported_text), safe='')
+        elif request.method == 'GET':
+            reported_text = request.args.get('text')
+            if reported_text is None:
+                return "Text parameter is required", 400
+            
+            # Ensure reported_text is a string before encoding
+            reported_text = urllib.parse.quote(str(reported_text), safe='')
+        
+        return hate_query.updateTable(reported_text)
 
     except AssertionError as error:
-            pass
+        return str(error), 400
+
     
 
 @app.route("/savefc",methods=["POST"])
