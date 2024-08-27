@@ -2,34 +2,18 @@ import { CONFIG } from './config.js';
 
 var r = /:\/\/(.[^/]+)/;
  
-
 var prevWebsite='';
 var myURL = 'about:blank'; // A default url just in case below code doesn't work
 
-
 var msgs='';
 console.log('start');
-// var URL= chrome.runtime.getURL('../../common/news_websites.json');
-// var request = new XMLHttpRequest();
-// request.open('GET', URL , false);  // `false` makes the request synchronous
-// request.send(null);
 
-// if (request.status === 200) {
-//   var msgs = JSON.parse(request.responseText);
-
-// }
 async function fetchNewsWebsites() {
   try {
-    // Construct the URL for the JSON file
     const URL = chrome.runtime.getURL('common/news_websites.json');
-    
-    // Fetch the JSON file
     const response = await fetch(URL);
-    
-    // Check if the request was successful
     if (response.ok) {
       const msgs = await response.json();
-      // Handle the parsed JSON data (msgs) here
       console.log(msgs);
     } else {
       console.error('Failed to fetch JSON:', response.status, response.statusText);
@@ -39,133 +23,128 @@ async function fetchNewsWebsites() {
   }
 }
 
-// Call the function
 fetchNewsWebsites();
-
-
-// // Get the URL of the JSON file using chrome.runtime.getURL
-// const URL = chrome.runtime.getURL('../../common/news_websites.json');
-// // Use fetch to get the JSON data
-// fetch(URL)
-//     .then(response => {
-//         if (!response.ok) {
-//             throw new Error(`Network response was not ok: ${response.statusText}`);
-//         }
-//         return response.json();
-//     })
-//     .then(data => {
-//         // Handle the JSON data
-//         console.log(data);
-//         // Perform any operations you need with the data
-//     })
-//     .catch(error => {
-//         console.error('There has been a problem with your fetch operation:', error);
-//     });
-
-
-// var creds; 
-// var newsKeys;
-// chrome.storage.sync.get('diiKeys', function (result) {
-//   console.log('Old Keys:');
-//   console.log(result);
-//   creds = result.diiKeys;
-
-// });
-
-// chrome.storage.sync.get('newsKeys', function (result) {
-//   console.log('Old Keys:');
-//   console.log(result);
-//   newsKeys = result.newsKeys;
-
-// });
 
 var websites= msgs.Website;
 var domainsList= msgs.Domain;
 var comments= msgs.Comments;
 
-// var newsOriginContextMenu= {
-//   'id': 'SsSorigin',
-//   'title': 'Get probable News ',
-//   'contexts':['selection']
-// };
-
-// var diiContextMenu = {
-//   'id': 'diiMenu',
-//   'title': 'Check image for disinformation',
-//   'contexts': ['image'],
-//   // onclick:dii
-//   // handleImageURL(info.srcUrl);
-//   // console.log(info.url);
-//   // }
-// };
-// var fnContextMenu = {
-//   'id': 'fnMenu',
-//   'title': 'Check for Fake News',
-//   'contexts': ['selection','link'], 
-//   // onclick:dii
-//   // handleImageURL(info.srcUrl);
-//   // console.log(info.url);
-//   // }
-// };
-
-
-
-
-chrome.runtime.onInstalled.addListener(() => {
-  // ########### Context Menu Options For SSL & Security Header Checker############
-  chrome.contextMenus.create({
-    id: 'CheckShcMenu',
-    title: 'Check Url Safety',
-    contexts: ['link', 'selection'],
+// Function to get values from chrome.storage.sync using Promises
+function getFromStorage(keys) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.sync.get(keys, function(result) {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError);
+      } else {
+        resolve(result);
+      }
+    });
   });
-  
-  chrome.contextMenus.create({
-    id: 'CheckSslMenu',
-    title: 'Check SSL Validity',
-    contexts: ['link', 'selection'],
-  });
-  // // ################################## Context Menu Options For Report#####################################
-  chrome.contextMenus.create({
-    id: 'reportFNMenu',
-    title: 'Report For Fake News',
-    contexts: ['link', 'selection'],
-  });
-  
-  chrome.contextMenus.create({
-    id: 'reportHSMenu',
-    title: 'Report For Hate Speech',
-    contexts: ['link', 'selection'],
-  });
+}
 
-  chrome.contextMenus.create({
-    id: 'summarizar',
-    title: 'summarize text or link',
-    contexts: ['link', 'selection'],
-  });
+// Initialize the context menus when the extension is installed
+chrome.runtime.onInstalled.addListener(async () => {
+  try {
+    const { diiKeys } = await getFromStorage('diiKeys');
+    const { newsKeys } = await getFromStorage('newsKeys');
+    console.log('Old Keys:', diiKeys, newsKeys);
+
+    // ########### Context Menu Options For SSL & Security Header Checker ############
+    chrome.contextMenus.create({
+      id: 'CheckShcMenu',
+      title: 'Check URL Safety',
+      contexts: ['link', 'selection'],
+    });
+
+    chrome.contextMenus.create({
+      id: 'CheckSslMenu',
+      title: 'Check SSL Validity',
+      contexts: ['link', 'selection'],
+    });
+
+    // ################################## Context Menu Options For Report #####################################
+    chrome.contextMenus.create({
+      id: 'reportFNMenu',
+      title: 'Report For Fake News',
+      contexts: ['link', 'selection'],
+    });
+
+    chrome.contextMenus.create({
+      id: 'reportHSMenu',
+      title: 'Report For Hate Speech',
+      contexts: ['link', 'selection'],
+    });
+
+    chrome.contextMenus.create({
+      id: 'summarizar',
+      title: 'Summarize Text or Link',
+      contexts: ['link', 'selection'],
+    });
+
+    // ################################## Custom Context Menu Options #####################################
+
+    chrome.contextMenus.create({
+      id: 'SsSorigin',
+      title: 'Get Probable News Origin',
+      contexts: ['selection'],
+    });
+
+    chrome.contextMenus.create({
+      id: 'diiMenu',
+      title: 'Check Image for Disinformation',
+      contexts: ['image'],
+    });
+
+    chrome.contextMenus.create({
+      id: 'fnMenu',
+      title: 'Check for Fake News',
+      contexts: ['selection', 'link'],
+    });
+
+    chrome.contextMenus.create({
+      id: 'fcMenu',
+      title: 'Check for Fact Checker',
+      contexts: ['link', 'selection'],
+    });
+
+  } catch (error) {
+    console.error('Error accessing chrome storage:', error);
+  }
 });
 
+// Listener for context menu click events
+chrome.contextMenus.onClicked.addListener((clickData) => {
+  if (clickData.menuItemId === 'SsSorigin' && clickData.selectionText) {
+    fetchOriginProbabilities(clickData.selectionText);
+  }
+  // Add other menu item handlers as needed
+});
 
-// // ############################################################################
+async function fetchOriginProbabilities(selectedText) {
+  try {
+    const response = await fetch(`https://example.com/api/origin?text=${encodeURIComponent(selectedText)}`);
+    if (response.ok) {
+      const data = await response.json();
+      const info_high = data['HIGH'];
+      const info_some = data['SOME'];
+      const info_minimal = data['MINIMAL'];
 
+      const notific = {
+        type: 'basic',
+        title: 'Origin Probabilities',
+        message: `High: ${info_high}, Some: ${info_some}, Minimal: ${info_minimal}`,
+        iconUrl: 'assets/icon/72.png'
+      };
 
+      chrome.notifications.create('', notific);
+    } else {
+      console.error('Failed to fetch origin probabilities:', response.status, response.statusText);
+    }
+  } catch (error) {
+    console.error('Error fetching origin probabilities:', error);
+  }
+}
 
-// // fact checker context menu
-// var factCheckerContextMenu = {
-//   'id': 'fcMenu',
-//   'title': 'Check for Fact Checker',
-//   'contexts': ['link', 'selection'],
-// };
-
-// function dii(info){
-//   console.log(info.srcURL);
-// }
-
-// chrome.contextMenus.create(newsOriginContextMenu);
-// chrome.contextMenus.create(diiContextMenu);
-// chrome.contextMenus.create(fnContextMenu);
-
-// // add fact Checker Context menu
-// chrome.contextMenus.create(factCheckerContextMenu);
 
 
 chrome.contextMenus.onClicked.addListener(function(clickData){
@@ -380,22 +359,6 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // report a post
 // if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportHSMenu'){
 //   saveToLocalAndDB(clickData.menuItemId , clickData);
@@ -534,56 +497,10 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Handles user clicks to report posts
 if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportHSMenu') {
   saveToLocalAndDB(clickData.menuItemId, clickData);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -703,6 +620,9 @@ if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportH
 //   });
 // }
 
+
+
+
 // // fake news helper function
 // function checkFakeNews(query){
 //   let searchKeyWords = getSearchKeywords(query); // returns a set object
@@ -734,6 +654,7 @@ if (clickData.menuItemId === 'reportFNMenu' || clickData.menuItemId === 'reportH
 //       .catch(error => alert('error', error));
 //   });
 // }
+
 
 
 function checkWebsite(myWebsite){

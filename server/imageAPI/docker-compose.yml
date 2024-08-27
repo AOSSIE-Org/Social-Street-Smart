@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_APP: app.py
+      FLASK_ENV: production
+    volumes:
+      - .:/app
+    command: ["flask", "run", "--host=0.0.0.0"]

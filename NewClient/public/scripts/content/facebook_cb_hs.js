@@ -61,6 +61,7 @@ function facebook_clickbait(node, hide=true) {
 }
 
 
+
 function facebook_hatespeech(node, hide=false) {
   const class1 = 'enqfppq2 muag1w35 ni8dbmo4 stjgntxs e5nlhep0 ecm0bbzt rq0escxv a5q79mjw r9c01rrb'; // when signed in
   const class2 = 'mbs _6m6 _2cnj _5s6c';  // when signed out

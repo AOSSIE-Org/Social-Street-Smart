@@ -1,10 +1,35 @@
 
 services:
+  news_scrapper:
+    build:
+      context: ./fakeNews
+      dockerfile: Dockerfile
+    command: python /app/newsScrapper/app.py
+    volumes:
+      - ./fakeNews/newsScrapper:/app/newsScrapper
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
+  predictions:
+    build:
+      context: ./fakeNews
+      dockerfile: Dockerfile
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./fakeNews/predictions:/app/predictions
+    
+    ports:
+      - "5008:5000"
+    
+
   hate_speech:
     build:
       context: ./Hate_Speech
       dockerfile: Dockerfile
-    container_name: hate_speech_service
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./Hate_Speech:/app
     ports:
       - "5001:5000"
 
@@ -12,7 +37,9 @@ services:
     build:
       context: ./Click-Bait
       dockerfile: Dockerfile
-    container_name: click_bait_service
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./Click-Bait:/app
     ports:
       - "5002:5000"
 
@@ -20,7 +47,9 @@ services:
     build:
       context: ./Security-Header
       dockerfile: Dockerfile
-    container_name: security_header_service
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./Security-Header:/app
     ports:
       - "5003:5000"
 
@@ -28,31 +57,19 @@ services:
     build:
       context: ./SSL
       dockerfile: Dockerfile
-    container_name: ssl_service
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./SSL:/app
     ports:
       - "5004:5000"
-
-  fake_news_api:
-    build:
-      context: ./FakeNewsAPI
-      dockerfile: Dockerfile
-    container_name: fake_news_api_service
-    ports:
-      - "5005:5000"
 
   image_api:
     build:
       context: ./imageAPI
       dockerfile: Dockerfile
-    container_name: image_api_service
-    ports:
-      - "5006:5000"
-
-  news_origin:
-    build:
-      context: ./News_Origin
-      dockerfile: Dockerfile
-    container_name: news_origin_service
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./imageAPI:/app
     ports:
       - "5007:5000"
 
@@ -60,6 +77,30 @@ services:
     build:
       context: ./ReportAPI
       dockerfile: Dockerfile
-    container_name: report_api_service
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./ReportAPI:/app
     ports:
-      - "5008:5000"
+      - "5006:5000"
+
+  summarizer:
+    build:
+      context: ./Summarizer
+      dockerfile: Dockerfile
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./Summarizer:/app
+    ports:
+      - "5005:5000"
+
+  news_origin:
+    build:
+      context: ./News_Origin
+      dockerfile: Dockerfile
+    command: ["flask", "run", "--host=0.0.0.0"]
+    volumes:
+      - ./News_Origin:/app
+    ports:
+      - "5009:5000"
+
+

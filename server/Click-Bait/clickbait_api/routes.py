@@ -12,7 +12,7 @@ import numpy as np
 main = Blueprint("main", __name__)
 # Set up TensorFlow session and graph
 # Load the tokenizer
-with open('clickbait_api/resources/tokenizer.pickle', 'rb') as f:
+with open('clickbait_api/resources/sentences.pickle', 'rb') as f:
     tokenizer = pickle.load(f)
     # print(tokenizer)
 # n_str = ["this is the best product for you"]

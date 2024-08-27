@@ -19,7 +19,10 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 - 🎨 **Frontend Development**
 - 📁 **Project Structure and Documentation Enhancements**
 - 🐳 **Dockerization and Deployment**
+- 🔚 **Deployed Docker Images on free service - Render**
 - 🚀 **Ongoing Improvements**
+- 🔄️ **Continuous Integration (Github Actions)**
+- 🪽 **Frontend integration for News Origin and FakeNews**
 
 #### Project Migration and Consolidation
 
@@ -39,9 +42,9 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 
 #### Backend Improvements
 
-- 🛠️ Upgraded versions and resolved errors in all backend servers
+- 🛠️ Upgraded versions and resolved dependency errors in all backend servers - Click bait, Hate Speech, FakeNews, ImageAPI, ReportAPI, NewsOrigin, Summariser
 - ⚙️ Ensured all servers, models, and APIs are functioning without issues
-- 🚀 Improved overall backend stability and performance
+- 🚀 Improved overall backend stability and performance 
 
 #### Frontend Development
 
@@ -72,18 +75,52 @@ This year's GSoC tasks focused on consolidating the project, improving its infra
 - 🚀 Tested and deployed all endpoints, ensuring they are production-ready
 - 🛠️ Streamlined deployment processes, reducing downtime and improving maintainability
 
+#### CI/CD
+- Made Github Workflow CI for all servers
+
+#### Frontend integration for News Origin and FakeNews
+- Added scripts for FakeNews and News Origin in eventPage
+- Upgraded outdated code for manifest version 3 for fakenews, ImageAPI and NewsOrigin
+
+#### Deployed Docker Images on free service - Render
+
+ Deployed all the servers as docker images on docker hub, and APIs to render
+
+  - DockerHub : https://hub.docker.com/repository/docker/vishav9933
+
+  - Click bait Api : https://sss-click-bait-latest.onrender.com/
+  - Ssl Api : https://sss-ssl-latest.onrender.com/
+  - Hate speech Api: https://sss-hate-speech-latest.onrender.com/
+  - FakeNews Api - https://social-street-smart-latest.onrender.com/
+
 #### Ongoing Work
 
 - 📝 Preparing to publish the extension on various platforms
-- 🔧 Addressing existing issues in the codebase due to changes in social media sites
+- 🔧 Addressing existing issues in the codebase
 
 ### Commits and Pull Requests
 
 Here are some significant commits and pull requests made during the GSoC period:
 
+- **Aug 26, 2024:**
+
+  - 📄 *Deployed servers on render and dockerhub and Added final documentation* ([#40](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/40)) - `vishavsingla`
+
+- **Aug 25, 2024:**
+
+  - 📄 *Added final Docker Compose and bug fixes to run all servers using one command* ([#39](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/39)) - `vishavsingla`
+
+  - 📄 *Added frontend code in scripts to effectively run fake news, imageAPI and NewsOrigin* ([#39](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/39)) - `vishavsingla`
+
+- **Aug 24, 2024:**
+  - 📄 *Added frontend code for newer dashboard* ([#38](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/38)) - `vishavsingla`
+
+- **Aug 22, 2024:**
+  - 📄 *Sqlite database added for fakenews* ([#36](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/36)) - `vishavsingla`
+
 - **Aug 19, 2024:**
   - 📄 *Added documentation with links to datasets and APIs related to servers and models* ([#28](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/28)) - `vishavsingla`
-
+  - 📄 *Added Github Workflows(CI) for Github based on Dockerfile* ([#29](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/28)) - `vishavsingla`
 
 - **Aug 18, 2024:**
   - 📄 *Added updated README files for contributors and project* ([#26](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/26)) - `vishavsingla`
@@ -99,14 +136,23 @@ Here are some significant commits and pull requests made during the GSoC period:
   - 🖼️ *Added GoogleAPI integration to ImageAPI, tested all endpoints, and prepared for deployment* ([#21](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/21)) - `vishavsingla`
 
 
-- **Commits on Jun 22, 2024:**
+- **Aug 10, 2024:**
+  - 🔧 *Started with GSoC'2024 Documentation* ([#23](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/23)) - `vishavsingla`
+
+- **Jun 22, 2024:**
+
   - 🖼️ *Image API*: Updated `app.py`, `node.js`, and deployment files to run all routes in Image API Flask server ([#15](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/15)) - `vishavsingla`
+
   - 📦 *Clickbait API*: Updated and upgraded old packages and code, ensuring it is fully functional ([#14](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/14)) - `vishavsingla`
+
   - 🛠️ *News Origin API*: Restructured file system, upgraded libraries, and fixed errors to make the API functional ([#13](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/13)) - `vishavsingla`
+
   - 🧠 *Clickbait ML Models*: Updated and upgraded ML models, added documentation for setup ([#12](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/12)) - `vishavsingla`
+
   - 🧠 *Hate Speech ML Models*: Updated and upgraded to the latest versions ([#10](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/10)) - `vishavsingla`
 
-- **Commits on Jun 17, 2024:**
+
+- **Jun 17, 2024:**
   - 🔄 *Migrate project to GitHub and merge Client and Server repositories* ([#9](https://github.com/AOSSIE-Org/Social-Street-Smart/pull/9)) - `vishavsingla`
 
 ### Future Scope
