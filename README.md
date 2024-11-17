@@ -24,7 +24,7 @@ Social Street Smart is a Chrome extension aimed at making the internet a safer a
 ```bash
 cd client
 npm install
-npm run build
+gulp build
 
 ```
 ### Load the 'dist' folder as an unpacked extension in Chrome
@@ -53,6 +53,19 @@ Social-Street-Smart/
 │   ├── hate-speech/
 │   └── fake-news/
 └── docker-compose.yml
+```
+## Build Tasks
+
+### Gulp Tasks for Development
+- Build the extension: Run the following to clean, lint, process, and bundle the files for the Chrome extension:
+```bash
+gulp build
+```
+The processed files will be available in the dist directory.
+
+-Fix ESLint Errors: Automatically fix linting issues:
+```bash
+gulp fix
 ```
 
 ## API Endpoints
