@@ -17,8 +17,7 @@ def summarize(text, ratio):
             {"role": "system", "content": "You are a helpful assistant."},
             {
                 "role": "user",
-                "content": f"Write a summary of the following text:\n{text}\nThe summary should be very easy to understand and in 
-                			bullet points wise with neat formatted ouput"
+                "content": f"Write a summary of the following text:\n{text}\nsummary should be very easy to understand and inpoints wise with neat formatted ouput"
             }
         ],
         
