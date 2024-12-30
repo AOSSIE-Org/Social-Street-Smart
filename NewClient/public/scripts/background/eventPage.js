@@ -275,20 +275,30 @@ chrome.contextMenus.onClicked.addListener(function(clickData){
   // ############################# summarizar ############################
   if (clickData.menuItemId === 'summarizar') {
     let targetUrl = clickData.selectionText;
+
     fetch(`${CONFIG.SUMMARIZE_API_URL}/pred?text=` + encodeURIComponent(targetUrl))
-      .then(response => response.json())
-      .then(data => {
-        // Extract the result from the response
-        let resultText = data.Result;
-        
-        chrome.windows.create({
-          url: 'scripts/content/summarizar/summarizar.html?summary=' + encodeURIComponent(resultText),
-          focused: true,
-          type: 'popup'
-        });
-      })
-      .catch(error => console.error('Error fetching the summary:', error));
-  }
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch the summary. Server responded with ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.Result) {
+                // Extract the result from the response
+                let resultText = data.Result;
+
+                chrome.windows.create({
+                    url: 'scripts/content/summarizar/summarizar.html?summary=' + encodeURIComponent(resultText),
+                    focused: true,
+                    type: 'popup'
+                });
+            } else {
+                console.error('No summary result found:', data);
+            }
+        })
+        .catch(error => console.error('Error fetching the summary:', error));
+}
   
   // // ######################### Fake News New API ##################################
 
