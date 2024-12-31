@@ -5,3 +5,4 @@ Flask
 Flask_Cors
 flask_swagger_ui
 groq 
+newspaper3k
