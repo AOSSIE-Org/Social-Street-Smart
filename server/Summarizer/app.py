@@ -19,6 +19,7 @@ def summarize(text, ratio):
                 "role": "user",
                 "content": f"Write a summary of the following text:\n{text}\n"
                            f"summary should be very easy to understand and inpoints wise with neat formatted output."
+                           f"return in clean and formatted markdown format."
             }
         ],
     )
