@@ -4,9 +4,4 @@ flask-swagger-ui
 nltk
 pandas
 python-dotenv
-requests
-beautifulsoup4
-lxml 
-google-search
-google-api-python-client==2.86.0
-tldextract
+pattern
