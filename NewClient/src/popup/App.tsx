@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
 type NewsOriginResult = {
-  HIGH?: [string, string][];
-  MINIMAL?: [string, string][];
-  SOME?: [string, string][];
+  HIGH?: string[];
+  MINIMAL?: string[];
+  SOME?: string[];
   error?: string;
 };
 
@@ -89,22 +89,53 @@ function App() {
         {newsOriginResult && !newsOriginResult.error && (
           <div className="mt-2">
             <h4>News Origin Results:</h4>
-            {["HIGH", "MINIMAL", "SOME"].map((category) => (
-              newsOriginResult[category as keyof NewsOriginResult] && newsOriginResult[category as keyof NewsOriginResult]!.length > 0 && (
-                <div key={category} className="mb-2">
-                  <h5>{category} Probability:</h5>
-                  <ul className="list-disc ml-5">
-                    {newsOriginResult[category as keyof NewsOriginResult]!.map(([url, description], index) => (
-                      <li key={index}>
-                        <a href={`https://${url}`} target="_blank" rel="noopener noreferrer">
-                          {url} {description && `- ${description}`}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )
-            ))}
+
+            {/* Cleanly display the categories */}
+            {newsOriginResult.HIGH && newsOriginResult.HIGH.length > 0 && (
+              <div className="mb-2">
+                <strong>HIGH:</strong>
+                <ul className="list-disc ml-5">
+                  {newsOriginResult.HIGH.map((url, index) => (
+                    <li key={index}>
+                      <a href={`https://${url}`} target="_blank" rel="noopener noreferrer">
+                        {url}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {newsOriginResult.MINIMAL && newsOriginResult.MINIMAL.length > 0 && (
+              <div className="mb-2">
+                <strong>MINIMAL:</strong>
+                <ul className="list-disc ml-5">
+                  {newsOriginResult.MINIMAL.map((url, index) => (
+                    <li key={index}>
+                      <a href={`https://${url}`} target="_blank" rel="noopener noreferrer">
+                        {url}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {newsOriginResult.SOME && newsOriginResult.SOME.length > 0 && (
+              <div className="mb-2">
+                <strong>SOME:</strong>
+                <ul className="list-disc ml-5">
+                  {newsOriginResult.SOME.map((url, index) => (
+                    <li key={index}>
+                      <a href={`https://${url}`} target="_blank" rel="noopener noreferrer">
+                        {url}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <Button variant="destructive" onClick={handleDeleteNewsOrigin}>
               Delete News Origin Results
             </Button>
