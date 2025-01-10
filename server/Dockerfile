@@ -17,6 +17,7 @@ COPY fakeNews/predictions/requirements.txt /app/fakeNews/predictions/requirement
 COPY imageAPI/requirements.txt /app/imageAPI/requirements.txt
 COPY ReportAPI/requirements.txt /app/ReportAPI/requirements.txt
 COPY Summarizer/requirements.txt /app/Summarizer/requirements.txt
+COPY News_Origin/requirements.txt /app/News_Origin/requirements.txt
 
 RUN pip install --no-cache-dir -r /app/Hate_Speech/requirements.txt && \
     pip install --no-cache-dir -r /app/Click-Bait/requirements.txt && \
@@ -26,6 +27,7 @@ RUN pip install --no-cache-dir -r /app/Hate_Speech/requirements.txt && \
     pip install --no-cache-dir -r /app/fakeNews/predictions/requirements.txt && \
     pip install --no-cache-dir -r /app/imageAPI/requirements.txt && \
     pip install --no-cache-dir -r /app/ReportAPI/requirements.txt && \
+    pip install --no-cache-dir -r /app/News_Origin/requirements.txt && \
     pip install --no-cache-dir -r /app/Summarizer/requirements.txt
 
 # Copy all applications' code into the container
@@ -38,9 +40,10 @@ COPY fakeNews /app/fakeNews/predictions
 COPY imageAPI /app/imageAPI
 COPY ReportAPI /app/ReportAPI
 COPY Summarizer /app/Summarizer
+COPY News_Origin /app/News_Origin
 
 # Expose ports for Flask services
-EXPOSE 5001 5002 5003 5004 5005 5006 5007 5008
+EXPOSE 5001 5002 5003 5004 5005 5006 5007 5008 5009
 
 # Default command is to start the app (can be overridden by Docker Compose)
 CMD ["python", "app.py"]
