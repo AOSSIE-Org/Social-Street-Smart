@@ -1,0 +1,6 @@
+{
+    "n_estimators": 100,
+    "max_depth": null,
+    "max_features": "sqrt",
+    "random_state": 42
+}

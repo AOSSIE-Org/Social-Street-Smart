@@ -1,0 +1,48 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: 
+          - Hate_Speech
+          - Click-Bait
+          - Security-Header
+          - SSL
+          - FakeNewsAPI
+          - ImageAPI
+          - News_Origin
+          - ReportAPI
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Build Docker image for ${{ matrix.service }}
+        run: |
+          docker build -t ${{ matrix.service }} ./server/${{ matrix.service }}
+
+      - name: Run Pytest inside Docker container
+        run: |
+          docker run --rm ${{ matrix.service }} pytest
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Docker images (Placeholder)
+        run: echo "Deploying Docker images"
