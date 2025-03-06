@@ -29,6 +29,32 @@ npm run build
 ```
 ### Load the 'dist' folder as an unpacked extension in Chrome
 
+## Fixing EACCES Errors on MacOS
+If you encounter an EACCES error while running npm install, it may be due to permission issues. Try one of the following:
+
+Quick Fix (Not Recommended):
+```bash
+sudo npm install
+Using sudo may cause future permission issues.
+```
+
+Recommended Fix:
+Change the ownership of node_modules and ~/.npm directory:
+```bash
+sudo chown -R $(whoami) ~/.npm
+sudo chown -R $(whoami) node_modules
+```
+Then retry npm install.
+
+Best Practice: Use nvm to manage Node.js versions and avoid permission issues.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+source ~/.bashrc # or ~/.zshrc if using zsh
+nvm install node
+nvm use node
+npm install
+```
 
 ### Backend Servers
 
