@@ -13,6 +13,7 @@
   },
   "homepage": "https://gitlab.com/aossie/social-street-smart#README",
   "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.80",
     "chrome-webstore-upload": "^0.4.0",
     "del": "^2.2.0",
     "gulp": "^4.0.2",
@@ -43,5 +44,4 @@
       "./node_modules/.bin/eslint --fix"
     ]
   }
-  
 }

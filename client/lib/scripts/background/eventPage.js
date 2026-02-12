@@ -69,10 +69,11 @@ var ReportFnMenu = {
   'contexts': ['link', 'selection'],
 };
 
+// UPDATED: Renamed title to reflect new AI capability
 var ReportHsMenu = {
   'id': 'reportHSMenu',
-  'title': 'Report For Hate Speech',
-  'contexts': ['link', 'selection'],
+  'title': 'Analyze with Sovereign AI (Hate Speech)',
+  'contexts': ['selection'], // AI works best on text selection
 };
 
 
@@ -385,69 +386,58 @@ function saveToLocalAndDB(menuItemId,clickData){
 
   }
 
+  // -------------------------------------------------------------
+  // CRITICAL UPDATE: SOVEREIGN AI IMPLEMENTATION
+  // Replaced server calls with Local In-Browser Inference
+  // -------------------------------------------------------------
   else if ( menuItemId === 'reportHSMenu' ){
-    //do HS stuffs
-
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-
-        var data = JSON.parse(xhttp.responseText);
-
-        chrome.storage.sync.get('reported_contents', function (result) {
     
-          if( Object.keys(result).length === 0 ){
-            result = {
-              'reported_contents': {
-                'reported_fake_news' : {}, // local storage only stores arrays or dict
-                'reported_hate_speech' : {}
-              },
-            }; 
-          }
-    
-          result['reported_contents']['reported_hate_speech'][data['text']] = null ;
-    
-          chrome.storage.sync.set(result, function() {
-            console.log(result);
-          });
-    
-        });
-        
-
-        var notific = {
-          type: 'basic',
-          title: 'Reported Successfully ',
-          message: 'Thanks for your feedback!! ',
-          // expandedMessage: 'High' + info_minimal,
-          iconUrl: '../../assets/icon/72.png'
-        };
-        chrome.notifications.create(notific); 
-      }
-    };
-
     if (clickData.selectionText){
+      
+      console.log('Analyzing text with Sovereign AI...');
+      
+      // Notify user that AI is thinking
+      var loadingNotif = {
+        type: 'basic',
+        title: 'Sovereign AI',
+        message: 'Analyzing content locally...',
+        iconUrl: '../../assets/icon/72.png',
+        priority: 0
+      };
+      chrome.notifications.create('ai_loading', loadingNotif);
 
-      chrome.storage.sync.get('reported_contents', function (result) {
+      // Call the Sovereign AI (from ai_engine.js)
+      // Note: analyzeText is attached to 'window' in our new architecture
+      if (window.analyzeText) {
+        window.analyzeText(clickData.selectionText).then(function(verdict) {
+              
+          console.log('Sovereign AI Verdict:', verdict);
+              
+          // Clear loading notification
+          chrome.notifications.clear('ai_loading');
 
-        // request only if not reported earlier
-        if(result['reported_contents']['reported_hate_speech'][clickData.selectionText] === undefined){
-          xhttp.open('GET', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reporthate?text=' + clickData.selectionText, true);
-          xhttp.send();
-        }
+          // Show Result
+          var resultNotif = {
+            type: 'basic',
+            title: 'Sovereign AI Verdict',
+            message: 'This content is classified as: ' + verdict,
+            contextMessage: 'Processed locally on your device.',
+            iconUrl: '../../assets/icon/72.png',
+            priority: 2
+          };
+          chrome.notifications.create(resultNotif);
+              
+        }).catch(function(err){
+          console.error('AI Error:', err);
+          alert('AI Initialization Failed. Please check console.');
+        });
+      } else {
+        console.error('AI Engine not found! Make sure ai_engine.js is loaded.');
+      }
 
-      });
-
+    } else {
+      alert('Please select text to analyze with Sovereign AI.');
     }
-    else{
-
-      var raw = JSON.stringify({'link':clickData.linkUrl});
-
-      xhttp.open('POST', 'https://se7c1fy10c.execute-api.us-east-2.amazonaws.com/dev/reporthate', true);
-      xhttp.setRequestHeader('Content-type', 'application/json');
-      xhttp.send(raw);
-    }
-
   }
 }
 
@@ -639,10 +629,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) { // onUpdate
     chrome.storage.sync.set({'website': myWebsite});
   });
 });
- 
-
-
-
 
 
 
