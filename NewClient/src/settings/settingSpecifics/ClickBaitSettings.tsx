@@ -1,6 +1,6 @@
 import CommonSettings from "./CommonSettings";
 
-export default function ClickBaitSettings({currSettings, updateAndStoreSettings}) {
+export default function ClickBaitSettings({currSettings, updateAndStoreSettings} :any) {
     function handleUpdateAndStoreClickBaitSettings(specificField:any, value:any){
         updateAndStoreSettings("Click Bait", specificField, value)
     }

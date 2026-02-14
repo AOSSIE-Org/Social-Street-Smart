@@ -20,7 +20,7 @@ async function fetchSettings() {
 }
 
 // Update settings in chrome.storage
-async function updateSettings(newSettings) {
+async function updateSettings(newSettings: any):Promise<void> {
   return new Promise((resolve) => {
     chrome.storage.sync.set({ settings: newSettings }, () => {
       resolve();
@@ -29,8 +29,9 @@ async function updateSettings(newSettings) {
 }
 
 export default function SettingsViewer() {
-  const [selectedSetting, setSelectedSetting] = useState("General"); // for UI
-  const [savedSettings, setSavedSettings] = useState(null);
+  
+  const [selectedSetting, setSelectedSetting] = useState<keyof typeof settingsCatalog>("General"); // for UI
+  const [savedSettings, setSavedSettings] = useState<any | null>(null);
   const [loading, setLoading] = useState(true); // loading state
 
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function SettingsViewer() {
   }, []);
 
   // Handle settings update and store in chrome.storage
-  function handleUpdateAndStoreSettings(settingName, specificField, value) {
+  function handleUpdateAndStoreSettings(settingName:any, specificField:any , value: any) {
     const newSettings = { ...savedSettings };
     newSettings[settingName] = {
       ...newSettings[settingName], // Copy existing settingName object
@@ -98,7 +99,7 @@ export default function SettingsViewer() {
           {Object.keys(settingsCatalog).map((setting) => (
             <Button
               key={setting}
-              onClick={() => setSelectedSetting(setting)}
+              onClick={() => setSelectedSetting(setting as keyof typeof settingsCatalog)}
               className={`block w-full py-2 px-4 text-left ${
                 selectedSetting === setting ? "bg-primary" : "bg-secondary"
               }`}

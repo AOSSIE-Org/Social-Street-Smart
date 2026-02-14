@@ -34,7 +34,8 @@ async function initializeStorage() {
   // Initialize white_list if not present
   if (!result.white_list) {
       // console.log('test');
-      temp['white_list'] = '|stackoverflow.com';
+      // temp['white_list'] = '|stackoverflow.com';
+      temp['white_list'] = '';
       await chrome.storage.sync.set(temp);
   }
 
@@ -115,7 +116,6 @@ function setWebsite(){
 
 
 async function execute(){
-  
   for(var i = 0, len = profanityWords.length; i < len; i++){
     let searchTerm=profanityWords[i];
     matchText(document.body, new RegExp('\\b' + searchTerm + '\\b', 'i'), function(node, match, offset) {

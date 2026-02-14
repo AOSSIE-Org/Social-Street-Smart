@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function CommonSettings({
   currSettings,
   updateAndStoreSettings,
-}) {
+}: any) {
   const [isThisSettingEnabled, setIsThisSettingEnabled] = useState(false);
   console.log("kesahv", currSettings);
   return (

@@ -1,6 +1,6 @@
 import CommonSettings from "./CommonSettings";
 
-export default function HideFlaggedContentSettings({currSettings, updateAndStoreSettings}) {
+export default function HideFlaggedContentSettings({currSettings, updateAndStoreSettings}:any) {
   console.log("ke")
     function handleUpdateAndStoreHideFlaggedContentSettings(specificField:any, value:any){
         updateAndStoreSettings("Hide Flagged Content", specificField, value)

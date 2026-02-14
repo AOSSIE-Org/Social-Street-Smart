@@ -94,13 +94,13 @@ function App() {
                 <div key={category} className="mb-2">
                   <h5>{category} Probability:</h5>
                   <ul className="list-disc ml-5">
-                    {newsOriginResult[category as keyof NewsOriginResult]!.map(([url, description], index) => (
-                      <li key={index}>
-                        <a href={`https://${url}`} target="_blank" rel="noopener noreferrer">
-                          {url} {description && `- ${description}`}
-                        </a>
-                      </li>
-                    ))}
+                  {(newsOriginResult[category as keyof NewsOriginResult] as [string, string][]).map(([url, description]: [any,any], index: number) => (
+                    <li key={index}>
+                      <a href={`https://${url}`} target="_blank" rel="noopener noreferrer">
+                         {url} {description && `- ${description}`}
+                      </a>
+                   </li>
+                  ))}
                   </ul>
                 </div>
               )
