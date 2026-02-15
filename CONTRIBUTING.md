@@ -47,7 +47,7 @@ Social-Street-Smart/
 
 1. Navigate to the client directory:
    ```bash
-   cd client
+   cd newclient
    ```
 
 2. Install dependencies:
