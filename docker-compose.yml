@@ -1,14 +1,23 @@
-
+version: '3.8'
 
 services:
   hate_speech:
     container_name: hate_speech_service
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./server/Hate_Speech:/app/Hate_Speech
-    working_dir: /app/Hate_Speech
-    command: ["python", "app.py"]
+    environment:
+      - FLASK_ENV=development
+      - PORT=5001
     ports:
       - "5001:5001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   click_bait:
     container_name: click_bait_service

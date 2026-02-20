@@ -4,6 +4,8 @@
   "description": "Shaping tomorrow's Internet with Artificial Intelligence",
   "repository": "https://gitlab.com/aossie/social-street-smart",
   "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "mocha test.js"
   },
   "author": "SerChirag",
@@ -23,6 +25,7 @@
     "gulp-if": "^2.0.2",
     "gulp-minify": "^3.1.0",
     "husky": "^2.4.1",
+    "react-scripts": "^5.0.1",
     "zip-folder": "^1.0.0"
   },
   "devDependencies": {
@@ -43,5 +46,4 @@
       "./node_modules/.bin/eslint --fix"
     ]
   }
-  
 }

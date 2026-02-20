@@ -28,6 +28,6 @@
       ]
     }
   },
-  "include": ["src", "public/scripts/background"],
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
