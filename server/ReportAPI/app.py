@@ -1,153 +1,114 @@
-from flask import Flask, request,jsonify
-import boto3
-from boto3.dynamodb.conditions import Key
-import urllib.parse , requests
+from flask import Flask, request, jsonify
+import os
+from supabase import create_client, Client
+import urllib.parse, requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
-import os
-from reportStuff import ReportStuffs
 load_dotenv()
 app = Flask(__name__)
 
-# Replace these placeholder values with your actual credentials and region
-aws_access_key_id = os.getenv("AWS_ACCESS_KEY_DYNAMODB_REPORT_API")
-aws_secret_access_key = os.getenv('AWS_SCRETE_KEY_DYNAMODB_REPORT_API')
-region_name = os.getenv('AWS_REGION_DYNAMODB_REPORT_API')  # Mumbai region
-
-# Create a DynamoDB resource instance
-db = boto3.resource(
-    'dynamodb',
-    region_name=region_name,
-    aws_access_key_id=aws_access_key_id,
-    aws_secret_access_key=aws_secret_access_key
-)
-
-tableFake      = db.Table("Reported-Fake")
-tableHate      = db.Table("Reported-Hate")
-tableFactCheck = db.Table("Google-FNCheck")
-
-fake_query = ReportStuffs(table_name = tableFake)
-hate_query = ReportStuffs(table_name = tableHate)
+# Supabase credentials
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
 
-def createContent(claims):
-    output = []
-    
-    try:
-        for claim in claims:
-            single_item = {}
-            single_item['Content']      = claim['text']
-            single_item['claimant']     = claim['claimant']
-            single_item['languageCode'] = claim['claimReview'][0]['languageCode']
-            single_item['reviewPublisher'] = claim['claimReview'][0]['publisher']['name']
-            single_item['reviewPublisherSite'] = claim['claimReview'][0]['publisher']['site']
-            single_item['textualRating'] = claim['claimReview'][0]['textualRating']
-            single_item['actualFact'] = claim['claimReview'][0]['title']
+# Create a Supabase client
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
-            output.append(single_item)
-    except:
-        pass
+class ReportStuffs:
+    def __init__(self, table_name):
+        self.table_name = table_name
 
-    return output
+    def query_avail(self, text):
+        response = supabase.table(self.table_name).select("*").eq("content", text).execute()
+        return len(response.data) > 0
 
+    def save_query(self, text):
+        response = supabase.table(self.table_name).insert({"content": text, "report_count": 1}).execute()
+        return response.status_code
 
-def getTextFromLink(url):
+    def update_count(self, text):
+        response = supabase.rpc("increment_report_count", {"content_param": text}).execute()
+        return response.status_code
 
+    def update_table(self, text):
+        if self.query_avail(text):
+            response = self.update_count(text)
+        else:
+            response = self.save_query(text)
+        return jsonify({"statusCode": response, "text": text})
+
+# Tables
+fake_query = ReportStuffs("reported_fake")
+hate_query = ReportStuffs("reported_hate")
+
+def get_text_from_link(url):
     if 'l.facebook.com' in url:
         url = urllib.parse.unquote(url.split("=")[1])
-    pageReq = requests.get(url)
-    soup = BeautifulSoup(pageReq.content,'lxml')
+    page_req = requests.get(url)
+    soup = BeautifulSoup(page_req.content, 'lxml')
     title = soup.find("meta", property="og:title")['content']
     if 'reddit.com' in url:
-        title = title.split(' - ',1)[-1]
+        title = title.split(' - ', 1)[-1]
     return title
 
-@app.route("/getText",methods = ['GET','POST'])
-def getTexts():
+@app.route("/getText", methods=['GET', 'POST'])
+def get_texts():
     try:
         if request.method == 'POST':
             reported_link = request.get_json()['link']
-            reported_text = getTextFromLink(reported_link)
-        if request.method == 'GET':
+            reported_text = get_text_from_link(reported_link)
+        else:
             reported_text = request.args.get('text')
-        return jsonify({ "searchText" : reported_text})
-
-    except AssertionError as error:
-            pass
-
-import urllib.parse
+        return jsonify({"searchText": reported_text})
+    except Exception as e:
+        return str(e), 400
 
 @app.route("/reportfake", methods=['GET', 'POST'])
-def reportfake():
+def report_fake():
     try:
         if request.method == 'POST':
             data = request.get_json()
-            if 'link' in data:
-                reported_link = data['link']
-                reported_text = getTextFromLink(reported_link)
-            elif 'text' in data:
-                reported_text = data['text']
-            else:
-                return "No link or text provided", 400
-            
-            # Ensure reported_text is a string before encoding
-            reported_text = urllib.parse.quote(str(reported_text), safe='')
-        elif request.method == 'GET':
+            reported_text = get_text_from_link(data['link']) if 'link' in data else data.get('text')
+        else:
             reported_text = request.args.get('text')
-            if reported_text is None:
-                return "Text parameter is required", 400
-            
-            # Ensure reported_text is a string before encoding
-            reported_text = urllib.parse.quote(str(reported_text), safe='')
-        
-        return fake_query.updateTable(reported_text)
-
-    except AssertionError as error:
-        return str(error), 400
+        if not reported_text:
+            return "Text parameter is required", 400
+        return fake_query.update_table(urllib.parse.quote(str(reported_text), safe=''))
+    except Exception as e:
+        return str(e), 400
 
 @app.route("/reporthate", methods=['GET', 'POST'])
-def reporthate():
+def report_hate():
     try:
         if request.method == 'POST':
             data = request.get_json()
-            if 'link' in data:
-                reported_link = data['link']
-                reported_text = getTextFromLink(reported_link)
-            elif 'text' in data:
-                reported_text = data['text']
-            else:
-                return "No link or text provided", 400
-            
-            # Ensure reported_text is a string before encoding
-            reported_text = urllib.parse.quote(str(reported_text), safe='')
-        elif request.method == 'GET':
+            reported_text = get_text_from_link(data['link']) if 'link' in data else data.get('text')
+        else:
             reported_text = request.args.get('text')
-            if reported_text is None:
-                return "Text parameter is required", 400
-            
-            # Ensure reported_text is a string before encoding
-            reported_text = urllib.parse.quote(str(reported_text), safe='')
-        
-        return hate_query.updateTable(reported_text)
+        if not reported_text:
+            return "Text parameter is required", 400
+        return hate_query.update_table(urllib.parse.quote(str(reported_text), safe=''))
+    except Exception as e:
+        return str(e), 400
 
-    except AssertionError as error:
-        return str(error), 400
-
-    
-
-@app.route("/savefc",methods=["POST"])
-def storeGFNC():
-    if request.method == 'POST':
+@app.route("/savefc", methods=["POST"])
+def store_gfnc():
+    try:
         claims = request.get_json()["claims"]
-
-        createBatch = createContent(claims)
-
-        with tableFactCheck.batch_writer() as batch:
-            for i in range(len(createBatch)):
-                batch.put_item(
-                    Item = createBatch[i]
-                )
-        return jsonify({ "statusCode":200 })
+        formatted_claims = [{
+            "content": claim['text'],
+            "claimant": claim.get('claimant', ''),
+            "languageCode": claim['claimReview'][0].get('languageCode', ''),
+            "reviewPublisher": claim['claimReview'][0]['publisher'].get('name', ''),
+            "reviewPublisherSite": claim['claimReview'][0]['publisher'].get('site', ''),
+            "textualRating": claim['claimReview'][0].get('textualRating', ''),
+            "actualFact": claim['claimReview'][0].get('title', '')
+        } for claim in claims]
+        supabase.table("google_fncheck").insert(formatted_claims).execute()
+        return jsonify({"statusCode": 200})
+    except Exception as e:
+        return str(e), 400
 
 @app.route("/")
 def home():
