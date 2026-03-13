@@ -19,7 +19,7 @@ Thank you for your interest in contributing to Social Street Smart! This documen
 
 ```
 Social-Street-Smart/
-├── client/                 # Frontend (Chrome extension)
+├── newclient/                 # Frontend (Chrome extension)
 ├── server/                 # Backend services
 │   ├── clickbait/
 │   ├── hate-speech/
@@ -47,7 +47,7 @@ Social-Street-Smart/
 
 1. Navigate to the client directory:
    ```bash
-   cd client
+   cd newclient
    ```
 
 2. Install dependencies:
