@@ -4,7 +4,8 @@
   "description": "Shaping tomorrow's Internet with Artificial Intelligence",
   "repository": "https://gitlab.com/aossie/social-street-smart",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+     "build": "gulp"
   },
   "author": "SerChirag",
   "license": "GPL-3.0",
