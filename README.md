@@ -1,3 +1,7 @@
+
+<img src="https://lh3.googleusercontent.com/WpVNZgHSiAVrU-DV1qfUU0rL5YFe_ibyfEG5oFpmqPHfkJ5xpnnuuXU6d_OqQZxTr2F-laJdyA4NLPZLnvBX5Cq6Dg=s1280-w1280-h800" alt="SOCIAL-STREET-SMART" width="300" style="display: block; margin: 0 auto;">
+
+
 # Social Street Smart
 
 Social Street Smart is a Chrome extension aimed at making the internet a safer and more productive space for users. It addresses issues like abusive language, fake news, clickbait, malicious websites, and security attacks.
@@ -16,13 +20,15 @@ Social Street Smart is a Chrome extension aimed at making the internet a safer a
 - Disinformation in images detection
 - Web activity tracking
 - Website reputation checking
+- Content Summarization
+- News Origin Detection
 
 ## Quick Start
 
 ### Frontend (Chrome Extension)
 
 ```bash
-cd client
+cd Newclient
 npm install
 npm run build
 
@@ -34,20 +40,23 @@ npm run build
 
 ```bash
 cd server
-docker compose up
+docker compose up --build
 ````
 
 ## Project Structure
 
 ```
 Social-Street-Smart/
-├── client/                 # Frontend (Chrome extension)
+├── Newclient/                 # Frontend (Chrome extension)
 ├── server/                 # Backend services
 │   ├── clickbait/
 │   ├── hate-speech/
 │   ├── fake-news/
 │   ├── image-api/
+│   ├── report-api/
+│   ├── summarize-api/
 │   └── news-origin/
+    
 ├── ML/              # Machine learning models
 │   ├── clickbait/
 │   ├── hate-speech/
@@ -62,6 +71,8 @@ Social-Street-Smart/
 - Fake News API: `http://localhost:5002/predict`
 - Image Disinformation API: `http://localhost:5003/analyze`
 - News Origin API: `http://localhost:5004/origin`
+- Report API: `http://localhost:5006/report`
+- Summarize API: `http://localhost:5005/summarize`
 
 ## Contributing
 
@@ -77,3 +88,5 @@ This project is licensed under the CC-By-NC-ND 4.0 License - see the [LICENSE](L
 
 - [AOSSIE](https://aossie.gitlab.io/) for organizing and supporting this project
 - All contributors and mentors who have helped shape Social Street Smart
+
+<img src="https://avatars.githubusercontent.com/u/38881995?v=4"  width="155" style="display: block; margin: 0 auto;">

@@ -1,84 +1,65 @@
-# Contributing to Social Street Smart
+# Social Street Smart
 
-Thank you for your interest in contributing to Social Street Smart! This document provides detailed information on how to set up the project, run various components, and contribute effectively.
+Social Street Smart is a Chrome extension aimed at making the internet a safer and more productive space for users. It addresses issues like abusive language, fake news, clickbait, malicious websites, and security attacks.
 
-## Table of Contents
+## Project Overview
 
-1. [Project Structure](#project-structure)
-2. [Setting Up the Project](#setting-up-the-project)
+- **Frontend**: Chrome extension built with React and TypeScript
+- **Backend**: Multiple Python-based APIs for various detection tasks
+- **ML Models**: Pre-trained models for clickbait, hate speech, and fake news detection
 
-3. [Extracting Data and Models](#extracting-data-and-models)
-4. [Running the Components](#running-the-components)
-5. [Contributing Guidelines](#contributing-guidelines)
-6. [Code Style](#code-style)
-7. [Reporting Issues](#reporting-issues)
+## Features
 
+- **Clickbait Detection**: Identifies misleading headlines designed to attract attention
+- **Hate Speech Detection**: Flags content with abusive or offensive language
+- **Fake News Detection**: Analyzes articles for misinformation and false content
+- **Disinformation in Images Detection**: Identifies manipulated or misleading images
+- **Web Activity Tracking**: Monitors and reports browsing patterns
+- **Website Reputation Checking**: Evaluates the credibility of websites
+- **Content Summarization**: Provides concise summaries of lengthy articles
+- **News Origin Detection**: Identifies the original source of news articles
 
-
-## Project Structure
-
-```
-Social-Street-Smart/
-├── client/                 # Frontend (Chrome extension)
-├── server/                 # Backend services
-│   ├── clickbait/
-│   ├── hate-speech/
-
-│   ├── fakenews/
-│   ├── imageAPI/
-│   └── news-origin/
-├── ML/              # Machine learning models
-│   ├── clickbait/
-│   ├── hate-speech/
-│   └── fakenews/
-
-└── docker-compose.yml
-```
-
-## Setting Up the Project
+## Installation Guide
 
 ### Prerequisites
 
 - Node.js (v14+)
 - Python (v3.8+)
 - Docker and Docker Compose
+- Chrome Browser
 
-### Frontend Setup
+### Frontend (Chrome Extension) Installation
 
-1. Navigate to the client directory:
+1. Clone the repository:
    ```bash
-   cd client
+   git clone https://github.com/AOSSIE/Social-Street-Smart.git
+   cd Social-Street-Smart
    ```
 
-2. Install dependencies:
+2. Navigate to the frontend directory:
+   ```bash
+   cd Newclient
+   ```
+
+3. Install dependencies:
    ```bash
    npm install
    ```
 
-3. Build the extension:
+4. Build the extension:
    ```bash
    npm run build
    ```
 
-4. Load the extension in Chrome:
+5. Load the extension in Chrome:
    - Open Chrome and go to `chrome://extensions/`
-   - Enable "Developer mode"
-   - Click "Load unpacked" and select the `dist` folder
+   - Enable "Developer mode" in the top-right corner
+   - Click "Load unpacked" and select the `dist` folder generated in the build step
+   - The extension icon should appear in your browser toolbar
 
+### Backend Installation
 
-#### Deployed Docker Images on Render
-
-  - DockerHub : https://hub.docker.com/repository/docker/vishav9933
-
-  - Click bait Api : https://sss-click-bait-latest.onrender.com/
-  - Ssl Api : https://sss-ssl-latest.onrender.com/
-  - Hate speech Api: https://sss-hate-speech-latest.onrender.com/
-  - FakeNews Api - https://social-street-smart-latest.onrender.com/
-
-
-### Backend Setup
-
-The backend services are containerized using Docker:
+#### Using Docker (Recommended)
 
 1. Navigate to the server directory:
    ```bash
@@ -87,13 +68,22 @@ The backend services are containerized using Docker:
 
 2. Start all services:
    ```bash
-
-   docker compose up
+   docker compose up --build
    ```
 
-## Extracting Data and Models
+#### Manual Installation (For Development)
 
-Some data and models are too large to be included in the GitHub repository. Follow these steps to obtain and set up the necessary files:
+1. For each service, navigate to its directory and create a virtual environment:
+   ```bash
+   cd server/[service-name]
+   python -m venv venv
+   source venv/bin/activate  # On Windows, use: venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. Start each service individually (consult service-specific README for port configurations)
+
+## Required Data and Models Setup
 
 ### Fake News Model
 
@@ -114,9 +104,9 @@ Some data and models are too large to be included in the GitHub repository. Foll
 ### Toxic Comment/Hate Speech Models
 
 1. Download the GloVe word embeddings (glove.6B.zip) from [Stanford NLP](https://nlp.stanford.edu/data/glove.6B.zip)
-2. Extract and place the files in `Toxic Comment/Data/glove.6B/`
+2. Extract and place the files in `server/hate-speech/`
 3. Download the Toxic Comment Classification Challenge dataset from Kaggle: [Jigsaw Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/data)
-4. Extract and place the files in `Toxic Comment/Data/toxic-comment/`
+4. Extract and place the files in `server/hate-speech/data/`
 
 ### Image API Credentials
 
@@ -129,27 +119,91 @@ Some data and models are too large to be included in the GitHub repository. Foll
 2. Click on "Get a Key" and follow the instructions to create a new project and generate an API key
 3. Create a `.env` file in `server/News_Origin/` and add your API key:
    ```
-   GOOGLE_API_KEY=your_api_key_here
-
+   # Environment variables
+   API_KEY = os.getenv("API_KEY") # Replace with ur Key from https://developers.google.com/custom-search/v1/introduction
+   CSE_ID = os.getenv("CSE_ID") # Replace with your valid CSE ID from  https://programmablesearchengine.google.com/controlpanel/all
    ```
 
-## Running the Components
+## Project Structure
 
-### Frontend (Chrome Extension)
+```
+Social-Street-Smart/
+├── Newclient/                 # Frontend (Chrome extension)
+│   ├── public/                # Static files
+│   ├── src/                   # Source code
+│   ├── dist/                  # Built extension (generated)
+│   └── package.json           # Dependencies and scripts
+│
+├── server/                    # Backend services
+│   ├── clickbait/             # Clickbait detection service
+│   ├── hate-speech/           # Hate speech detection service
+│   ├── fake-news/             # Fake news detection service
+│   ├── image-api/             # Image disinformation detection
+│   ├── report-api/            # Reporting service
+│   ├── summarize-api/         # Content summarization service
+│   ├── news-origin/           # News origin detection service
+│   └── docker-compose.yml     # Docker configuration
+│
+├── ML/                        # Machine learning models
+│   ├── clickbait/             # Clickbait detection models
+│   ├── hate-speech/           # Hate speech detection models
+│   └── fake-news/             # Fake news detection models
+│
+├── docs/                      # Documentation
+├── tests/                     # Test files
+├── LICENSE                    # License file
+└── README.md                  # This file
+```
 
-After building the extension, you can load it into Chrome as an unpacked extension. Any changes to the source code will require rebuilding the extension and reloading it in Chrome.
+## API Endpoints
 
-### Backend Servers
-
-The Docker Compose file will start all the backend services. You can access them at the following endpoints:
+All APIs are available after starting the backend services:
 
 - Clickbait API: `http://localhost:5000/predict`
 - Hate Speech API: `http://localhost:5001/predict`
 - Fake News API: `http://localhost:5002/predict`
 - Image Disinformation API: `http://localhost:5003/analyze`
 - News Origin API: `http://localhost:5004/origin`
+- Report API: `http://localhost:5006/report`
+- Summarize API: `http://localhost:5005/summarize`
 
-## Contributing Guidelines
+## Deployed Services
+
+The following services are deployed and available online:
+
+- DockerHub Repository: [https://hub.docker.com/repository/docker/vishav9933](https://hub.docker.com/repository/docker/vishav9933)
+- Clickbait API: [https://sss-click-bait-latest.onrender.com/](https://sss-click-bait-latest.onrender.com/)
+- SSL API: [https://sss-ssl-latest.onrender.com/](https://sss-ssl-latest.onrender.com/)
+- Hate Speech API: [https://sss-hate-speech-latest.onrender.com/](https://sss-hate-speech-latest.onrender.com/)
+- Fake News API: [https://social-street-smart-latest.onrender.com/](https://social-street-smart-latest.onrender.com/)
+
+## Usage Guide
+
+1. Once the extension is installed and the backend services are running, you'll see the Social Street Smart icon in your Chrome toolbar.
+2. Click on the icon to open the extension popup.
+3. Navigate to any webpage to analyze its content:
+   - The extension will automatically check for clickbait headlines, hate speech, and fake news.
+   - For image analysis, right-click on an image and select the appropriate option from the context menu.
+   - For article summarization, click the summarize button in the extension popup.
+
+## Troubleshooting
+
+### Common Issues
+
+1. **APIs not responding**: Make sure Docker services are running properly. Check with `docker ps` to see if all containers are active.
+2. **Extension not loading**: Verify that you've built the extension correctly and loaded the right directory in Chrome.
+3. **Missing data files**: Ensure all required datasets and models are downloaded and placed in the correct directories.
+
+### Logs
+
+- Docker container logs: `docker logs [container_name]`
+- Extension logs: Open Chrome DevTools for the extension background page
+
+## Contributing
+
+We welcome contributions to Social Street Smart! For detailed setup instructions and how to contribute, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+### Pull Request Process
 
 1. Fork the repository
 2. Create a new branch: `git checkout -b feature-name`
@@ -159,19 +213,23 @@ The Docker Compose file will start all the backend services. You can access them
 6. Push to the branch: `git push origin feature-name`
 7. Submit a pull request
 
-## Code Style
+### Code Style
 
 - For Python: Follow PEP 8
 - For JavaScript/TypeScript: Use ESLint with the project's configuration
 
-## Reporting Issues
+## License
 
-Use the GitHub Issues tab to report bugs or suggest enhancements. Please provide as much detail as possible, including:
+This project is licensed under the CC-By-NC-ND 4.0 License - see the [LICENSE](LICENSE) file for details.
 
-- A clear and descriptive title
-- Steps to reproduce the issue
-- Expected behavior
-- Actual behavior
-- Any relevant logs or screenshots
+[![License](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-nd/4.0/)
 
-Thank you for contributing to Social Street Smart!
+## Acknowledgements
+
+- [AOSSIE](https://aossie.gitlab.io/) for organizing and supporting this project
+- All contributors and mentors who have helped shape Social Street Smart
+- Open source community for providing valuable resources and tools
+
+## Contact
+
+For questions, suggestions, or support, please open an issue on the GitHub repository.
