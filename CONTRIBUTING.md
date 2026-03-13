@@ -19,6 +19,7 @@ Thank you for your interest in contributing to Social Street Smart! This documen
 
 ```
 Social-Street-Smart/
+├── NewClient/              # Frontend for contribution (Chrome extension)
 ├── client/                 # Frontend (Chrome extension)
 ├── server/                 # Backend services
 │   ├── clickbait/
@@ -47,7 +48,7 @@ Social-Street-Smart/
 
 1. Navigate to the client directory:
    ```bash
-   cd client
+   cd NewClient
    ```
 
 2. Install dependencies:
@@ -98,7 +99,7 @@ Some data and models are too large to be included in the GitHub repository. Foll
 ### Fake News Model
 
 1. Download the Fake News datasets from Kaggle: [AOSSIE Fake News Detection Datasets](https://www.kaggle.com/ad6398/aossie-fake-news-detection-datasets)
-2. Extract and place the files in `server/fakeNewsAPI/ML/` and `server/fakeNews/predictions/ML/`
+2. Extract and place the files in `ML/Fake NEWS` and `server/fakeNews/predictions/ML/`
 3. Download the GloVe word embeddings (glove.6B.100d.txt) from [Stanford NLP](https://nlp.stanford.edu/projects/glove/) and place it in both directories mentioned above
 
 ### Click-Bait Model
@@ -109,7 +110,7 @@ Some data and models are too large to be included in the GitHub repository. Foll
 ### Google News Vectors
 
 1. Download the Google News vector dataset from Kaggle: [Google News Vectors](https://www.kaggle.com/datasets/adarshsng/googlenewsvectors)
-2. Extract and place the files in the appropriate directory under `ML/`
+2. Extract and place the files in the appropriate directory under `ML/Click-Bait/Data/`
 
 ### Toxic Comment/Hate Speech Models
 

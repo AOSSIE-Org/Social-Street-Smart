@@ -41,6 +41,7 @@ docker compose up
 
 ```
 Social-Street-Smart/
+├── NewClient/              # Frontend for Contribution (Chrome extension)
 ├── client/                 # Frontend (Chrome extension)
 ├── server/                 # Backend services
 │   ├── clickbait/
