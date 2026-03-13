@@ -12,7 +12,8 @@ type NewsOriginResult = {
   error?: string;
 };
 
-type FakeNewsResult = "genuine" | "fakenews" | "unknown" | string;
+// Corrected type definition:  "Fakenews" -> "Fake"
+type FakeNewsResult = "Genuine" | "Fake" | "Unknown" | string;
 
 const extensionWidth = "300px";
 const extensionHeight = "450px";
@@ -23,7 +24,8 @@ function App() {
   const [fakeNewsResult, setFakeNewsResult] = useState<FakeNewsResult | null>(null);
 
   const handleNewsOriginCheck = async () => {
-    try {
+    // ... (News Origin Check - No Changes)
+      try {
       const response = await fetch(`http://localhost:5009/pred?text=${encodeURIComponent(inputText)}`);
       const result: NewsOriginResult = await response.json();
       setNewsOriginResult(result); // Store the parsed JSON object
@@ -37,23 +39,30 @@ function App() {
       const response = await fetch("http://localhost:5008/predict", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          body: {
-            description: inputText
-          },
-          source: "newsWeb"
-        })
+          // Use the 'claim' key, as expected by the updated backend
+          claim: inputText,
+        }),
       });
+
+      // Handle potential errors from the backend
+      if (!response.ok) {
+        const errorData = await response.json();
+        setFakeNewsResult(errorData.error || "An unknown error occurred.");
+        return;
+      }
+
       const result: { prediction: FakeNewsResult } = await response.json();
-      setFakeNewsResult(result.prediction); // Store the prediction string
+      setFakeNewsResult(result.prediction);
     } catch (error) {
+      // Catch network or other unexpected errors
+      console.error("Error during fake news check:", error);
       setFakeNewsResult("Error fetching fake news data");
     }
   };
 
-  // Handlers to delete results
   const handleDeleteNewsOrigin = () => {
     setNewsOriginResult(null);
   };
@@ -85,7 +94,7 @@ function App() {
           <Checkbox />
         </div>
 
-        {/* News Origin Result Display */}
+        {/* News Origin Result Display (No changes) */}
         {newsOriginResult && !newsOriginResult.error && (
           <div className="mt-2">
             <h4>News Origin Results:</h4>
@@ -111,7 +120,7 @@ function App() {
           </div>
         )}
 
-        {/* Error Message for News Origin */}
+        {/* Error Message for News Origin (No changes) */}
         {newsOriginResult && newsOriginResult.error && (
           <div className="mt-2 text-red-500">
             <p>{newsOriginResult.error}</p>
@@ -121,27 +130,20 @@ function App() {
           </div>
         )}
 
-        {/* Fake News Result Display */}
-        {fakeNewsResult && fakeNewsResult !== "Error fetching fake news data" && (
+        {/* Fake News Result Display - Updated */}
+      {fakeNewsResult && (
           <div className="mt-2">
             <h4>Fake News Result:</h4>
-            <p>
-              {fakeNewsResult === "genuine" && "This news appears to be genuine."}
-              {fakeNewsResult === "fakenews" && "This news appears to be fake."}
-              {fakeNewsResult === "unknown" && "The authenticity of this news is unclear."}
-            </p>
+            {/* Handle all possible result states */}
+            {fakeNewsResult === "Genuine" && <p>This news appears to be genuine.</p>}
+            {fakeNewsResult === "Fake" && <p>This news appears to be fake.</p>}
+            {fakeNewsResult === "Unknown" && <p>The authenticity of this news is unclear.</p>}
+            {/* Display any other string as an error message */}
+            {typeof fakeNewsResult === "string" && !["Genuine", "Fake", "Unknown"].includes(fakeNewsResult) && (
+              <p className="text-red-500">{fakeNewsResult}</p>
+            )}
             <Button variant="destructive" onClick={handleDeleteFakeNews}>
               Delete Fake News Result
-            </Button>
-          </div>
-        )}
-
-        {/* Error Message for Fake News */}
-        {fakeNewsResult && fakeNewsResult === "Error fetching fake news data" && (
-          <div className="mt-2 text-red-500">
-            <p>{fakeNewsResult}</p>
-            <Button variant="destructive" onClick={handleDeleteFakeNews}>
-              Dismiss
             </Button>
           </div>
         )}

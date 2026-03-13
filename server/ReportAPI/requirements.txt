@@ -1,6 +1,16 @@
+<<<<<<< HEAD
 Flask_Cors==4.0.1
 Flask==3.0.0
 boto3==1.35.2
 requests==2.32.3
 beautifulsoup4==4.12.3
 
+=======
+Flask_Cors
+Flask
+boto3
+requests
+beautifulsoup4
+python-dotenv
+supabase
+>>>>>>> 24fb8e5 (Newsscrapper)

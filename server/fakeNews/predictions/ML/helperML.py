@@ -4,7 +4,7 @@ from ML.glove_embeddings import Embed
 from ML.handFeature import HandFeatures
 from tflite_runtime.interpreter import Interpreter
 # import tflite_runtime.interpreter as tflite
-
+#from tensorflow.lite.python.interpreter import Interpreter
 
 embeddingFilePath= r'ML/glove.6B.100d.txt'
 modelDescPath= r'ML/model_FNC.json' #model description json path
