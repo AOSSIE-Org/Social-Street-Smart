@@ -20,22 +20,45 @@ Social Street Smart is a Chrome extension aimed at making the internet a safer a
 ## Quick Start
 
 ### Frontend (Chrome Extension)
+Follow these steps to set up the frontend locally:
+1.  Navigate to the client directory:
 
 ```bash
 cd client
-npm install
-npm run build
-
 ```
-### Load the 'dist' folder as an unpacked extension in Chrome
+
+2.  Install dependencies:
+
+```bash
+npm install
+```
+
+3.  Run in Development Mode:
+Currently, the `npm run build` script is being updated. To test the extension, use:
+
+```bash
+npm run dev
+```
+
+4.  Load the extension in Chrome:
+
+- Open Chrome and navigate to `chrome://extensions/`
+- Enable Developer mode in the top right
+- Click Load unpacked and select the `client` (or `dist` if created) folder
 
 
 ### Backend Servers
 
+1.  Navigate to the server directory:
 ```bash
 cd server
+
+```
+2.  Start services with Docker:
+```bash
 docker compose up
-````
+
+```
 
 ## Project Structure
 
